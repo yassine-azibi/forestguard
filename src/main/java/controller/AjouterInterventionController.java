@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -174,6 +175,11 @@ public class AjouterInterventionController implements Initializable {
             ctrl.setDonnees(inter, niveau, type);
 
             Stage stage = new Stage();
+            try {
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("/image/foret-logo.png")));
+            } catch (Exception e) {
+                System.out.println("⚠️ Impossible de charger l'icône");
+            }
             stage.setTitle("Analyse d'Intervention — ForestGuard");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));

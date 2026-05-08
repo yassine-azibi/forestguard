@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -268,6 +269,11 @@ public class ListeAffectationsController implements Initializable {
             ctrl.preRemplirZone(zone);
             
             Stage stage = new Stage();
+            try {
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("/image/foret-logo.png")));
+            } catch (Exception e) {
+                System.out.println("⚠️ Impossible de charger l'icône");
+            }
             stage.setTitle("Nouvelle Intervention — Affectation");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));

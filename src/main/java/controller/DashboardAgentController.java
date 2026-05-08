@@ -15,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -53,6 +54,18 @@ public class DashboardAgentController implements Initializable {
     
     // Popup d'affectation actuellement ouvert (pour éviter les doublons)
     private Stage popupAffectationStage = null;
+    
+    /**
+     * Définit l'icône ForestGuard pour une fenêtre
+     */
+    private void setForestGuardIcon(Stage stage) {
+        try {
+            Image icon = new Image(getClass().getResourceAsStream("/image/foret-logo.png"));
+            stage.getIcons().add(icon);
+        } catch (Exception e) {
+            System.out.println("⚠️ Impossible de charger l'icône: " + e.getMessage());
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -246,6 +259,7 @@ public class DashboardAgentController implements Initializable {
                     getClass().getResource("/fxml/AjouterIntervention.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
+            setForestGuardIcon(stage);
             stage.setTitle("Nouvelle Intervention");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
@@ -264,6 +278,7 @@ public class DashboardAgentController implements Initializable {
             ModifierInterventionController ctrl = loader.getController();
             ctrl.setIntervention(intervention);
             Stage stage = new Stage();
+            setForestGuardIcon(stage);
             stage.setTitle("Modifier Intervention");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
@@ -325,6 +340,7 @@ public class DashboardAgentController implements Initializable {
             
             // Créer et afficher le popup
             popupAffectationStage = new Stage();
+            setForestGuardIcon(popupAffectationStage);
             popupAffectationStage.setTitle("🚨 Nouvelle Affectation");
             popupAffectationStage.initModality(Modality.APPLICATION_MODAL);
             popupAffectationStage.setScene(new Scene(root));
@@ -352,6 +368,7 @@ public class DashboardAgentController implements Initializable {
                     getClass().getResource("/fxml/Statistiques.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
+            setForestGuardIcon(stage);
             stage.setTitle("Statistiques");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
@@ -367,6 +384,7 @@ public class DashboardAgentController implements Initializable {
                     getClass().getResource("/fxml/AssistantIA.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
+            setForestGuardIcon(stage);
             stage.setTitle("🤖 Assistant IA — ForestGuard");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
@@ -502,6 +520,7 @@ public class DashboardAgentController implements Initializable {
             Parent root = loader.load();
             
             Stage stage = new Stage();
+            setForestGuardIcon(stage);
             stage.setTitle("📬 Mes Affectations — ForestGuard");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));

@@ -25,7 +25,7 @@
 
         <!-- ══ HEADER AVEC LOGO ══ -->
         <HBox spacing="12" alignment="CENTER_LEFT"
-              style="-fx-background-color: #16a34a;
+              style="-fx-background-color: #5ead77;
                      -fx-padding: 16 20;
                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);">
             <!-- Logo -->
@@ -54,10 +54,10 @@
             <VBox spacing="6">
                 <Label text="ZONE D'ALERTE *"
                        style="-fx-font-size: 9; -fx-font-weight: bold;
-                              -fx-text-fill: #4ade80;"/>
+                              -fx-text-fill: white;"/>
                 <ComboBox fx:id="cbAlerte" maxWidth="Infinity"
                           promptText="Sélectionner une alerte..."
-                          style="-fx-background-color: #1a2e1e;
+                          style="-fx-background-color: #5ead77;
                                  -fx-border-color: #2d5a37;
                                  -fx-border-radius: 8;
                                  -fx-background-radius: 8;
@@ -68,7 +68,7 @@
             <VBox spacing="6">
                 <Label text="ÉQUIPEMENTS UTILISÉS *"
                        style="-fx-font-size: 9; -fx-font-weight: bold;
-                              -fx-text-fill: #4ade80;"/>
+                              -fx-text-fill: #5ead77;"/>
                 <ListView fx:id="lvEquipements" prefHeight="140"
                           style="-fx-background-color: #1a2e1e;
                                  -fx-border-color: #2d5a37;
@@ -101,7 +101,7 @@
                        style="-fx-font-size: 9; -fx-font-weight: bold;
                               -fx-text-fill: #4ade80;"/>
                 <ComboBox fx:id="cbStatut" maxWidth="Infinity"
-                          style="-fx-background-color: #1a2e1e;
+                          style="-fx-background-color: #5ead77;
                                  -fx-border-color: #2d5a37;
                                  -fx-border-radius: 8;
                                  -fx-background-radius: 8;
@@ -122,7 +122,7 @@
                            -fx-cursor: hand;"/>
             <Button text="✔ Créer"
                     onAction="#handleCreer"
-                    style="-fx-background-color: #16a34a;
+                    style="-fx-background-color: #5ead77;
                            -fx-text-fill: white; -fx-font-size: 13;
                            -fx-font-weight: bold;
                            -fx-padding: 11 28; -fx-background-radius: 10;

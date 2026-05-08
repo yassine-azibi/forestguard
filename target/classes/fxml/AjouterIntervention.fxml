@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.AjouterInterventionController"
+           prefWidth="520">
+
+    <!-- Background Image avec overlay -->
+    <StackPane>
+        <ImageView fitWidth="520" fitHeight="700" preserveRatio="false">
+            <image>
+                <javafx.scene.image.Image url="@../image/foret-back.jpg"/>
+            </image>
+        </ImageView>
+        <!-- Overlay sombre pour la lisibilité -->
+        <VBox style="-fx-background-color: rgba(5, 20, 8, 0.88);"/>
+    </StackPane>
+
+    <!-- Contenu principal -->
+    <VBox style="-fx-background-color: transparent;">
+
+        <!-- ══ HEADER AVEC LOGO ══ -->
+        <HBox spacing="12" alignment="CENTER_LEFT"
+              style="-fx-background-color: #5ead77;
+                     -fx-padding: 16 20;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);">
+            <!-- Logo -->
+            <ImageView fitWidth="28" fitHeight="28" preserveRatio="true">
+                <image>
+                    <javafx.scene.image.Image url="@../image/foret-logo.png"/>
+                </image>
+            </ImageView>
+            <VBox spacing="2">
+                <Label text="Nouvelle Intervention"
+                       style="-fx-font-size: 17; -fx-font-weight: bold;
+                              -fx-text-fill: white;
+                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 3, 0, 0, 1);"/>
+                <Label text="Remplissez tous les champs *"
+                       style="-fx-font-size: 10;
+                              -fx-text-fill: rgba(255,255,255,0.85);"/>
+            </VBox>
+        </HBox>
+
+        <!-- ══ FORMULAIRE ══ -->
+        <VBox spacing="16"
+              style="-fx-padding: 24;
+                     -fx-background-color: transparent;">
+
+            <!-- Zone alerte -->
+            <VBox spacing="6">
+                <Label text="ZONE D'ALERTE *"
+                       style="-fx-font-size: 9; -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
+                <ComboBox fx:id="cbAlerte" maxWidth="Infinity"
+                          promptText="Sélectionner une alerte..."
+                          style="-fx-background-color: #5ead77;
+                                 -fx-border-color: #2d5a37;
+                                 -fx-border-radius: 8;
+                                 -fx-background-radius: 8;
+                                 -fx-text-fill: white;"/>
+            </VBox>
+
+            <!-- Équipements -->
+            <VBox spacing="6">
+                <Label text="ÉQUIPEMENTS UTILISÉS *"
+                       style="-fx-font-size: 9; -fx-font-weight: bold;
+                              -fx-text-fill: #5ead77;"/>
+                <ListView fx:id="lvEquipements" prefHeight="140"
+                          style="-fx-background-color: #1a2e1e;
+                                 -fx-border-color: #2d5a37;
+                                 -fx-border-radius: 8;
+                                 -fx-background-radius: 8;"/>
+                <Label text="Maintenez Ctrl pour sélectionner plusieurs équipements"
+                       style="-fx-font-size: 9; -fx-text-fill: #94a3b8;"/>
+            </VBox>
+
+            <!-- Résultat -->
+            <VBox spacing="6">
+                <Label text="RÉSULTAT DE L'INTERVENTION"
+                       style="-fx-font-size: 9; -fx-font-weight: bold;
+                              -fx-text-fill: #3b8054;"/>
+                <TextArea fx:id="taResultat"
+                          promptText="Décrivez le résultat..."
+                          prefHeight="80" wrapText="true"
+                          style="-fx-background-color: #1a2e1e;
+                                 -fx-border-color: #2d5a37;
+                                 -fx-border-radius: 8;
+                                 -fx-background-radius: 8;
+                                 -fx-text-fill: black;
+                                 -fx-prompt-text-fill: #64748b;
+                                 -fx-padding: 9 12;"/>
+            </VBox>
+
+            <!-- Statut -->
+            <VBox spacing="6">
+                <Label text="STATUT *"
+                       style="-fx-font-size: 9; -fx-font-weight: bold;
+                              -fx-text-fill: #4ade80;"/>
+                <ComboBox fx:id="cbStatut" maxWidth="Infinity"
+                          style="-fx-background-color: #5ead77;
+                                 -fx-border-color: #2d5a37;
+                                 -fx-border-radius: 8;
+                                 -fx-background-radius: 8;
+                                 -fx-text-fill: black;"/>
+            </VBox>
+
+        </VBox>
+
+        <!-- ══ BOUTONS ══ -->
+        <HBox spacing="12" alignment="CENTER_RIGHT"
+              style="-fx-padding: 0 24 24 24;">
+            <Button text="Annuler"
+                    onAction="#handleAnnuler"
+                    style="-fx-background-color: #1a2e1e;
+                           -fx-text-fill: #94a3b8; -fx-font-size: 13;
+                           -fx-padding: 11 24; -fx-background-radius: 10;
+                           -fx-border-color: #2d5a37; -fx-border-radius: 10;
+                           -fx-cursor: hand;"/>
+            <Button text="✔ Créer"
+                    onAction="#handleCreer"
+                    style="-fx-background-color: #5ead77;
+                           -fx-text-fill: white; -fx-font-size: 13;
+                           -fx-font-weight: bold;
+                           -fx-padding: 11 28; -fx-background-radius: 10;
+                           -fx-cursor: hand;
+                           -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.5),10,0,0,3);"/>
+        </HBox>
+
+    </VBox>
+</StackPane>

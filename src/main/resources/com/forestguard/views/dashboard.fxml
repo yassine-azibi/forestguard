@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.forestguard.controllers.DashboardController"
+           styleClass="dashboard-root"
+           stylesheets="@../styles/app.css">
+    <ImageView fx:id="backgroundImage" preserveRatio="false" opacity="0.72" StackPane.alignment="CENTER">
+        <image>
+            <Image url="@../images/foret.jpg"/>
+        </image>
+    </ImageView>
+    <VBox styleClass="dashboard-overlay"/>
+
+    <BorderPane>
+        <top>
+            <HBox alignment="CENTER_LEFT" spacing="16" styleClass="toolbar-shell">
+                <padding>
+                    <Insets top="16" right="24" bottom="16" left="24"/>
+                </padding>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                        <image>
+                            <Image url="@../images/logo.png"/>
+                        </image>
+                    </ImageView>
+                    <VBox spacing="2">
+                        <Label text="ForestGuard" styleClass="toolbar-brand"/>
+                        <Label text="Surveillance intelligente" styleClass="toolbar-subbrand"/>
+                    </VBox>
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Label fx:id="navAvatarLabel"
+                           text="US"
+                           styleClass="nav-avatar-circle"
+                           onMouseClicked="#handleOpenProfile"/>
+                    <Button text="Quitter" onAction="#handleLogout" styleClass="secondary-button"/>
+                </HBox>
+            </HBox>
+        </top>
+
+        <center>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="content-scroll">
+                <content>
+                    <VBox spacing="20" styleClass="dashboard-page" fillWidth="true">
+                        <padding>
+                            <Insets top="24" right="24" bottom="28" left="24"/>
+                        </padding>
+
+                        <VBox spacing="8" styleClass="hero-card dashboard-hero">
+                            <Label fx:id="greetingLabel" text="Bienvenue" styleClass="hero-title"/>
+                            <Label text="Choisis une action rapide pour consulter les alertes, envoyer un signal ou gerer ton profil." styleClass="hero-subtitle" wrapText="true"/>
+                        </VBox>
+
+                        <HBox spacing="18" alignment="CENTER_LEFT">
+                            <VBox styleClass="dashboard-info-card" spacing="6" HBox.hgrow="ALWAYS">
+                                <Label text="Utilisateur" styleClass="meta-label"/>
+                                <Label fx:id="nameLabel" text="--" styleClass="info-card-value"/>
+                            </VBox>
+                            <VBox styleClass="dashboard-info-card" spacing="6" HBox.hgrow="ALWAYS">
+                                <Label text="Email" styleClass="meta-label"/>
+                                <Label fx:id="emailLabel" text="--" styleClass="info-card-value" wrapText="true"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="18" alignment="CENTER" maxWidth="Infinity">
+                            <VBox styleClass="action-card" onMouseClicked="#handleOpenAlerts" alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
+                                <Label text="🔔" styleClass="action-icon"/>
+                                <Label text="Alertes" styleClass="action-title"/>
+                                <Label text="Consulter les alertes envoyees vers l'utilisateur." styleClass="action-subtitle" wrapText="true"/>
+                                <Button text="Ouvrir" onAction="#handleOpenAlerts" styleClass="primary-button"/>
+                            </VBox>
+
+                            <VBox styleClass="action-card" onMouseClicked="#handleOpenSignal" alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
+                                <Label text="🔥" styleClass="action-icon"/>
+                                <Label text="Signal" styleClass="action-title"/>
+                                <Label text="Declarer un incendie ou signaler une flamme." styleClass="action-subtitle" wrapText="true"/>
+                                <Button text="Declarer" onAction="#handleOpenSignal" styleClass="primary-button"/>
+                            </VBox>
+
+                            <VBox styleClass="action-card" onMouseClicked="#handleOpenProfile" alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
+                                <Label text="👤" styleClass="action-icon"/>
+                                <Label text="Profil" styleClass="action-title"/>
+                                <Label text="Modifier les informations ou supprimer le compte." styleClass="action-subtitle" wrapText="true"/>
+                                <Button text="Gerer" onAction="#handleOpenProfile" styleClass="primary-button"/>
+                            </VBox>
+                            
+                            <VBox styleClass="action-card" onMouseClicked="#handleOpenEvenements" alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
+                                <Label text="🌿" styleClass="action-icon"/>
+                                <Label text="Événements" styleClass="action-title"/>
+                                <Label text="S'inscrire aux activités forestières et laisser un avis." styleClass="action-subtitle" wrapText="true"/>
+                                <Button text="Explorer" onAction="#handleOpenEvenements" styleClass="primary-button"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Admin card — Gestion des utilisateurs -->
+                        <HBox spacing="18" alignment="CENTER_LEFT">
+                            <VBox styleClass="admin-access-card" onMouseClicked="#handleOpenAdminUtilisateurs"
+                                  alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS" maxWidth="340">
+                                <Label text="🛡️" styleClass="action-icon"/>
+                                <Label text="Administration" styleClass="action-title"/>
+                                <Label text="Gérer les comptes utilisateurs : liste, recherche, modification, suppression."
+                                       styleClass="action-subtitle" wrapText="true"/>
+                                <Button text="Accéder" onAction="#handleOpenAdminUtilisateurs"
+                                        style="-fx-background-color: linear-gradient(to right, #7c3aed, #5b21b6); -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 12; -fx-padding: 10 18;"/>
+                            </VBox>
+                        </HBox>
+
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+
+    <!-- Bouton flottant Chat IA -->
+    <Button text="🤖 Chat IA"
+            onAction="#handleOpenChat"
+            styleClass="chat-float-button"
+            StackPane.alignment="BOTTOM_RIGHT">
+        <StackPane.margin>
+            <Insets bottom="50" right="30"/>
+        </StackPane.margin>
+    </Button>
+
+    <!-- Ticker bar fixé en bas -->
+    <HBox fx:id="tickerBar"
+          alignment="CENTER_LEFT"
+          prefHeight="44" minHeight="44" maxHeight="44"
+          StackPane.alignment="BOTTOM_CENTER"
+          style="-fx-background-color: rgba(0,0,0,0.92); -fx-border-color: #22c55e; -fx-border-width: 2 0 0 0;">
+
+        <!-- LEFT: badge -->
+        <Label text="🌿 ForestGuard"
+               style="-fx-background-color: #22c55e; -fx-text-fill: white; -fx-font-weight: 900; -fx-font-size: 13px; -fx-padding: 0 18 0 18; -fx-min-height: 44; -fx-max-height: 44; -fx-min-width: 150;"/>
+
+        <!-- SEPARATOR -->
+        <Label text=""
+               style="-fx-background-color: #16a34a; -fx-min-width: 3; -fx-min-height: 44; -fx-max-height: 44;"/>
+
+        <!-- MIDDLE: Scrolling ticker -->
+        <StackPane HBox.hgrow="ALWAYS"
+                   style="-fx-clip-children: true;"
+                   minHeight="44" maxHeight="44">
+            <Label fx:id="tickerContent"
+                   text="Chargement..."
+                   style="-fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: 600;"
+                   StackPane.alignment="CENTER_LEFT"/>
+        </StackPane>
+
+        <!-- SEPARATOR -->
+        <Label text=""
+               style="-fx-background-color: #16a34a; -fx-min-width: 3; -fx-min-height: 44; -fx-max-height: 44;"/>
+
+        <!-- RIGHT: Horloge live -->
+        <VBox alignment="CENTER" spacing="0"
+              minWidth="120" maxWidth="120" minHeight="44" maxHeight="44"
+              style="-fx-background-color: #111111; -fx-border-color: #22c55e; -fx-border-width: 0 0 0 2; -fx-padding: 0 10 0 10;">
+            <Label fx:id="clockTimeLabel"
+                   text="--:--:--"
+                   style="-fx-text-fill: #ffffff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-alignment: CENTER; -fx-max-width: Infinity;"/>
+            <Label fx:id="clockDateLabel"
+                   text="--/--/----"
+                   style="-fx-text-fill: rgba(160,255,180,0.90); -fx-font-size: 10px; -fx-font-weight: bold; -fx-alignment: CENTER; -fx-max-width: Infinity;"/>
+        </VBox>
+
+    </HBox>
+
+</StackPane>

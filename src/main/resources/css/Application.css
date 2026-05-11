@@ -1,0 +1,105 @@
+/* ============================================
+   ForestGuard — application.css
+   ============================================ */
+
+.root {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ===== NAVBAR BUTTON ===== */
+.nav-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(170, 230, 170, 0.55);
+    -fx-font-size: 12.5px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 14;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+.nav-btn:hover {
+    -fx-background-color: rgba(46, 204, 113, 0.1);
+    -fx-text-fill: #5de876;
+    -fx-border-color: rgba(46, 204, 113, 0.15);
+    -fx-border-radius: 10;
+}
+
+/* ===== LISTVIEW ===== */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 4;
+}
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 3 5;
+}
+.list-view .list-cell:selected {
+    -fx-background-color: rgba(46, 204, 113, 0.06);
+    -fx-background-radius: 11;
+}
+.list-view .list-cell:hover {
+    -fx-background-color: rgba(46, 204, 113, 0.04);
+}
+.list-view .scroll-bar:vertical {
+    -fx-pref-width: 5px;
+    -fx-background-color: transparent;
+}
+.list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(46, 204, 113, 0.25);
+    -fx-background-radius: 3;
+}
+.list-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+}
+
+/* ===== CHAMPS FORMULAIRE ===== */
+.champ-form {
+    -fx-background-color: rgba(255, 255, 255, 0.06);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(160, 230, 160, 0.3);
+    -fx-background-radius: 9;
+    -fx-border-color: rgba(46, 204, 113, 0.22);
+    -fx-border-radius: 9;
+    -fx-padding: 9 13;
+    -fx-font-size: 12px;
+}
+.champ-form:focused {
+    -fx-border-color: rgba(46, 204, 113, 0.65);
+    -fx-background-color: rgba(255, 255, 255, 0.09);
+}
+
+/* ===== COMBOBOX ===== */
+.champ-combo {
+    -fx-background-color: rgba(255, 255, 255, 0.06);
+    -fx-border-color: rgba(46, 204, 113, 0.22);
+    -fx-border-radius: 9;
+    -fx-background-radius: 9;
+}
+.champ-combo .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: #0b2e12;
+    -fx-padding: 6 10;
+}
+.champ-combo-popup .list-view {
+    -fx-background-color: #0b2e12;
+    -fx-border-color: rgba(46, 204, 113, 0.25);
+}
+.champ-combo-popup .list-view .list-cell:hover {
+    -fx-background-color: rgba(46, 204, 113, 0.18);
+}
+
+/* ===== SEPARATOR ===== */
+.separator .line {
+    -fx-border-color: rgba(46, 204, 113, 0.18);
+}
+
+/* ===== SCROLLBAR GLOBALE ===== */
+.scroll-bar .thumb {
+    -fx-background-color: rgba(46, 204, 113, 0.2);
+    -fx-background-radius: 4;
+}
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}

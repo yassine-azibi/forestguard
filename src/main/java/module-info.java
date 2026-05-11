@@ -7,6 +7,8 @@ module gestion.des.interventions {
     requires org.json;
     requires java.desktop;
     requires com.github.librepdf.openpdf;
+    requires jdk.httpserver;
+    requires java.net.http;
 
     opens controller to javafx.fxml;
     opens tests to javafx.fxml;

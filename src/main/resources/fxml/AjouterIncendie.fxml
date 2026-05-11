@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.web.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.AjouterIncendie"
+      prefWidth="900" prefHeight="620"
+      style="-fx-background-color: white;">
+
+    <!-- ══ HEADER ══ -->
+    <HBox spacing="14" alignment="CENTER_LEFT"
+          style="-fx-background-color: #dc2626; -fx-padding: 18 24;">
+        <ImageView fitWidth="34" fitHeight="34" preserveRatio="true">
+            <image><Image url="@/foret_bg.jpg"/></image>
+        </ImageView>
+        <VBox spacing="2">
+            <Label fx:id="titreLabel" text="Nouvel Incendie"
+                   style="-fx-font-size: 17; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Délimitez la zone affectée sur la carte, puis remplissez les champs *"
+                   style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.75);"/>
+        </VBox>
+    </HBox>
+
+    <!-- ══ CORPS : carte gauche + formulaire droite ══ -->
+    <HBox VBox.vgrow="ALWAYS" spacing="0" minHeight="0">
+
+        <!-- ── CARTE LEAFLET ── -->
+        <VBox prefWidth="460" minWidth="400" HBox.hgrow="NEVER"
+              style="-fx-background-color: #f8fafc;">
+            <Label text="Délimitez la zone incendiée"
+                   style="-fx-font-size: 11; -fx-font-weight: bold; -fx-text-fill: #dc2626;
+                          -fx-padding: 8 14 4 14;"/>
+            <WebView fx:id="mapView" VBox.vgrow="ALWAYS"/>
+            <!-- Indicateur zone détectée -->
+            <HBox spacing="8" alignment="CENTER_LEFT"
+                  style="-fx-padding: 6 14; -fx-background-color: #f1f5f9;
+                         -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0;">
+                <Label text="Zone détectée :"
+                       style="-fx-font-size: 11; -fx-text-fill: #64748b;"/>
+                <Label fx:id="lblZoneDetectee" text="—"
+                       style="-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: #16a34a;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Superficie calculée :"
+                       style="-fx-font-size: 11; -fx-text-fill: #64748b;"/>
+                <Label fx:id="lblSuperficieCalculee" text="—"
+                       style="-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: #dc2626;"/>
+            </HBox>
+        </VBox>
+
+        <!-- ── FORMULAIRE ── -->
+        <VBox spacing="14" HBox.hgrow="ALWAYS"
+              style="-fx-padding: 20 24; -fx-background-color: white;
+                     -fx-border-color: #e2e8f0; -fx-border-width: 0 0 0 1;">
+
+            <!-- Cause -->
+            <VBox spacing="5">
+                <Label text="CAUSE *"
+                       style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #dc2626;"/>
+                <ChoiceBox fx:id="causeCombo" maxWidth="Infinity"
+                           style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;
+                                  -fx-border-radius: 8; -fx-background-radius: 8;"/>
+            </VBox>
+
+            <!-- Date Debut + Date Fin -->
+            <HBox spacing="12">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="DATE DEBUT *"
+                           style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #dc2626;"/>
+                    <DatePicker fx:id="dateDebutPicker" maxWidth="Infinity"
+                                style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;
+                                       -fx-border-radius: 8; -fx-background-radius: 8;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="DATE FIN"
+                           style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #64748b;"/>
+                    <DatePicker fx:id="dateFinPicker" maxWidth="Infinity"
+                                style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;
+                                       -fx-border-radius: 8; -fx-background-radius: 8;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Superficie brulee -->
+            <VBox spacing="5">
+                <Label text="SUPERFICIE BRULEE (ha) *"
+                       style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #dc2626;"/>
+                <TextField fx:id="superficieField" promptText="Ex: 45.5 — ou calculée depuis la carte"
+                           maxWidth="Infinity"
+                           style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;
+                                  -fx-border-radius: 8; -fx-background-radius: 8;
+                                  -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8;
+                                  -fx-padding: 9 12;"/>
+            </VBox>
+
+            <!-- Niveau gravite -->
+            <VBox spacing="5">
+                <Label text="NIVEAU GRAVITE *"
+                       style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #dc2626;"/>
+                <ChoiceBox fx:id="graviteCombo" maxWidth="Infinity"
+                           style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;
+                                  -fx-border-radius: 8; -fx-background-radius: 8;"/>
+            </VBox>
+
+            <!-- Statut -->
+            <VBox spacing="5">
+                <Label text="STATUT *"
+                       style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #dc2626;"/>
+                <ChoiceBox fx:id="statutCombo" maxWidth="Infinity"
+                           style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;
+                                  -fx-border-radius: 8; -fx-background-radius: 8;"/>
+            </VBox>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <!-- Boutons -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Annuler" onAction="#annuler"
+                        style="-fx-background-color: #f1f5f9; -fx-text-fill: #64748b;
+                               -fx-font-size: 13; -fx-padding: 11 24; -fx-background-radius: 10;
+                               -fx-border-color: #e2e8f0; -fx-border-radius: 10; -fx-cursor: hand;"/>
+                <Button text="Enregistrer" onAction="#validerEtAjouter"
+                        style="-fx-background-color: #dc2626; -fx-text-fill: white;
+                               -fx-font-size: 13; -fx-font-weight: bold;
+                               -fx-padding: 11 28; -fx-background-radius: 10; -fx-cursor: hand;
+                               -fx-effect: dropshadow(gaussian,rgba(220,38,38,0.4),10,0,0,3);"/>
+            </HBox>
+
+        </VBox>
+    </HBox>
+
+</VBox>

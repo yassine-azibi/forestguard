@@ -36,7 +36,8 @@ public class DashboardController {
     // Ticker bar
     @FXML private Label tickerContent;
     @FXML private HBox  tickerBar;
-    @FXML private Label clockLabel;
+    @FXML private Label clockTimeLabel;
+    @FXML private Label clockDateLabel;
 
     /** Running scroll animation — restarted after text update. */
     private javafx.animation.SequentialTransition tickerLoop;
@@ -86,15 +87,18 @@ public class DashboardController {
 
     /** Updates the clock label with current time and date. */
     private void updateClock() {
-        if (clockLabel == null) return;
+        if (clockTimeLabel == null && clockDateLabel == null) return;
         java.time.LocalDateTime now = java.time.LocalDateTime.now();
         String time = String.format("%02d:%02d:%02d",
                 now.getHour(), now.getMinute(), now.getSecond());
         String date = String.format("%02d/%02d/%d",
                 now.getDayOfMonth(), now.getMonthValue(), now.getYear());
-        clockLabel.setText(time + "\n" + date);
-        clockLabel.setAlignment(javafx.geometry.Pos.CENTER);
-        clockLabel.setWrapText(true);
+        if (clockTimeLabel != null) {
+            clockTimeLabel.setText(time);
+        }
+        if (clockDateLabel != null) {
+            clockDateLabel.setText(date);
+        }
     }
 
     // ── Navigation ────────────────────────────────────────────────────────────

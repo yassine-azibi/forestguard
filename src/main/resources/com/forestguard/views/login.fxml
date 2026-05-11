@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.forestguard.controllers.LoginController"
+           fx:id="rootPane"
+           prefWidth="1366" prefHeight="768"
+           style="-fx-background-color: #020c02;">
+
+    <!-- ═══ BACKGROUND IMAGE ═══ -->
+    <ImageView fx:id="bgImage" preserveRatio="false"
+               fitWidth="1920" fitHeight="1080" opacity="0.0">
+        <image><Image url="@../images/foret.jpg"/></image>
+    </ImageView>
+
+    <!-- ═══ DARK CINEMATIC OVERLAY ═══ -->
+    <Rectangle fx:id="overlayRect" width="1920" height="1080" opacity="0.0">
+        <fill>
+            <javafx.scene.paint.LinearGradient startX="0" startY="0" endX="1" endY="1">
+                <stops>
+                    <javafx.scene.paint.Stop offset="0.0"  color="#010a01f0"/>
+                    <javafx.scene.paint.Stop offset="0.5"  color="#020e02b0"/>
+                    <javafx.scene.paint.Stop offset="1.0"  color="#010a01f0"/>
+                </stops>
+            </javafx.scene.paint.LinearGradient>
+        </fill>
+    </Rectangle>
+
+    <!-- ═══ VIGNETTE ═══ -->
+    <Rectangle fx:id="vignetteRect" width="1920" height="1080" opacity="0.0">
+        <fill>
+            <javafx.scene.paint.RadialGradient centerX="0.5" centerY="0.5"
+                                               radius="0.80" proportional="true">
+                <stops>
+                    <javafx.scene.paint.Stop offset="0.0" color="transparent"/>
+                    <javafx.scene.paint.Stop offset="1.0" color="#000000e0"/>
+                </stops>
+            </javafx.scene.paint.RadialGradient>
+        </fill>
+    </Rectangle>
+
+    <!-- ═══ PARTICLE CANVAS ═══ -->
+    <Canvas fx:id="particleCanvas" width="1920" height="1080"/>
+
+    <!-- ═══ MAIN LAYOUT ═══ -->
+    <HBox fx:id="mainHBox" alignment="CENTER" fillHeight="true" opacity="0.0" spacing="0">
+
+        <!-- ══════════ LEFT : BRANDING ══════════ -->
+        <VBox fx:id="brandingBox" alignment="CENTER_LEFT" spacing="30"
+              HBox.hgrow="ALWAYS"
+              style="-fx-padding: 0 40 0 100;">
+
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label fx:id="flameLabel" text="🔥" style="-fx-font-size: 80px;"/>
+                <VBox spacing="6">
+                    <Label fx:id="titleLabel" text="ForestGuard" opacity="0.0"
+                           style="-fx-font-size: 58px; -fx-font-weight: bold;
+                                  -fx-text-fill: #e8fce8; -fx-font-family: 'Georgia';
+                                  -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.6), 20, 0, 0, 0);"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Rectangle width="9" height="9" arcWidth="9" arcHeight="9"
+                                   style="-fx-fill: #ff5500;"/>
+                        <Label text="SYSTÈME DE DÉTECTION DES INCENDIES"
+                               style="-fx-font-size: 11px; -fx-text-fill: #52c252;
+                                      -fx-font-family: 'Georgia'; -fx-letter-spacing: 2;"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- Animated separator -->
+            <Rectangle fx:id="separatorRect" width="0" height="2.5" arcWidth="2" arcHeight="2">
+                <fill>
+                    <javafx.scene.paint.LinearGradient startX="0" startY="0" endX="1" endY="0">
+                        <stops>
+                            <javafx.scene.paint.Stop offset="0.0" color="#ff5500"/>
+                            <javafx.scene.paint.Stop offset="0.35" color="#4caf50"/>
+                            <javafx.scene.paint.Stop offset="0.85" color="#81c784"/>
+                            <javafx.scene.paint.Stop offset="1.0" color="transparent"/>
+                        </stops>
+                    </javafx.scene.paint.LinearGradient>
+                </fill>
+            </Rectangle>
+
+            <!-- Typing label -->
+            <Label fx:id="typingLabel" text="" wrapText="true" maxWidth="540"
+                   style="-fx-font-size: 40px; -fx-font-weight: bold;
+                          -fx-text-fill: white; -fx-font-family: 'Georgia';
+                          -fx-line-spacing: 12;
+                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 0, 2);"/>
+
+            <!-- Subtitle -->
+            <Label fx:id="subtitleLabel" text="" wrapText="true" maxWidth="500" opacity="0.0"
+                   style="-fx-font-size: 15px; -fx-text-fill: #7cb87c;
+                          -fx-font-family: 'Georgia'; -fx-line-spacing: 7;"/>
+
+            <!-- Badges -->
+            <HBox fx:id="badgesBox" spacing="14" opacity="0.0" style="-fx-padding: 10 0 0 0;">
+                <VBox fx:id="badge1" alignment="CENTER" spacing="7"
+                      style="-fx-background-color: rgba(76,175,80,0.09);
+                             -fx-background-radius: 18; -fx-padding: 18 26;
+                             -fx-border-color: rgba(76,175,80,0.30);
+                             -fx-border-radius: 18; -fx-border-width: 1.5;">
+                    <Label text="🌲" style="-fx-font-size: 28px;"/>
+                    <Label text="Forêts" style="-fx-text-fill: #7ec87e; -fx-font-size: 12px;
+                                               -fx-font-family: 'Georgia'; -fx-font-weight: bold;"/>
+                    <Label text="Protégées" style="-fx-text-fill: rgba(126,200,126,0.55);
+                                                   -fx-font-size: 10px; -fx-font-family: 'Georgia';"/>
+                </VBox>
+                <VBox fx:id="badge2" alignment="CENTER" spacing="7"
+                      style="-fx-background-color: rgba(255,85,0,0.09);
+                             -fx-background-radius: 18; -fx-padding: 18 26;
+                             -fx-border-color: rgba(255,85,0,0.30);
+                             -fx-border-radius: 18; -fx-border-width: 1.5;">
+                    <Label text="🔥" style="-fx-font-size: 28px;"/>
+                    <Label text="Incendies" style="-fx-text-fill: #ff8a65; -fx-font-size: 12px;
+                                                   -fx-font-family: 'Georgia'; -fx-font-weight: bold;"/>
+                    <Label text="Détectés" style="-fx-text-fill: rgba(255,138,101,0.55);
+                                                  -fx-font-size: 10px; -fx-font-family: 'Georgia';"/>
+                </VBox>
+                <VBox fx:id="badge3" alignment="CENTER" spacing="7"
+                      style="-fx-background-color: rgba(255,193,7,0.09);
+                             -fx-background-radius: 18; -fx-padding: 18 26;
+                             -fx-border-color: rgba(255,193,7,0.30);
+                             -fx-border-radius: 18; -fx-border-width: 1.5;">
+                    <Label text="🚒" style="-fx-font-size: 28px;"/>
+                    <Label text="Pompiers" style="-fx-text-fill: #ffd54f; -fx-font-size: 12px;
+                                                  -fx-font-family: 'Georgia'; -fx-font-weight: bold;"/>
+                    <Label text="Mobilisés" style="-fx-text-fill: rgba(255,213,79,0.55);
+                                                   -fx-font-size: 10px; -fx-font-family: 'Georgia';"/>
+                </VBox>
+                <VBox fx:id="badge4" alignment="CENTER" spacing="7"
+                      style="-fx-background-color: rgba(33,150,243,0.09);
+                             -fx-background-radius: 18; -fx-padding: 18 26;
+                             -fx-border-color: rgba(33,150,243,0.30);
+                             -fx-border-radius: 18; -fx-border-width: 1.5;">
+                    <Label text="🛰️" style="-fx-font-size: 28px;"/>
+                    <Label text="Capteurs" style="-fx-text-fill: #90caf9; -fx-font-size: 12px;
+                                                  -fx-font-family: 'Georgia'; -fx-font-weight: bold;"/>
+                    <Label text="Connectés" style="-fx-text-fill: rgba(144,202,249,0.55);
+                                                   -fx-font-size: 10px; -fx-font-family: 'Georgia';"/>
+                </VBox>
+            </HBox>
+
+        </VBox>
+
+        <!-- ══════ DIVIDER ══════ -->
+        <Rectangle fx:id="dividerRect" width="1.5" height="0" opacity="0.0">
+            <fill>
+                <javafx.scene.paint.LinearGradient startX="0" startY="0" endX="0" endY="1">
+                    <stops>
+                        <javafx.scene.paint.Stop offset="0.0" color="transparent"/>
+                        <javafx.scene.paint.Stop offset="0.3" color="#ff5500aa"/>
+                        <javafx.scene.paint.Stop offset="0.7" color="#4caf50aa"/>
+                        <javafx.scene.paint.Stop offset="1.0" color="transparent"/>
+                    </stops>
+                </javafx.scene.paint.LinearGradient>
+            </fill>
+        </Rectangle>
+
+        <!-- ══════ RIGHT : FORM CARD ══════ -->
+        <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+
+            <VBox fx:id="formCard" spacing="0"
+                  prefWidth="520" prefHeight="580"
+                  minWidth="520" minHeight="580"
+                  maxWidth="520" maxHeight="580"
+                  alignment="CENTER"
+                  style="-fx-background-color: rgba(4,18,4,0.62);
+                         -fx-background-radius: 28;
+                         -fx-border-color: rgba(76,175,80,0.28), rgba(255,85,0,0.10);
+                         -fx-border-radius: 28;
+                         -fx-border-width: 1.5;
+                         -fx-padding: 44 48 44 48;
+                         -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.20), 60, 0, 0, 0),
+                                     dropshadow(gaussian, rgba(0,0,0,0.90), 40, 0, 0, 15);
+                         -fx-scale-x: 0.82; -fx-scale-y: 0.82;">
+
+                <!-- Top glow bar -->
+                <HBox alignment="CENTER" style="-fx-padding: 0 0 28 0;">
+                    <Rectangle width="120" height="3" arcWidth="3" arcHeight="3">
+                        <fill>
+                            <javafx.scene.paint.LinearGradient startX="0" startY="0" endX="1" endY="0">
+                                <stops>
+                                    <javafx.scene.paint.Stop offset="0.0" color="transparent"/>
+                                    <javafx.scene.paint.Stop offset="0.35" color="#ff550099"/>
+                                    <javafx.scene.paint.Stop offset="0.65" color="#4caf5099"/>
+                                    <javafx.scene.paint.Stop offset="1.0" color="transparent"/>
+                                </stops>
+                            </javafx.scene.paint.LinearGradient>
+                        </fill>
+                    </Rectangle>
+                </HBox>
+
+                <!-- Header -->
+                <VBox spacing="8" alignment="CENTER" style="-fx-padding: 0 0 24 0;">
+                    <Label text="Connexion"
+                           style="-fx-font-size: 36px; -fx-font-weight: bold;
+                                  -fx-text-fill: #edfced; -fx-font-family: 'Georgia';
+                                  -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.5), 15, 0, 0, 0);"/>
+                    <Label text="Bienvenue sur ForestGuard"
+                           style="-fx-font-size: 13px; -fx-text-fill: #4a9a4a;
+                                  -fx-font-family: 'Georgia'; -fx-font-style: italic;"/>
+                    <Rectangle width="60" height="1.5" arcWidth="2" arcHeight="2"
+                               style="-fx-fill: rgba(76,175,80,0.55);"/>
+                </VBox>
+
+                <!-- Email -->
+                <VBox spacing="8" style="-fx-padding: 0 0 16 0;" maxWidth="Infinity">
+                    <Label text="📧   Adresse Email"
+                           style="-fx-font-size: 12.5px; -fx-text-fill: #5ab55a;
+                                  -fx-font-family: 'Georgia'; -fx-font-weight: bold;"/>
+                    <TextField fx:id="emailField" promptText="exemple@forestguard.tn"
+                               prefHeight="50" maxWidth="Infinity"
+                               style="-fx-background-color: rgba(6,28,6,0.70);
+                                      -fx-background-radius: 14;
+                                      -fx-border-color: rgba(76,175,80,0.38);
+                                      -fx-border-radius: 14; -fx-border-width: 1.5;
+                                      -fx-text-fill: #e8fce8;
+                                      -fx-prompt-text-fill: rgba(255,255,255,0.28);
+                                      -fx-font-size: 13.5px; -fx-padding: 13 18;
+                                      -fx-font-family: 'Georgia';"/>
+                </VBox>
+
+                <!-- Password -->
+                <VBox spacing="8" style="-fx-padding: 0 0 10 0;" maxWidth="Infinity">
+                    <Label text="🔒   Mot de Passe"
+                           style="-fx-font-size: 12.5px; -fx-text-fill: #5ab55a;
+                                  -fx-font-family: 'Georgia'; -fx-font-weight: bold;"/>
+                    <PasswordField fx:id="mdpField" promptText="••••••••"
+                                   prefHeight="50" maxWidth="Infinity"
+                                   style="-fx-background-color: rgba(6,28,6,0.70);
+                                         -fx-background-radius: 14;
+                                         -fx-border-color: rgba(76,175,80,0.38);
+                                         -fx-border-radius: 14; -fx-border-width: 1.5;
+                                         -fx-text-fill: #e8fce8;
+                                         -fx-prompt-text-fill: rgba(255,255,255,0.28);
+                                         -fx-font-size: 13.5px; -fx-padding: 13 18;
+                                         -fx-font-family: 'Georgia';"/>
+                </VBox>
+
+                <!-- Error label -->
+                <Label fx:id="errorLabel" text="" wrapText="true" maxWidth="Infinity"
+                       style="-fx-text-fill: #ff6b6b; -fx-font-size: 11.5px;
+                              -fx-font-family: 'Georgia'; -fx-font-style: italic;
+                              -fx-padding: 4 0 0 0;"/>
+
+                <!-- Mot de passe oublié -->
+                <Label fx:id="forgotPasswordLink" text="Mot de passe oublié ?"
+                       maxWidth="Infinity" alignment="CENTER_RIGHT"
+                       onMouseClicked="#handleForgotPassword"
+                       style="-fx-font-size: 11.5px; -fx-text-fill: #4a9a4a;
+                              -fx-font-family: 'Georgia'; -fx-font-style: italic;
+                              -fx-cursor: hand; -fx-padding: 4 0 10 0;"/>
+
+                <!-- Login button -->
+                <Button fx:id="loginBtn" text="🔑   SE CONNECTER"
+                        onAction="#handleLogin" maxWidth="Infinity"
+                        style="-fx-background-color: linear-gradient(to right, #1b6b1b, #2e7d32, #43a047, #2e7d32);
+                               -fx-text-fill: white; -fx-font-size: 15px;
+                               -fx-font-weight: bold; -fx-font-family: 'Georgia';
+                               -fx-background-radius: 14; -fx-padding: 16 0;
+                               -fx-cursor: hand;
+                               -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.65), 22, 0, 0, 6);"/>
+
+                <!-- Créer un compte -->
+                <Label fx:id="registerLink"
+                       text="Pas encore de compte ? S'inscrire"
+                       maxWidth="Infinity" alignment="CENTER"
+                       onMouseClicked="#handleRegister"
+                       style="-fx-font-size: 11.5px; -fx-text-fill: #4a9a4a;
+                              -fx-font-family: 'Georgia'; -fx-font-style: italic;
+                              -fx-cursor: hand; -fx-padding: 12 0 0 0;"/>
+
+                <!-- Footer note -->
+                <VBox style="-fx-padding: 16 0 0 0;">
+                    <Label text="Votre sécurité est notre priorité"
+                           alignment="CENTER" maxWidth="Infinity"
+                           style="-fx-font-size: 10px; -fx-text-fill: rgba(255,255,255,0.15);
+                                  -fx-font-family: 'Georgia'; -fx-font-style: italic;"/>
+                </VBox>
+
+            </VBox>
+        </HBox>
+
+    </HBox>
+
+    <!-- ═══ BOUTON NAVIGATION VERS ADMIN ═══ -->
+    <VBox alignment="BOTTOM_LEFT" StackPane.alignment="BOTTOM_LEFT"
+          style="-fx-padding: 0 0 28 32;" pickOnBounds="false">
+        <Button fx:id="btnAdminLogin" onAction="#handleNaviguerAdmin"
+                text="&#x2190;  Espace Admin"
+                style="-fx-background-color: rgba(255,255,255,0.07);
+                       -fx-text-fill: rgba(255,255,255,0.55);
+                       -fx-font-size: 12px; -fx-font-family: 'Georgia';
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 22;
+                       -fx-border-color: rgba(255,255,255,0.18);
+                       -fx-border-radius: 22; -fx-border-width: 1;
+                       -fx-padding: 10 20; -fx-cursor: hand;"/>
+    </VBox>
+
+</StackPane>

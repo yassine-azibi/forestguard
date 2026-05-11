@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.forestguard.controllers.AlertsController"
+           styleClass="alerts-root"
+           stylesheets="@../styles/app.css">
+    <ImageView fx:id="backgroundImage" preserveRatio="false" opacity="0.72" StackPane.alignment="CENTER">
+        <image>
+            <Image url="@../images/foret.jpg"/>
+        </image>
+    </ImageView>
+    <VBox styleClass="alerts-overlay"/>
+
+    <BorderPane>
+        <top>
+            <HBox alignment="CENTER_LEFT" spacing="16" styleClass="toolbar-shell">
+                <padding>
+                    <Insets top="16" right="24" bottom="16" left="24"/>
+                </padding>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                        <image>
+                            <Image url="@../images/logo.png"/>
+                        </image>
+                    </ImageView>
+                    <VBox spacing="2">
+                        <Label text="ForestGuard" styleClass="toolbar-brand"/>
+                        <Label text="Surveillance des alertes incendie" styleClass="toolbar-subbrand"/>
+                    </VBox>
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Retour au tableau de bord" onAction="#handleBackToDashboard" styleClass="secondary-button"/>
+            </HBox>
+        </top>
+
+        <center>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="content-scroll">
+                <content>
+                    <VBox spacing="18" styleClass="alerts-page" fillWidth="true">
+                        <padding>
+                            <Insets top="24" right="24" bottom="28" left="24"/>
+                        </padding>
+
+                        <VBox spacing="8" styleClass="hero-card alerts-main-card">
+                            <Label text="Alertes Incendie" styleClass="hero-title"/>
+                            <Label text="Surveillez les alertes incendie actives et leur statut" styleClass="hero-subtitle"/>
+                        </VBox>
+
+                        <VBox spacing="12" styleClass="alerts-filter-card">
+                            <Label text="Filtres" styleClass="section-title"/>
+                            <HBox spacing="14" alignment="CENTER_LEFT">
+                                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                    <Label text="Zone" styleClass="field-label"/>
+                                    <ComboBox fx:id="zoneFilterCombo" promptText="Toutes les zones" maxWidth="Infinity"/>
+                                </VBox>
+                                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                    <Label text="Niveau d'alerte" styleClass="field-label"/>
+                                    <ComboBox fx:id="levelFilterCombo" promptText="Tous les niveaux" maxWidth="Infinity"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <VBox fx:id="alertsListBox" spacing="12" styleClass="alerts-list-container"/>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+</StackPane>

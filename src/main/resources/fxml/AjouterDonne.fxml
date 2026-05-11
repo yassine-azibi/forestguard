@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ForestGuard.controllers.AjouterDonneeController"
+      prefWidth="540"
+      style="-fx-background-color: white;
+             -fx-background-radius: 12;">
+
+    <!-- ══ HEADER vert ForestGuard ══ -->
+    <HBox spacing="14" alignment="CENTER_LEFT"
+          style="-fx-background-color: #15803d;
+                 -fx-padding: 20 24;
+                 -fx-background-radius: 12 12 0 0;">
+        <ImageView fitWidth="46" fitHeight="46" preserveRatio="true">
+            <image><Image url="@/logo.png"/></image>
+        </ImageView>
+        <VBox spacing="3">
+            <Label fx:id="titreLabel" text="Nouvelle Donnee Capteur"
+                   style="-fx-font-size: 18; -fx-font-weight: bold;
+                          -fx-text-fill: white;"/>
+            <Label text="Remplissez tous les champs obligatoires *"
+                   style="-fx-font-size: 11;
+                          -fx-text-fill: rgba(255,255,255,0.75);"/>
+        </VBox>
+    </HBox>
+
+    <!-- ══ FORMULAIRE ══ -->
+    <VBox spacing="18" style="-fx-padding: 24 28;">
+
+        <!-- Ligne 1 : Capteur + Forêt -->
+        <HBox spacing="20">
+            <!-- Capteur -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="CAPTEUR *"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569;"/>
+                <ChoiceBox fx:id="capteurCombo" prefWidth="220"
+                           style="-fx-background-color: white;
+                                  -fx-border-color: #cbd5e1;
+                                  -fx-border-radius: 8;
+                                  -fx-background-radius: 8;"/>
+                <Label fx:id="errCapteur" text=""
+                       style="-fx-font-size: 10; -fx-text-fill: #ef4444;
+                              -fx-font-weight: bold;"/>
+            </VBox>
+
+            <!-- Forêt -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="FORET / ZONE *"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569;"/>
+                <ChoiceBox fx:id="foretCombo" prefWidth="220"
+                           style="-fx-background-color: white;
+                                  -fx-border-color: #cbd5e1;
+                                  -fx-border-radius: 8;
+                                  -fx-background-radius: 8;"/>
+                <Label fx:id="errForet" text=""
+                       style="-fx-font-size: 10; -fx-text-fill: #ef4444;
+                              -fx-font-weight: bold;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Ligne 2 : Date + Heure -->
+        <HBox spacing="20">
+            <!-- Date -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="DATE *"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569;"/>
+                <DatePicker fx:id="datePicker" prefWidth="220"
+                            style="-fx-background-color: white;
+                                   -fx-border-color: #cbd5e1;
+                                   -fx-border-radius: 8;
+                                   -fx-background-radius: 8;"/>
+                <Label fx:id="errDate" text=""
+                       style="-fx-font-size: 10; -fx-text-fill: #ef4444;
+                              -fx-font-weight: bold;"/>
+            </VBox>
+
+            <!-- Heure -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="HEURE * (HH:mm)"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569;"/>
+                <TextField fx:id="heureField" promptText="Ex: 14:30"
+                           prefWidth="220"
+                           style="-fx-background-color: white;
+                                  -fx-border-color: #cbd5e1;
+                                  -fx-border-radius: 8;
+                                  -fx-background-radius: 8;
+                                  -fx-padding: 9 12; -fx-font-size: 13;"/>
+                <Label fx:id="errHeure" text=""
+                       style="-fx-font-size: 10; -fx-text-fill: #ef4444;
+                              -fx-font-weight: bold;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Ligne 3 : Température + Humidité -->
+        <HBox spacing="20">
+            <!-- Température -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="TEMPERATURE (C) *  [-50 à 80]"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569;"/>
+                <TextField fx:id="tempField" promptText="Ex: 28.5"
+                           prefWidth="220"
+                           style="-fx-background-color: white;
+                                  -fx-border-color: #cbd5e1;
+                                  -fx-border-radius: 8;
+                                  -fx-background-radius: 8;
+                                  -fx-padding: 9 12; -fx-font-size: 13;"/>
+                <Label fx:id="errTemp" text=""
+                       style="-fx-font-size: 10; -fx-text-fill: #ef4444;
+                              -fx-font-weight: bold;"/>
+            </VBox>
+
+            <!-- Humidité -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="HUMIDITE (%) *  [0 à 100]"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569;"/>
+                <TextField fx:id="humField" promptText="Ex: 45"
+                           prefWidth="220"
+                           style="-fx-background-color: white;
+                                  -fx-border-color: #cbd5e1;
+                                  -fx-border-radius: 8;
+                                  -fx-background-radius: 8;
+                                  -fx-padding: 9 12; -fx-font-size: 13;"/>
+                <Label fx:id="errHum" text=""
+                       style="-fx-font-size: 10; -fx-text-fill: #ef4444;
+                              -fx-font-weight: bold;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Ligne 4 : Fumée + Risque calculé -->
+        <HBox spacing="20">
+            <!-- Fumée -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="NIVEAU FUMEE *"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569;"/>
+                <ChoiceBox fx:id="fumeeCombo" prefWidth="220"
+                           style="-fx-background-color: white;
+                                  -fx-border-color: #cbd5e1;
+                                  -fx-border-radius: 8;
+                                  -fx-background-radius: 8;"/>
+                <Label fx:id="errFumee" text=""
+                       style="-fx-font-size: 10; -fx-text-fill: #ef4444;
+                              -fx-font-weight: bold;"/>
+            </VBox>
+
+            <!-- Risque calculé automatiquement -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="RISQUE CALCULE (automatique)"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569;"/>
+                <Label fx:id="risqueLabel" text="Remplissez les champs..."
+                       prefWidth="220"
+                       style="-fx-font-size: 13; -fx-font-weight: bold;
+                              -fx-text-fill: #94a3b8;
+                              -fx-background-color: #f8fafc;
+                              -fx-background-radius: 8;
+                              -fx-border-color: #e2e8f0;
+                              -fx-border-radius: 8;
+                              -fx-padding: 9 12;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Barre de progression validation -->
+        <VBox spacing="6">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Progression :"
+                       style="-fx-font-size: 10; -fx-text-fill: #64748b;"/>
+                <Label fx:id="lblProgression" text="0 / 6 champs remplis"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #64748b;"/>
+            </HBox>
+            <ProgressBar fx:id="barreProgression" prefWidth="484"
+                         prefHeight="8" progress="0"
+                         style="-fx-accent: #15803d;
+                                -fx-background-color: #e2e8f0;
+                                -fx-background-radius: 4;
+                                -fx-background-insets: 0;"/>
+        </VBox>
+
+    </VBox>
+
+    <!-- ══ BOUTONS ══ -->
+    <HBox spacing="12" alignment="CENTER_RIGHT"
+          style="-fx-padding: 0 28 24 28;">
+        <Button text="Annuler" onAction="#annuler"
+                style="-fx-background-color: white;
+                       -fx-text-fill: #374151; -fx-font-size: 13;
+                       -fx-padding: 11 28; -fx-background-radius: 10;
+                       -fx-border-color: #d1d5db; -fx-border-radius: 10;
+                       -fx-cursor: hand;"/>
+        <Button fx:id="btnEnregistrer" text="Enregistrer"
+                onAction="#validerEtAjouter"
+                style="-fx-background-color: #15803d;
+                       -fx-text-fill: white; -fx-font-size: 13;
+                       -fx-font-weight: bold;
+                       -fx-padding: 11 28; -fx-background-radius: 10;
+                       -fx-cursor: hand;
+                       -fx-effect: dropshadow(gaussian,rgba(21,128,61,0.4),10,0,0,3);"/>
+    </HBox>
+
+</VBox>

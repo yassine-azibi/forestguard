@@ -1,0 +1,85 @@
+/* ═══════════════════════════════════════════════
+   chart-style.css
+   Mettre dans : src/main/resources/chart-style.css
+   ═══════════════════════════════════════════════ */
+
+/* Fond transparent du graphique */
+.chart {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+.chart-content {
+    -fx-background-color: transparent;
+}
+
+/* Grille pointillée grise claire */
+.chart-vertical-grid-lines {
+    -fx-stroke: rgba(148,163,184,0.25);
+    -fx-stroke-dash-array: 4 6;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: rgba(148,163,184,0.25);
+    -fx-stroke-dash-array: 4 6;
+}
+.chart-vertical-zero-line,
+.chart-horizontal-zero-line {
+    -fx-stroke: rgba(148,163,184,0.4);
+}
+
+/* Axes */
+.axis {
+    -fx-tick-label-fill: #94a3b8;
+    -fx-font-size: 11px;
+}
+.axis-label {
+    -fx-text-fill: #94a3b8;
+}
+
+/* Légende cachée (on fait notre propre légende) */
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Supprimer les symboles (points) sur les courbes */
+.chart-area-symbol {
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, transparent;
+}
+
+/* Couleurs des séries (fallback si Platform.runLater ne suffit pas) */
+
+/* Série 0 — Temperature — Rouge */
+.default-color0.chart-series-area-line {
+    -fx-stroke: #ef4444;
+    -fx-stroke-width: 2.5px;
+}
+.default-color0.chart-series-area-fill {
+    -fx-fill: rgba(239,68,68,0.15);
+    -fx-stroke: transparent;
+}
+
+/* Série 1 — Humidité — Bleu */
+.default-color1.chart-series-area-line {
+    -fx-stroke: #3b82f6;
+    -fx-stroke-width: 2.5px;
+}
+.default-color1.chart-series-area-fill {
+    -fx-fill: rgba(59,130,246,0.15);
+    -fx-stroke: transparent;
+}
+
+/* Série 2 — Fumée — Gris */
+.default-color2.chart-series-area-line {
+    -fx-stroke: #6b7280;
+    -fx-stroke-width: 2px;
+}
+.default-color2.chart-series-area-fill {
+    -fx-fill: rgba(107,114,128,0.08);
+    -fx-stroke: transparent;
+}

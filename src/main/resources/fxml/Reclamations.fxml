@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ReclamationsController"
+      prefHeight="720.0" prefWidth="1280.0"
+      style="-fx-background-color:#0a1612;">
+
+    <!-- SIDEBAR -->
+    <VBox prefWidth="220" minWidth="220"
+          style="-fx-background-color:#0d1f14;-fx-border-color:#1a3a20;-fx-border-width:0 1 0 0;">
+        <VBox alignment="CENTER_LEFT"
+              style="-fx-padding:22 16 20 16;-fx-border-color:#1a3a20;-fx-border-width:0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="44" fitHeight="44" preserveRatio="true">
+                    <image><Image url="@../brinis.png"/></image>
+                </ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard"
+                           style="-fx-text-fill:white;-fx-font-size:16;-fx-font-weight:bold;"/>
+                    <Label text="Réclamations Citoyens"
+                           style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Stats -->
+        <VBox spacing="10" style="-fx-padding:16 12;-fx-border-color:#1a3a20;-fx-border-width:0 0 1 0;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="📋" style="-fx-font-size:20;"/>
+                <VBox>
+                    <Label fx:id="lblTotal" text="0 réclamations"
+                           style="-fx-text-fill:white;-fx-font-size:14;-fx-font-weight:bold;"/>
+                    <Label fx:id="lblNouveaux" text="0 actives"
+                           style="-fx-text-fill:#ef4444;-fx-font-size:11;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Filtre -->
+        <VBox spacing="8" style="-fx-padding:14 12;">
+            <Label text="FILTRER PAR STATUT"
+                   style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+            <ComboBox fx:id="cbFiltreStatut" maxWidth="Infinity"
+                      style="-fx-background-color:#0d2418;-fx-background-radius:8;
+                             -fx-border-color:#2d5a37;-fx-border-radius:8;
+                             -fx-border-width:1;-fx-font-size:12;"/>
+            <Button text="Actualiser" onAction="#actualiser" maxWidth="Infinity"
+                    style="-fx-background-color:#0d2418;-fx-text-fill:#4ade80;
+                           -fx-background-radius:8;-fx-border-color:#2d5a37;
+                           -fx-border-radius:8;-fx-border-width:1;
+                           -fx-padding:9 12;-fx-cursor:hand;-fx-font-size:12;"/>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <!-- Info -->
+        <VBox style="-fx-padding:12;-fx-border-color:#1a3a20;-fx-border-width:1 0 0 0;">
+            <Label text="Rafraichissement auto toutes les 30 sec"
+                   style="-fx-text-fill:#334155;-fx-font-size:9;" wrapText="true"/>
+        </VBox>
+
+        <Button text="Retour Dashboard" maxWidth="Infinity" onAction="#goDashboard"
+                style="-fx-background-color:#0d1f14;-fx-text-fill:#4ade80;
+                       -fx-background-radius:0;-fx-border-color:#1a3a20;
+                       -fx-border-width:1 0 0 0;-fx-padding:14;
+                       -fx-cursor:hand;-fx-font-size:12;"/>
+    </VBox>
+
+    <!-- CONTENU -->
+    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color:#0a1612;">
+
+        <!-- BANNIÈRE -->
+        <StackPane prefHeight="90" minHeight="90" maxHeight="90">
+            <ImageView fitWidth="1060" fitHeight="90" preserveRatio="false">
+                <image><Image url="@../brinis2.jpg"/></image>
+            </ImageView>
+            <Pane style="-fx-background-color:linear-gradient(to right,rgba(10,22,18,0.92),rgba(10,22,18,0.5));"/>
+            <HBox alignment="CENTER_LEFT" style="-fx-padding:0 24;" spacing="14">
+                <Label text="📋" style="-fx-font-size:28;"/>
+                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                    <Label text="Réclamations Citoyennes"
+                           style="-fx-text-fill:white;-fx-font-size:22;-fx-font-weight:bold;"/>
+                    <Label text="Signalements depuis l'application citoyenne — Analyse IA disponible"
+                           style="-fx-text-fill:#94a3b8;-fx-font-size:11;"/>
+                </VBox>
+            </HBox>
+        </StackPane>
+
+        <!-- LISTE RÉCLAMATIONS -->
+        <ScrollPane fx:id="scrollReclamations" VBox.vgrow="ALWAYS"
+                    fitToWidth="true"
+                    style="-fx-background-color:transparent;-fx-background:transparent;
+                           -fx-border-color:transparent;-fx-padding:0;">
+            <VBox fx:id="conteneurReclamations" spacing="8"
+                  style="-fx-padding:14 16;-fx-background-color:transparent;"/>
+        </ScrollPane>
+    </VBox>
+</HBox>

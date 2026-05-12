@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.SatelliteViewController"
+      prefHeight="720.0" prefWidth="1280.0"
+      style="-fx-background-color:#000510;">
+
+    <!-- SIDEBAR -->
+    <VBox prefWidth="240" minWidth="240"
+          style="-fx-background-color:#000c1a;-fx-border-color:#0a3a6e;-fx-border-width:0 1 0 0;">
+
+        <VBox alignment="CENTER_LEFT"
+              style="-fx-padding:16 14;-fx-border-color:#0a3a6e;-fx-border-width:0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="38" fitHeight="38" preserveRatio="true">
+                    <image><Image url="@../brinis.png"/></image>
+                </ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard"
+                           style="-fx-text-fill:white;-fx-font-size:14;-fx-font-weight:bold;"/>
+                    <Label text="SATELLITE VIEW"
+                           style="-fx-text-fill:#00d4ff;-fx-font-size:9;-fx-font-weight:bold;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Stats -->
+        <VBox spacing="0" style="-fx-padding:10 12;-fx-border-color:#0a3a6e;-fx-border-width:0 0 1 0;">
+            <Label text="DONNEES EN DIRECT"
+                   style="-fx-text-fill:#00d4ff;-fx-font-size:9;-fx-font-weight:bold;-fx-padding:0 0 6 0;"/>
+            <HBox spacing="8" alignment="CENTER_LEFT" style="-fx-padding:3 0;">
+                <Label text="●" style="-fx-text-fill:#ef4444;-fx-font-size:14;"/>
+                <Label fx:id="lblCritiques" text="0"
+                       style="-fx-text-fill:#ef4444;-fx-font-size:22;-fx-font-weight:bold;"/>
+                <Label text="CRITIQUES" style="-fx-text-fill:#64748b;-fx-font-size:9;"/>
+            </HBox>
+            <HBox spacing="8" alignment="CENTER_LEFT" style="-fx-padding:3 0;">
+                <Label text="●" style="-fx-text-fill:#f97316;-fx-font-size:14;"/>
+                <Label fx:id="lblHautes" text="0"
+                       style="-fx-text-fill:#f97316;-fx-font-size:22;-fx-font-weight:bold;"/>
+                <Label text="HAUTES" style="-fx-text-fill:#64748b;-fx-font-size:9;"/>
+            </HBox>
+            <HBox spacing="8" alignment="CENTER_LEFT" style="-fx-padding:3 0;">
+                <Label text="●" style="-fx-text-fill:#3b82f6;-fx-font-size:14;"/>
+                <Label fx:id="lblMoyennes" text="0"
+                       style="-fx-text-fill:#3b82f6;-fx-font-size:22;-fx-font-weight:bold;"/>
+                <Label text="MOYENNES" style="-fx-text-fill:#64748b;-fx-font-size:9;"/>
+            </HBox>
+        </VBox>
+
+        <!-- Dernière alerte -->
+        <VBox spacing="4" style="-fx-padding:10 12;-fx-border-color:#0a3a6e;-fx-border-width:0 0 1 0;">
+            <Label text="DERNIERE DETECTION"
+                   style="-fx-text-fill:#00d4ff;-fx-font-size:9;-fx-font-weight:bold;"/>
+            <Label fx:id="lblDerniereAlerte" text="---"
+                   style="-fx-text-fill:white;-fx-font-size:10;" wrapText="true"/>
+            <Label fx:id="lblDerniereDate" text=""
+                   style="-fx-text-fill:#64748b;-fx-font-size:9;"/>
+        </VBox>
+
+        <!-- Analyse IA -->
+        <VBox spacing="4" VBox.vgrow="ALWAYS"
+              style="-fx-padding:10 12;-fx-border-color:#0a3a6e;-fx-border-width:0 0 1 0;">
+            <Label text="ANALYSE IA — Cliquez un point"
+                   style="-fx-text-fill:#c4b5fd;-fx-font-size:9;-fx-font-weight:bold;"/>
+            <ScrollPane fx:id="scrollAnalyse" VBox.vgrow="ALWAYS" fitToWidth="true"
+                        style="-fx-background-color:transparent;-fx-background:transparent;
+                               -fx-border-color:transparent;">
+                <Label fx:id="lblAnalyseIA"
+                       text="Cliquez sur un point d'alerte pour analyser avec l'IA"
+                       style="-fx-text-fill:#64748b;-fx-font-size:10;" wrapText="true"/>
+            </ScrollPane>
+        </VBox>
+
+        <!-- Contrôles -->
+        <VBox spacing="6" style="-fx-padding:10 12;">
+            <Button text="Actualiser" onAction="#actualiser" maxWidth="Infinity"
+                    style="-fx-background-color:#0a3a6e;-fx-text-fill:#00d4ff;
+                           -fx-background-radius:6;-fx-border-color:#1a6aae;
+                           -fx-border-radius:6;-fx-border-width:1;
+                           -fx-padding:7 12;-fx-cursor:hand;-fx-font-size:11;"/>
+            <Button text="Zoom Zone Critique" onAction="#zoomCritique" maxWidth="Infinity"
+                    style="-fx-background-color:#3f0000;-fx-text-fill:#ef4444;
+                           -fx-background-radius:6;-fx-border-color:#ef4444;
+                           -fx-border-radius:6;-fx-border-width:1;
+                           -fx-padding:7 12;-fx-cursor:hand;-fx-font-size:11;"/>
+        </VBox>
+
+        <!-- Signal + Heure -->
+        <VBox style="-fx-padding:8 12;-fx-border-color:#0a3a6e;-fx-border-width:1 0 0 0;">
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <Label fx:id="lblSignal" text="●" style="-fx-text-fill:#4ade80;-fx-font-size:12;"/>
+                <Label fx:id="lblStatus" text="SIGNAL NOMINAL"
+                       style="-fx-text-fill:#4ade80;-fx-font-size:10;-fx-font-weight:bold;"/>
+            </HBox>
+            <Label fx:id="lblHeure" text=""
+                   style="-fx-text-fill:#334155;-fx-font-size:9;-fx-font-family:Monospace;"/>
+        </VBox>
+
+        <Button text="Retour Dashboard" maxWidth="Infinity" onAction="#goDashboard"
+                style="-fx-background-color:#000c1a;-fx-text-fill:#4ade80;
+                       -fx-background-radius:0;-fx-border-color:#0a3a6e;
+                       -fx-border-width:1 0 0 0;-fx-padding:12;
+                       -fx-cursor:hand;-fx-font-size:11;"/>
+    </VBox>
+
+    <!-- CARTE SATELLITE JavaFX Pure -->
+    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color:#000510;">
+
+        <!-- HUD Header -->
+        <HBox alignment="CENTER_LEFT" spacing="16"
+              style="-fx-padding:10 16;-fx-background-color:#000c1a;
+                     -fx-border-color:#0a3a6e;-fx-border-width:0 0 1 0;">
+            <Label text="FORESTGUARD SATELLITE"
+                   style="-fx-text-fill:#00d4ff;-fx-font-size:13;-fx-font-weight:bold;
+                          -fx-font-family:Monospace;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblTotal" text="0 ALERTES ACTIVES"
+                   style="-fx-text-fill:#fbbf24;-fx-font-size:11;-fx-font-weight:bold;
+                          -fx-background-color:rgba(251,191,36,0.1);
+                          -fx-background-radius:4;-fx-padding:3 10;"/>
+        </HBox>
+
+        <!-- Carte JavaFX -->
+        <Pane fx:id="carteSatellite" VBox.vgrow="ALWAYS"
+              prefWidth="750" prefHeight="580"
+              style="-fx-background-color:#000510;"/>
+    </VBox>
+</HBox>

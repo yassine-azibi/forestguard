@@ -1,20 +1,22 @@
-module gestion.des.interventions {
+module gestion.alertes {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.media;
-    requires java.sql;
     requires javafx.web;
-    requires org.json;
+    requires java.sql;
+    requires java.net.http;
+    requires jdk.jsobject;
     requires java.desktop;
-    requires com.github.librepdf.openpdf;
+    requires itextpdf;
 
     opens controller to javafx.fxml;
-    opens tests to javafx.fxml;
-    opens model to javafx.base;
+    opens tests     to javafx.fxml;
+    opens model     to javafx.base;
 
     exports tests;
     exports controller;
     exports model;
     exports dao;
     exports utils;
+    exports service;
 }
+

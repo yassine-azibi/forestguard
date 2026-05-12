@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.AssistantVocalController"
+      prefWidth="440" spacing="0"
+      style="-fx-background-color:#0a1612;">
+
+    <!-- Header -->
+    <HBox style="-fx-background-color:linear-gradient(to right,#7c3aed,#4f46e5);-fx-padding:16 20;"
+          alignment="CENTER_LEFT" spacing="12">
+        <Label text="ForestGuard Vocal"
+               style="-fx-text-fill:white;-fx-font-size:20;-fx-font-weight:bold;"
+               HBox.hgrow="ALWAYS"/>
+        <Button text="FR" onAction="#changerFR"
+                style="-fx-background-color:rgba(255,255,255,0.25);-fx-text-fill:white;
+                       -fx-background-radius:20;-fx-padding:5 12;-fx-cursor:hand;
+                       -fx-font-size:12;-fx-font-weight:bold;-fx-border-width:0;"/>
+        <Button text="AR" onAction="#changerAR"
+                style="-fx-background-color:rgba(255,255,255,0.25);-fx-text-fill:white;
+                       -fx-background-radius:20;-fx-padding:5 12;-fx-cursor:hand;
+                       -fx-font-size:12;-fx-font-weight:bold;-fx-border-width:0;"/>
+    </HBox>
+
+    <!-- Exemples -->
+    <VBox style="-fx-background-color:#0d1a2e;-fx-padding:12 16;
+                 -fx-border-color:#1e3a5f;-fx-border-width:0 0 1 0;">
+        <Label text="Exemples de commandes :"
+               style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+        <Label text="FR : Incendie critique a Kroumirie"
+               style="-fx-text-fill:#90CAF9;-fx-font-size:11;-fx-padding:3 0 0 0;"/>
+        <Label text="FR : Fumee haute zone Cap Bon"
+               style="-fx-text-fill:#90CAF9;-fx-font-size:11;"/>
+        <Label text="FR : Valider alerte 5  /  Rejeter alerte 3"
+               style="-fx-text-fill:#90CAF9;-fx-font-size:11;"/>
+        <Label fx:id="lblLang" text="Langue : Francais"
+               style="-fx-text-fill:#4ade80;-fx-font-size:10;-fx-padding:3 0 0 0;"/>
+    </VBox>
+
+    <!-- Bouton MIC -->
+    <VBox alignment="CENTER" spacing="10"
+          style="-fx-padding:24 20;-fx-background-color:#0a1612;">
+        <Button fx:id="btnMicro" text="MIC"
+                onAction="#toggleMicro"
+                style="-fx-background-color:#0d1f14;-fx-text-fill:#4ade80;
+                       -fx-background-radius:50;-fx-min-width:90;-fx-min-height:90;
+                       -fx-max-width:90;-fx-max-height:90;-fx-font-size:14;
+                       -fx-font-weight:bold;-fx-cursor:hand;
+                       -fx-border-color:#4ade80;-fx-border-radius:50;-fx-border-width:3;
+                       -fx-effect:dropshadow(gaussian,rgba(74,222,128,0.4),12,0,0,0);"/>
+        <Label text="Cliquez MIC - parlez - cliquez STOP"
+               style="-fx-text-fill:#94a3b8;-fx-font-size:11;"/>
+    </VBox>
+
+    <!-- Séparateur OU -->
+    <HBox alignment="CENTER" spacing="12" style="-fx-padding:0 24;">
+        <Separator HBox.hgrow="ALWAYS"/>
+        <Label text="OU" style="-fx-text-fill:#334155;-fx-font-size:11;-fx-font-weight:bold;"/>
+        <Separator HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <!-- Saisie manuelle -->
+    <VBox style="-fx-padding:14 20 6 20;">
+        <Button text="Saisir la commande manuellement"
+                onAction="#ouvrirSaisieManuelle" maxWidth="Infinity"
+                style="-fx-background-color:#1a1035;-fx-text-fill:#c4b5fd;
+                       -fx-background-radius:10;-fx-border-color:#7c3aed;
+                       -fx-border-radius:10;-fx-border-width:1;
+                       -fx-padding:11 20;-fx-cursor:hand;
+                       -fx-font-size:13;-fx-font-weight:bold;"/>
+    </VBox>
+
+    <!-- Etat -->
+    <VBox spacing="6" style="-fx-padding:10 16;-fx-background-color:#0d1f14;
+                              -fx-border-color:#1a3a20;-fx-border-width:1 0 0 0;">
+        <Label fx:id="lblEtat" text="Pret — Cliquez MIC pour parler"
+               style="-fx-text-fill:#64748b;-fx-font-size:12;"/>
+        <Label fx:id="lblTranscription" text=""
+               style="-fx-text-fill:#e2e8f0;-fx-font-size:13;-fx-font-style:italic;"
+               wrapText="true"/>
+        <Label fx:id="lblResultat" text=""
+               style="-fx-text-fill:#4ade80;-fx-font-size:12;" wrapText="true"/>
+    </VBox>
+
+    <!-- Résultat -->
+    <VBox fx:id="panelResultat" spacing="8" visible="false" managed="false"
+          style="-fx-background-color:#0d2418;-fx-padding:14 16;
+                 -fx-border-color:#2d5a37;-fx-border-width:1 0 0 0;">
+        <Label text="Commande detectee :"
+               style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+        <Label fx:id="lblAction" text=""
+               style="-fx-text-fill:#4ade80;-fx-font-size:15;-fx-font-weight:bold;"/>
+        <Label fx:id="lblType"   text="" style="-fx-text-fill:#e2e8f0;-fx-font-size:12;"/>
+        <Label fx:id="lblNiveau" text="" style="-fx-text-fill:#e2e8f0;-fx-font-size:12;"/>
+        <Label fx:id="lblZone"   text="" style="-fx-text-fill:#e2e8f0;-fx-font-size:12;"/>
+        <HBox spacing="10" style="-fx-padding:8 0 0 0;">
+            <Button fx:id="btnConfirmer" text="Confirmer"
+                    onAction="#confirmerCommande" HBox.hgrow="ALWAYS"
+                    style="-fx-background-color:#16a34a;-fx-text-fill:white;
+                           -fx-background-radius:8;-fx-border-width:0;
+                           -fx-padding:10 18;-fx-cursor:hand;
+                           -fx-font-size:12;-fx-font-weight:bold;"/>
+            <Button fx:id="btnAnnuler" text="Annuler"
+                    onAction="#annulerCommande"
+                    style="-fx-background-color:#1a2e1e;-fx-text-fill:#94a3b8;
+                           -fx-background-radius:8;-fx-border-color:#2d5a37;
+                           -fx-border-radius:8;-fx-border-width:1;
+                           -fx-padding:10 16;-fx-cursor:hand;-fx-font-size:12;"/>
+        </HBox>
+    </VBox>
+</VBox>

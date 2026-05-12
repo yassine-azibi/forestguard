@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.PredictionIAController"
+      prefHeight="720.0" prefWidth="1200.0"
+      style="-fx-background-color: #0d1f14;">
+
+    <!-- SIDEBAR -->
+    <VBox prefWidth="210" minWidth="210"
+          style="-fx-background-color:#0d1f14; -fx-border-color:#1a3a20; -fx-border-width:0 1 0 0;">
+        <VBox alignment="CENTER_LEFT" spacing="4"
+              style="-fx-padding:20 16 18 16; -fx-border-color:#1a3a20; -fx-border-width:0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                    <image><Image url="@../brinis.png"/></image>
+                </ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard"
+                           style="-fx-text-fill:white; -fx-font-size:15; -fx-font-weight:bold;"/>
+                    <Label text="Surveillance Intelligente"
+                           style="-fx-text-fill:#4ade80; -fx-font-size:10;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        <VBox spacing="2" style="-fx-padding:14 10;">
+            <Button text="🔔  Alertes" maxWidth="Infinity" onAction="#goDashboard"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="📡  Capteurs" maxWidth="Infinity" onAction="#goCapteurs"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="➕  Ajouter alerte" maxWidth="Infinity" onAction="#goAjout"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="🧠  Prediction IA" maxWidth="Infinity"
+                    style="-fx-background-color:#16a34a;-fx-text-fill:white;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-font-weight:bold;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS"/>
+    </VBox>
+
+    <!-- CONTENU PRINCIPAL -->
+    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color:#0f2117;">
+
+        <!-- Bannière -->
+        <StackPane prefHeight="90" minHeight="90" maxHeight="90">
+            <ImageView fitWidth="990" fitHeight="90" preserveRatio="false">
+                <image><Image url="@../brinis2.jpg"/></image>
+            </ImageView>
+            <Pane style="-fx-background-color:rgba(13,31,20,0.65);"/>
+            <HBox alignment="CENTER_LEFT" style="-fx-padding:0 20 0 28;" spacing="12">
+                <Label text="🧠"
+                       style="-fx-font-size:32;"/>
+                <VBox spacing="2">
+                    <Label text="Prediction IA — Risque d'Incendie"
+                           style="-fx-text-fill:white;-fx-font-size:22;-fx-font-weight:bold;"/>
+                    <Label text="Modele ML : Regression Logistique entraine sur 600 exemples forestiers"
+                           style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblStatutModele" text="⟳ Initialisation..."
+                       style="-fx-text-fill:#FFE082;-fx-font-size:11;
+                              -fx-background-color:rgba(0,0,0,0.4);
+                              -fx-background-radius:6;-fx-padding:5 10;"/>
+            </HBox>
+        </StackPane>
+
+        <!-- Contenu en 2 colonnes -->
+        <HBox VBox.vgrow="ALWAYS" spacing="14" style="-fx-padding:14 16;">
+
+            <!-- Colonne gauche : Entrées manuelles + résultat -->
+            <VBox spacing="12" prefWidth="340" minWidth="340">
+
+                <!-- Panel saisie manuelle -->
+                <VBox spacing="10"
+                      style="-fx-background-color:#0d1f14;-fx-background-radius:12;
+                             -fx-border-color:#2d5a37;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:16;">
+                    <Label text="Saisie Manuelle"
+                           style="-fx-text-fill:#4ade80;-fx-font-size:13;-fx-font-weight:bold;"/>
+                    <Label text="Entrez des valeurs pour obtenir une prediction"
+                           style="-fx-text-fill:#94a3b8;-fx-font-size:10;"/>
+
+                    <GridPane hgap="10" vgap="10">
+                        <Label text="Temperature (C) :" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                               style="-fx-text-fill:white;-fx-font-size:12;"/>
+                        <Slider fx:id="sliderTemp" min="10" max="90" value="30"
+                                GridPane.columnIndex="1" GridPane.rowIndex="0"
+                                style="-fx-control-inner-background:#1a2e1e;"
+                                showTickLabels="true" showTickMarks="true" majorTickUnit="20"/>
+                        <Label fx:id="lblSliderTemp" text="30 C"
+                               GridPane.columnIndex="2" GridPane.rowIndex="0"
+                               style="-fx-text-fill:#FFE082;-fx-font-size:12;-fx-font-weight:bold;-fx-min-width:50;"/>
+
+                        <Label text="Fumee (ppm) :" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                               style="-fx-text-fill:white;-fx-font-size:12;"/>
+                        <Slider fx:id="sliderFumee" min="0" max="150" value="10"
+                                GridPane.columnIndex="1" GridPane.rowIndex="1"
+                                style="-fx-control-inner-background:#1a2e1e;"
+                                showTickLabels="true" showTickMarks="true" majorTickUnit="50"/>
+                        <Label fx:id="lblSliderFumee" text="10 ppm"
+                               GridPane.columnIndex="2" GridPane.rowIndex="1"
+                               style="-fx-text-fill:#FFE082;-fx-font-size:12;-fx-font-weight:bold;-fx-min-width:50;"/>
+
+                        <Label text="Humidite (%) :" GridPane.columnIndex="0" GridPane.rowIndex="2"
+                               style="-fx-text-fill:white;-fx-font-size:12;"/>
+                        <Slider fx:id="sliderHum" min="5" max="90" value="55"
+                                GridPane.columnIndex="1" GridPane.rowIndex="2"
+                                style="-fx-control-inner-background:#1a2e1e;"
+                                showTickLabels="true" showTickMarks="true" majorTickUnit="20"/>
+                        <Label fx:id="lblSliderHum" text="55 %"
+                               GridPane.columnIndex="2" GridPane.rowIndex="2"
+                               style="-fx-text-fill:#FFE082;-fx-font-size:12;-fx-font-weight:bold;-fx-min-width:50;"/>
+
+                        <Label text="Heure (0-23) :" GridPane.columnIndex="0" GridPane.rowIndex="3"
+                               style="-fx-text-fill:white;-fx-font-size:12;"/>
+                        <Slider fx:id="sliderHeure" min="0" max="23" value="12" blockIncrement="1"
+                                GridPane.columnIndex="1" GridPane.rowIndex="3"
+                                style="-fx-control-inner-background:#1a2e1e;"
+                                showTickLabels="true" showTickMarks="true" majorTickUnit="6"/>
+                        <Label fx:id="lblSliderHeure" text="12h"
+                               GridPane.columnIndex="2" GridPane.rowIndex="3"
+                               style="-fx-text-fill:#FFE082;-fx-font-size:12;-fx-font-weight:bold;-fx-min-width:50;"/>
+                        <columnConstraints><ColumnConstraints minWidth="120"/><ColumnConstraints hgrow="ALWAYS"/><ColumnConstraints minWidth="55"/></columnConstraints>
+                    </GridPane>
+
+                    <Button text="Calculer le risque" onAction="#predireManuel" maxWidth="Infinity"
+                            style="-fx-background-color:#16a34a;-fx-text-fill:white;
+                                   -fx-background-radius:8;-fx-border-width:0;
+                                   -fx-padding:10;-fx-font-size:13;
+                                   -fx-cursor:hand;-fx-font-weight:bold;"/>
+                </VBox>
+
+                <!-- Résultat de prédiction manuelle -->
+                <VBox fx:id="panelResultatManuel" spacing="8" alignment="CENTER"
+                      style="-fx-background-color:#0d1f14;-fx-background-radius:12;
+                             -fx-border-color:#2d5a37;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:16;">
+                    <Label text="Resultat" style="-fx-text-fill:#4ade80;-fx-font-size:13;-fx-font-weight:bold;"/>
+                    <Label fx:id="lblRisqueLabel" text="---"
+                           style="-fx-text-fill:white;-fx-font-size:28;-fx-font-weight:bold;"/>
+                    <ProgressBar fx:id="progressRisque" progress="0" maxWidth="Infinity"
+                                 style="-fx-accent:#4ade80;" prefHeight="14"/>
+                    <Label fx:id="lblRisquePct" text="0%"
+                           style="-fx-text-fill:#94a3b8;-fx-font-size:12;"/>
+                    <Label fx:id="lblExplication" text="Entrez des valeurs ci-dessus"
+                           style="-fx-text-fill:#94a3b8;-fx-font-size:11;" wrapText="true"
+                           maxWidth="290"/>
+                    <!-- Probabilités par classe -->
+                    <VBox spacing="4" style="-fx-padding:8 0 0 0;">
+                        <HBox spacing="6" alignment="CENTER_LEFT">
+                            <Label text="Faible"    style="-fx-text-fill:#4ade80;-fx-font-size:10;-fx-min-width:55;"/>
+                            <ProgressBar fx:id="probFaible"   progress="0" prefWidth="150" prefHeight="8" style="-fx-accent:#4ade80;"/>
+                            <Label fx:id="pctFaible"   text="0%" style="-fx-text-fill:#94a3b8;-fx-font-size:10;"/>
+                        </HBox>
+                        <HBox spacing="6" alignment="CENTER_LEFT">
+                            <Label text="Modere"    style="-fx-text-fill:#FFE082;-fx-font-size:10;-fx-min-width:55;"/>
+                            <ProgressBar fx:id="probModere"   progress="0" prefWidth="150" prefHeight="8" style="-fx-accent:#FFE082;"/>
+                            <Label fx:id="pctModere"   text="0%" style="-fx-text-fill:#94a3b8;-fx-font-size:10;"/>
+                        </HBox>
+                        <HBox spacing="6" alignment="CENTER_LEFT">
+                            <Label text="Eleve"     style="-fx-text-fill:#FFA726;-fx-font-size:10;-fx-min-width:55;"/>
+                            <ProgressBar fx:id="probEleve"    progress="0" prefWidth="150" prefHeight="8" style="-fx-accent:#FFA726;"/>
+                            <Label fx:id="pctEleve"    text="0%" style="-fx-text-fill:#94a3b8;-fx-font-size:10;"/>
+                        </HBox>
+                        <HBox spacing="6" alignment="CENTER_LEFT">
+                            <Label text="Critique"  style="-fx-text-fill:#EF9A9A;-fx-font-size:10;-fx-min-width:55;"/>
+                            <ProgressBar fx:id="probCritique" progress="0" prefWidth="150" prefHeight="8" style="-fx-accent:#EF9A9A;"/>
+                            <Label fx:id="pctCritique" text="0%" style="-fx-text-fill:#94a3b8;-fx-font-size:10;"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+
+            <!-- Colonne droite : Prédictions temps réel des 3 capteurs -->
+            <VBox HBox.hgrow="ALWAYS" spacing="12">
+
+                <Label text="Predictions en Temps Reel (Capteurs Actifs)"
+                       style="-fx-text-fill:#4ade80;-fx-font-size:14;-fx-font-weight:bold;"/>
+
+                <!-- Capteur C-001 -->
+                <VBox spacing="8"
+                      style="-fx-background-color:#0d1f14;-fx-background-radius:12;
+                             -fx-border-color:#2d5a37;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:14;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="Capteur C-001 — Zone Nord-A, Cap Bon"
+                               style="-fx-text-fill:white;-fx-font-size:13;-fx-font-weight:bold;"
+                               HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblRisque1" text="---"
+                               style="-fx-text-fill:#4ade80;-fx-font-size:13;-fx-font-weight:bold;
+                                      -fx-background-color:rgba(74,222,128,0.15);
+                                      -fx-background-radius:6;-fx-padding:3 10;"/>
+                    </HBox>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <ProgressBar fx:id="barRisque1" progress="0" HBox.hgrow="ALWAYS"
+                                     style="-fx-accent:#4ade80;" prefHeight="16"/>
+                        <Label fx:id="pctRisque1" text="0%"
+                               style="-fx-text-fill:#94a3b8;-fx-font-size:12;-fx-min-width:40;"/>
+                    </HBox>
+                    <Label fx:id="lblExpl1" text="En attente des donnees capteur..."
+                           style="-fx-text-fill:#94a3b8;-fx-font-size:11;" wrapText="true"/>
+                </VBox>
+
+                <!-- Capteur C-002 -->
+                <VBox spacing="8"
+                      style="-fx-background-color:#0d1f14;-fx-background-radius:12;
+                             -fx-border-color:#2d5a37;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:14;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="Capteur C-002 — Zone Est-B, Kroumirie"
+                               style="-fx-text-fill:white;-fx-font-size:13;-fx-font-weight:bold;"
+                               HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblRisque2" text="---"
+                               style="-fx-text-fill:#4ade80;-fx-font-size:13;-fx-font-weight:bold;
+                                      -fx-background-color:rgba(74,222,128,0.15);
+                                      -fx-background-radius:6;-fx-padding:3 10;"/>
+                    </HBox>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <ProgressBar fx:id="barRisque2" progress="0" HBox.hgrow="ALWAYS"
+                                     style="-fx-accent:#4ade80;" prefHeight="16"/>
+                        <Label fx:id="pctRisque2" text="0%"
+                               style="-fx-text-fill:#94a3b8;-fx-font-size:12;-fx-min-width:40;"/>
+                    </HBox>
+                    <Label fx:id="lblExpl2" text="En attente des donnees capteur..."
+                           style="-fx-text-fill:#94a3b8;-fx-font-size:11;" wrapText="true"/>
+                </VBox>
+
+                <!-- Capteur C-003 -->
+                <VBox spacing="8"
+                      style="-fx-background-color:#0d1f14;-fx-background-radius:12;
+                             -fx-border-color:#2d5a37;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:14;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="Capteur C-003 — Zone Sud-C, Jendouba"
+                               style="-fx-text-fill:white;-fx-font-size:13;-fx-font-weight:bold;"
+                               HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblRisque3" text="---"
+                               style="-fx-text-fill:#4ade80;-fx-font-size:13;-fx-font-weight:bold;
+                                      -fx-background-color:rgba(74,222,128,0.15);
+                                      -fx-background-radius:6;-fx-padding:3 10;"/>
+                    </HBox>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <ProgressBar fx:id="barRisque3" progress="0" HBox.hgrow="ALWAYS"
+                                     style="-fx-accent:#4ade80;" prefHeight="16"/>
+                        <Label fx:id="pctRisque3" text="0%"
+                               style="-fx-text-fill:#94a3b8;-fx-font-size:12;-fx-min-width:40;"/>
+                    </HBox>
+                    <Label fx:id="lblExpl3" text="En attente des donnees capteur..."
+                           style="-fx-text-fill:#94a3b8;-fx-font-size:11;" wrapText="true"/>
+                </VBox>
+
+                <!-- Historique des prédictions -->
+                <VBox VBox.vgrow="ALWAYS" spacing="6"
+                      style="-fx-background-color:#0d1f14;-fx-background-radius:12;
+                             -fx-border-color:#2d5a37;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:14;">
+                    <Label text="Historique des predictions (20 derniers)"
+                           style="-fx-text-fill:#4ade80;-fx-font-size:12;-fx-font-weight:bold;"/>
+                    <ListView fx:id="listeHistorique" VBox.vgrow="ALWAYS"
+                              style="-fx-background-color:#0a1a0e;-fx-border-color:#2d5a37;
+                                     -fx-border-radius:8;-fx-background-radius:8;
+                                     -fx-control-inner-background:#0a1a0e;"/>
+                </VBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</HBox>

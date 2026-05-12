@@ -1,102 +1,175 @@
 package dao;
 
+import model.Alerte;
 import utils.MyConnection;
 
 import java.sql.*;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlerteDAO {
 
-    private Connection cnx;
+    private final Connection cnx;
 
     public AlerteDAO() {
         cnx = MyConnection.getInstance().getCnx();
     }
 
-    // ── GET toutes les alertes pour ComboBox ──────────────────────────────────
-    // Retourne Map<id, "localisation - type_alerte (niveau)">
-    public Map<Integer, String> getAllForComboBox() {
-        Map<Integer, String> map = new LinkedHashMap<>();
-        String sql = "SELECT id, type_alerte, niveau, localisation FROM alerte "
-                + "WHERE statut = 'Nouvelle' ORDER BY date_alerte DESC";
-        try (Statement st = cnx.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
-                int    id     = rs.getInt("id");
-                String label  = rs.getString("localisation")
-                        + " — " + rs.getString("type_alerte")
-                        + " (" + rs.getString("niveau") + ")";
-                map.put(id, label);
-            }
+    // ══════════════════════════════════════════════════════════════════════════
+    //  CREATE
+    // ══════════════════════════════════════════════════════════════════════════
+
+    public boolean create(Alerte a) {
+        if (cnx == null) return false;
+        String sql = "INSERT INTO alerte (type_alerte, niveau, localisation, statut, source) VALUES (?,?,?,?,?)";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, a.getTypeAlerte());
+            ps.setString(2, a.getNiveau());
+            ps.setString(3, a.getLocalisation());
+            ps.setString(4, a.getStatut() != null ? a.getStatut() : "Nouvelle");
+            ps.setString(5, a.getSource()  != null ? a.getSource()  : "Manuelle");
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Erreur create : " + e.getMessage());
+            return false;
         }
-        return map;
     }
 
-    // ── GET localisation par id ───────────────────────────────────────────────
-    public String getLocalisationById(int id) {
-        String sql = "SELECT localisation FROM alerte WHERE id = ?";
+    // ══════════════════════════════════════════════════════════════════════════
+    //  READ
+    // ══════════════════════════════════════════════════════════════════════════
+
+    public List<Alerte> getAll() {
+        List<Alerte> list = new ArrayList<>();
+        if (cnx == null) return list;
+        String sql = "SELECT * FROM alerte ORDER BY date_alerte DESC";
+        try (Statement st = cnx.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) list.add(mapRow(rs));
+        } catch (SQLException e) {
+            System.out.println("Erreur getAll : " + e.getMessage());
+        }
+        return list;
+    }
+
+    public List<Alerte> getByStatut(String statut) {
+        List<Alerte> list = new ArrayList<>();
+        if (cnx == null) return list;
+        String sql = "SELECT * FROM alerte WHERE statut=? ORDER BY date_alerte DESC";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, statut);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) list.add(mapRow(rs));
+        } catch (SQLException e) {
+            System.out.println("Erreur getByStatut : " + e.getMessage());
+        }
+        return list;
+    }
+
+    public Alerte getById(int id) {
+        if (cnx == null) return null;
+        String sql = "SELECT * FROM alerte WHERE id=?";
         try (PreparedStatement ps = cnx.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getString("localisation");
+            if (rs.next()) return mapRow(rs);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Erreur getById : " + e.getMessage());
         }
-        return "";
-    }
-    // ── GET niveau et type par id ─────────────────────────────────────────────
-    public String[] getNiveauEtType(int alerteId) {
-        String[] result = {"", ""};
-        String sql = "SELECT niveau, type_alerte FROM alerte WHERE id = ?";
-        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
-            ps.setInt(1, alerteId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                result[0] = rs.getString("niveau");
-                result[1] = rs.getString("type_alerte");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return result;
+        return null;
     }
 
-    // ── GET nouvelles alertes (5 dernières minutes) ───────────────────────────
-    /**
-     * Retourne toutes les alertes créées dans les 5 dernières minutes
-     * avec le statut 'Nouvelle', ordonnées par date décroissante
-     * 
-     * @return Liste de Map contenant : id, type_alerte, niveau, localisation, date_alerte
-     */
-    public java.util.List<java.util.Map<String, Object>> getNouvellesAlertes() {
-        java.util.List<java.util.Map<String, Object>> alertes = new java.util.ArrayList<>();
-        
-        // Alertes des 5 dernières minutes avec statut 'Nouvelle'
-        String sql = "SELECT id, type_alerte, niveau, localisation, date_alerte " +
-                     "FROM alerte " +
-                     "WHERE statut = 'Nouvelle' " +
-                     "AND date_alerte >= DATE_SUB(NOW(), INTERVAL 5 MINUTE) " +
-                     "ORDER BY date_alerte DESC";
-        
-        try (Statement st = cnx.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            
-            while (rs.next()) {
-                java.util.Map<String, Object> alerte = new java.util.HashMap<>();
-                alerte.put("id", rs.getInt("id"));
-                alerte.put("type_alerte", rs.getString("type_alerte"));
-                alerte.put("niveau", rs.getString("niveau"));
-                alerte.put("localisation", rs.getString("localisation"));
-                alerte.put("date_alerte", rs.getTimestamp("date_alerte"));
-                alertes.add(alerte);
-            }
+    // ══════════════════════════════════════════════════════════════════════════
+    //  UPDATE COMPLET — modifie type, niveau, localisation ET statut
+    // ══════════════════════════════════════════════════════════════════════════
+
+    public boolean update(Alerte a) {
+        if (cnx == null) return false;
+        String sql = "UPDATE alerte SET type_alerte=?, niveau=?, localisation=?, statut=? WHERE id=?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, a.getTypeAlerte());
+            ps.setString(2, a.getNiveau());
+            ps.setString(3, a.getLocalisation());
+            ps.setString(4, a.getStatut());
+            ps.setInt   (5, a.getId());
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.out.println("Erreur getNouvellesAlertes: " + e.getMessage());
+            System.out.println("Erreur update : " + e.getMessage());
+            return false;
         }
-        
-        return alertes;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  UPDATE STATUT SEULEMENT — utilisé par Valider / Rejeter rapide
+    // ══════════════════════════════════════════════════════════════════════════
+
+    public boolean updateStatut(int id, String statut) {
+        if (cnx == null) return false;
+        String sql = "UPDATE alerte SET statut=? WHERE id=?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, statut);
+            ps.setInt   (2, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Erreur updateStatut : " + e.getMessage());
+            return false;
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  DELETE
+    // ══════════════════════════════════════════════════════════════════════════
+
+    public boolean delete(int id) {
+        if (cnx == null) return false;
+        String sql = "DELETE FROM alerte WHERE id=?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Erreur delete : " + e.getMessage());
+            return false;
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  STATS — comptages pour les cartes
+    // ══════════════════════════════════════════════════════════════════════════
+
+    public int countAll() {
+        if (cnx == null) return 0;
+        try (Statement st = cnx.createStatement();
+             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM alerte")) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) { System.out.println(e.getMessage()); }
+        return 0;
+    }
+
+    public int countByStatut(String statut) {
+        if (cnx == null) return 0;
+        String sql = "SELECT COUNT(*) FROM alerte WHERE statut=?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setString(1, statut);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) { System.out.println(e.getMessage()); }
+        return 0;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  MAPPING privé : convertit une ligne SQL en objet Alerte
+    // ══════════════════════════════════════════════════════════════════════════
+
+    private Alerte mapRow(ResultSet rs) throws SQLException {
+        Alerte a = new Alerte();
+        a.setId(rs.getInt("id"));
+        a.setTypeAlerte(rs.getString("type_alerte"));
+        a.setNiveau(rs.getString("niveau"));
+        a.setLocalisation(rs.getString("localisation"));
+        a.setStatut(rs.getString("statut"));
+        a.setSource(rs.getString("source"));
+        Timestamp ts = rs.getTimestamp("date_alerte");
+        if (ts != null) a.setDateAlerte(ts.toLocalDateTime());
+        return a;
     }
 }

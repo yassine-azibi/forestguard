@@ -655,13 +655,9 @@ public class LoginController implements Initializable {
     // ══════════════════════════════════════════════════
     @FXML
     public void handleNaviguerUtilisateur() {
-        // Vérifier si le FXML utilisateur existe déjà
-        if (getClass().getResource("/LoginUtilisateur.fxml") != null) {
-            playExitThen(() -> ouvrirPage("/LoginUtilisateur.fxml", "ForestGuard - Espace Utilisateur"));
-        } else {
-            // Page pas encore intégrée — afficher un message informatif
-            showInfo("🚧  L'espace utilisateur est en cours d'intégration.\nRevenez bientôt !");
-        }
+        // Ouvrir le login utilisateur via NavigationController
+        Stage stage = (Stage) btnUserLogin.getScene().getWindow();
+        controller.NavigationController.ouvrirLoginUtilisateur(stage);
     }
 
     @FXML
@@ -847,8 +843,19 @@ public class LoginController implements Initializable {
     }
 
     private void ouvrirPagePompier(Pompier pompier) {
-        showInfo("✅ Bienvenue " + pompier.getPrenom() + " " + pompier.getNom()
-                + " !\nL'interface pompier est en cours de développement.");
+        // Stocker le pompier dans AppConfig
+        config.AppConfig.getInstance().setPompierConnecte(pompier);
+        
+        // Ouvrir le dashboard pompier
+        playExitThen(() -> {
+            try {
+                Stage stage = (Stage) emailField.getScene().getWindow();
+                controller.NavigationController.ouvrirDashboardPompier(stage, pompier);
+            } catch (Exception e) {
+                System.err.println("❌ Erreur ouverture dashboard: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
     }
 
     private void showError(String msg) {

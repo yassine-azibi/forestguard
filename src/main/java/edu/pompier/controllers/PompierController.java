@@ -3405,6 +3405,66 @@ public class PompierController {
     }
 
     // ══════════════════════════════════════════
+    //  NAVIGATION VERS LES MODULES
+    // ══════════════════════════════════════════
+    
+    /**
+     * Ouvre le module Gestion des Forêts
+     */
+    @FXML
+    private void ouvrirGestionForets() {
+        Stage stage = (Stage) btnForets.getScene().getWindow();
+        controller.NavigationController.ouvrirGestionForets(stage);
+    }
+    
+    /**
+     * Ouvre le module Gestion des Capteurs
+     */
+    @FXML
+    private void ouvrirGestionCapteurs() {
+        Stage stage = (Stage) btnCapteurs.getScene().getWindow();
+        controller.NavigationController.ouvrirGestionCapteurs(stage);
+    }
+    
+    /**
+     * Ouvre le module Gestion des Données
+     */
+    @FXML
+    private void ouvrirGestionDonnees() {
+        Stage stage = (Stage) btnDonnees.getScene().getWindow();
+        controller.NavigationController.ouvrirGestionDonnees(stage);
+    }
+    
+    /**
+     * Ouvre le module Gestion des Alertes
+     */
+    @FXML
+    private void ouvrirGestionAlertes() {
+        Stage stage = (Stage) btnAlertes.getScene().getWindow();
+        controller.NavigationController.ouvrirGestionAlertes(stage);
+    }
+    
+    /**
+     * Ouvre le module Gestion des Interventions
+     */
+    @FXML
+    private void ouvrirGestionInterventions() {
+        // Récupérer le pompier connecté depuis AppConfig
+        edu.pompier.entities.Pompier pompier = config.AppConfig.getInstance().getPompierConnecte();
+        Stage stage = (Stage) btnPompiers.getScene().getWindow();
+        controller.NavigationController.ouvrirGestionInterventions(stage, pompier);
+    }
+    
+    /**
+     * Ouvre le login utilisateur (espace utilisateur)
+     */
+    @FXML
+    private void ouvrirGestionUtilisateurs() {
+        Stage stage = (Stage) btnUtilisateurs.getScene().getWindow();
+        controller.NavigationController.ouvrirLoginUtilisateur(stage);
+    }
+
+    // ══════════════════════════════════════════
     //  DÉCONNEXION
     // ══════════════════════════════════════════
     @FXML

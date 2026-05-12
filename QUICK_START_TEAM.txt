@@ -1,0 +1,48 @@
+═══════════════════════════════════════════════════════════════════════════════
+⚡ QUICK START - FORESTGUARD TEAM
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 PROMPT RAPIDE POUR KIRO AI:
+───────────────────────────────────────────────────────────────────────────────
+
+Je rejoins le projet ForestGuard (https://github.com/yassine-azibi/forestguard).
+
+Mon module: [VOTRE MODULE ICI - ex: gestion-alertes]
+
+ÉTAPES:
+1. Clone le projet et crée une branche feature/[mon-module] depuis dev
+2. Développe mon module avec MA PROPRE structure de code
+3. Utilise MA PROPRE base de données locale pour les tests
+4. NE JAMAIS commiter: .idea/, target/, .class
+5. Commit avec messages clairs (✨ feature, 🐛 bugfix, etc.)
+6. Push ma branche feature/[mon-module] (PAS sur dev directement)
+7. Crée une Pull Request vers dev
+
+RÈGLES:
+- ❌ Ne JAMAIS pusher sur dev ou main directement
+- ✅ TOUJOURS créer une branche feature/mon-module
+- ✅ Tester avant de pusher
+- ✅ Annonce ton module dans le groupe AVANT de commencer
+- ✅ Focus: Que ton module FONCTIONNE (structure sera ajustée après)
+
+Technologies: Java 17, JavaFX 17, Maven, MySQL
+
+⚠️ BASE DE DONNÉES: Utilise TA PROPRE base de données locale. Pas de base commune pour l'instant.
+⚠️ STRUCTURE CODE: Utilise TA PROPRE structure. Pas besoin de suivre l'existant.
+
+───────────────────────────────────────────────────────────────────────────────
+
+📋 MODULES SUGGÉRÉS (6 MEMBRES):
+- [ ] feature/gestion-alertes
+- [ ] feature/gestion-equipements  
+- [ ] feature/statistiques-avancees
+- [ ] feature/authentification
+- [ ] feature/rapports-mensuels
+- [ ] feature/[VOTRE-IDÉE]
+
+⚠️ IMPORTANT: 
+1. Annoncez dans le groupe quel module vous prenez!
+2. Vous pouvez TOUS travailler EN PARALLÈLE (pas besoin d'attendre)
+3. Chacun sur SA branche = Pas de conflit possible
+
+═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,182 @@
+═══════════════════════════════════════════════════════════════════════════════
+🚀 INSTRUCTIONS POUR L'ÉQUIPE - PROJET FORESTGUARD
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 INFORMATIONS DU PROJET:
+- Repository: https://github.com/yassine-azibi/forestguard
+- Branche principale: dev
+- Chef de projet: Yassine Azibi
+- Technologie: Java 17 + JavaFX 17 + Maven + MySQL
+
+═══════════════════════════════════════════════════════════════════════════════
+📝 PROMPT POUR KIRO AI - COPIER-COLLER EXACTEMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+Je travaille sur le projet ForestGuard (système de gestion des interventions pour incendies forestiers).
+
+**INFORMATIONS DU PROJET:**
+- Repository GitHub: https://github.com/yassine-azibi/forestguard
+- Branche de développement: dev
+- Mon module: [REMPLACER PAR VOTRE MODULE - ex: gestion-alertes]
+- Technologies: Java 17, JavaFX 17, Maven, MySQL
+
+**STRUCTURE DU PROJET (SUGGESTION - PAS OBLIGATOIRE):**
+Tu peux organiser ton code comme tu veux. Voici une suggestion:
+```
+src/main/java/
+├── controller/     (Contrôleurs JavaFX - optionnel)
+├── dao/           (Accès base de données - optionnel)
+├── model/         (Classes modèles - optionnel)
+└── utils/         (Services - optionnel)
+
+src/main/resources/
+├── fxml/          (Interfaces JavaFX)
+├── css/           (Styles)
+└── image/         (Images)
+```
+⚠️ L'important: Que ton module FONCTIONNE. La structure sera ajustée lors de l'intégration.
+
+**RÈGLES STRICTES À RESPECTER:**
+
+1. **BRANCHES:**
+   - NE JAMAIS pusher directement sur `dev` ou `main`
+   - TOUJOURS créer une branche feature: `feature/mon-module`
+   - Format: `feature/nom-du-module` (ex: feature/gestion-alertes)
+
+2. **WORKFLOW GIT:**
+   - Cloner le projet
+   - Créer ma branche feature depuis `dev`
+   - Développer mon module
+   - Commit régulièrement avec messages clairs
+   - Push ma branche feature
+   - Créer une Pull Request vers `dev`
+
+3. **FICHIERS À NE JAMAIS COMMITER:**
+   - Dossier `.idea/` (configuration IntelliJ)
+   - Dossier `target/` (fichiers compilés)
+   - Fichiers `.class`
+   - Fichiers `.env` avec clés API
+   - Le `.gitignore` est déjà configuré pour les ignorer
+
+4. **CONVENTION DE NOMMAGE:**
+   - Classes: PascalCase (ex: GestionAlertesController)
+   - Méthodes: camelCase (ex: creerNouvelleAlerte)
+   - Fichiers FXML: PascalCase.fxml (ex: GestionAlertes.fxml)
+   - Packages: lowercase (ex: controller, dao, model, utils)
+
+5. **MESSAGES DE COMMIT:**
+   - Format: "emoji Description claire"
+   - Emojis:
+     * ✨ Nouvelle fonctionnalité
+     * 🐛 Correction de bug
+     * 📝 Documentation
+     * 🎨 Amélioration UI
+     * ♻️ Refactoring
+     * 🔧 Configuration
+
+**ÉTAPES À SUIVRE AVEC KIRO:**
+
+Étape 1: Clone et Setup
+"Clone le projet depuis https://github.com/yassine-azibi/forestguard.git et crée une branche feature/[mon-module] depuis dev"
+
+Étape 2: Développement
+"Je vais développer le module [nom du module]. Voici les fonctionnalités requises: [liste des fonctionnalités]. Je peux utiliser ma propre structure de code."
+
+Étape 3: Organisation du Code
+"Organise mon code de manière logique. Peu importe la structure exacte, l'important est que le module fonctionne correctement."
+
+Étape 4: Tests
+"Compile et teste le projet avec Maven. Assure-toi qu'il n'y a pas d'erreurs de compilation."
+
+Étape 5: Commit et Push
+"Commit mes changements avec un message clair et push ma branche feature/[mon-module] vers GitHub. NE PAS pusher sur dev directement."
+
+Étape 6: Pull Request
+"Guide-moi pour créer une Pull Request depuis ma branche feature/[mon-module] vers dev sur GitHub."
+
+**VÉRIFICATIONS AVANT PUSH:**
+- ✅ Le code compile sans erreurs
+- ✅ Pas de fichiers .idea/ ou target/ dans le commit
+- ✅ Le code suit les conventions de nommage Java standard
+- ✅ Les imports sont corrects
+- ✅ La branche est bien feature/[mon-module], pas dev
+- ✅ Tu peux pusher les clés API (sécurité désactivée temporairement)
+
+**EN CAS DE CONFLIT:**
+"J'ai des conflits Git. Aide-moi à les résoudre en gardant la structure du projet intacte."
+
+**INTÉGRATION AVEC LE CODE EXISTANT:**
+Le projet contient déjà du code de base (gestion interventions, IA, notifications, etc.).
+
+⚠️ IMPORTANT POUR TON MODULE:
+- Développe ton module de manière INDÉPENDANTE
+- Utilise TA PROPRE structure de code (pas besoin de suivre l'existant)
+- Utilise TA PROPRE base de données locale pour les tests
+- Ne t'inquiète pas des conflits ou différences avec les autres
+- Le chef de projet (Yassine) intégrera TOUT lors du merge final
+- **Focus: Que ton module FONCTIONNE, le reste sera ajusté**
+
+**BASE DE DONNÉES:**
+⚠️ IMPORTANT: Chaque membre utilise SA PROPRE base de données locale pour le développement.
+- Nous n'avons PAS encore de base de données commune
+- Chaque module peut avoir des tables différentes selon les besoins
+- Utilise ta propre structure de base de données pour ton module
+- Configuration suggérée:
+  * Host: localhost
+  * Database: forestguard (ou ton propre nom)
+  * User: root
+  * Password: [ton mot de passe]
+- Le chef de projet (Yassine) intégrera et harmonisera les bases de données lors du merge
+- NE T'INQUIÈTE PAS si ta structure est différente - c'est normal à ce stade
+
+**DÉPENDANCES MAVEN (déjà configurées):**
+- JavaFX 17 (base, graphics, controls, fxml, media, web)
+- MySQL Connector
+- JSON
+- OpenPDF
+
+**CONTACT:**
+En cas de problème, contacter Yassine Azibi (chef de projet).
+
+═══════════════════════════════════════════════════════════════════════════════
+FIN DU PROMPT
+═══════════════════════════════════════════════════════════════════════════════
+
+INSTRUCTIONS POUR L'ÉQUIPE:
+
+1. Copiez TOUT le texte entre les lignes "PROMPT POUR KIRO AI"
+2. Remplacez [mon-module] par le nom de votre module (ex: gestion-alertes)
+3. Collez ce prompt dans Kiro AI
+4. Suivez les étapes indiquées
+5. Kiro AI vous guidera pour maintenir la structure propre
+
+⚠️ COORDINATION ÉQUIPE (6 MEMBRES):
+
+AVANT DE COMMENCER:
+1. **Annoncez dans le groupe WhatsApp/Discord quel module vous prenez**
+2. **Vérifiez que personne d'autre n'a pris le même module**
+3. **Notez votre nom à côté du module dans le groupe**
+
+MODULES SUGGÉRÉS (vous pouvez en proposer d'autres):
+- [ ] feature/gestion-alertes (CRUD alertes, détection automatique)
+- [ ] feature/gestion-equipements (CRUD équipements, suivi état)
+- [ ] feature/statistiques-avancees (Graphiques, rapports)
+- [ ] feature/authentification (Login, gestion utilisateurs, rôles)
+- [ ] feature/rapports-mensuels (Génération automatique, emails)
+- [ ] feature/[VOTRE-IDÉE] (Proposez votre propre module!)
+
+ORDRE DE TRAVAIL:
+- ✅ Vous pouvez TOUS travailler EN PARALLÈLE (pas besoin d'attendre les autres)
+- ✅ Chacun travaille sur SA branche feature/[son-module]
+- ✅ Pas de conflit possible car chacun a sa propre branche
+- ✅ Yassine (chef) mergera les Pull Requests une par une
+
+RÈGLES D'OR:
+- ❌ Ne JAMAIS pusher sur dev ou main directement
+- ✅ TOUJOURS créer une branche feature/[votre-module]
+- ✅ Annoncez votre module dans le groupe AVANT de commencer
+- ✅ Ne modifiez PAS le code des autres modules
+- ✅ Testez TOUJOURS avant de pusher
+- ✅ Créez une Pull Request quand vous avez terminé
+
+═══════════════════════════════════════════════════════════════════════════════

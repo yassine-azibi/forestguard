@@ -38,8 +38,8 @@ public class DashboardAgentController implements Initializable {
 
     private final InterventionDAO dao = new InterventionDAO();
     private final ObservableList<Intervention> data = FXCollections.observableArrayList();
-    private final String currentAgent = "John Martinez";
-    private final int    currentPompier = 1;
+    private String currentAgent = "John Martinez";
+    private int currentPompier = 1;
     private static final DateTimeFormatter FMT =
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     
@@ -50,7 +50,23 @@ public class DashboardAgentController implements Initializable {
     private AffectationService affectationService;
     
     // ID du pompier (à adapter selon votre système d'authentification)
-    private final int idPompier = 1; // TODO: Récupérer depuis la session/authentification
+    private int idPompier = 1; // Sera défini par setPompierInfo()
+    
+    /**
+     * Définit les informations du pompier connecté
+     * Appelé depuis NavigationController lors de l'ouverture du module
+     */
+    public void setPompierInfo(String nomComplet, int id) {
+        this.currentAgent = nomComplet;
+        this.currentPompier = id;
+        this.idPompier = id;
+        
+        if (lblAgentName != null) {
+            lblAgentName.setText(nomComplet);
+        }
+        
+        System.out.println("✅ Pompier défini: " + nomComplet + " (ID: " + id + ")");
+    }
     
     // Popup d'affectation actuellement ouvert (pour éviter les doublons)
     private Stage popupAffectationStage = null;

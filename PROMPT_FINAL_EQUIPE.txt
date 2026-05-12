@@ -1,0 +1,230 @@
+═══════════════════════════════════════════════════════════════════════════════
+🚀 PROMPT COMPLET POUR L'ÉQUIPE FORESTGUARD (6 MEMBRES)
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️ AVANT DE COMMENCER - COORDINATION ÉQUIPE:
+1. Annoncez dans le groupe WhatsApp/Discord quel module vous prenez
+2. Vérifiez que personne d'autre n'a pris le même module
+3. Notez votre nom à côté du module dans le groupe
+
+📋 MODULES SUGGÉRÉS (6 MEMBRES):
+- [ ] feature/gestion-alertes (CRUD alertes, détection automatique)
+- [ ] feature/gestion-equipements (CRUD équipements, suivi état)
+- [ ] feature/statistiques-avancees (Graphiques, rapports)
+- [ ] feature/authentification (Login, gestion utilisateurs, rôles)
+- [ ] feature/rapports-mensuels (Génération automatique, emails)
+- [ ] feature/[VOTRE-IDÉE] (Proposez votre propre module!)
+
+✅ VOUS POUVEZ TOUS TRAVAILLER EN PARALLÈLE - Pas besoin d'attendre les autres!
+
+═══════════════════════════════════════════════════════════════════════════════
+📝 PROMPT POUR KIRO AI - COPIER-COLLER EXACTEMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+Je rejoins le projet ForestGuard - système de gestion des interventions pour incendies forestiers en équipe.
+
+**INFORMATIONS DU PROJET:**
+- Repository GitHub: https://github.com/yassine-azibi/forestguard
+- Branche principale de développement: dev
+- Chef de projet: Yassine Azibi
+- Technologies: Java 17, JavaFX 17, Maven, MySQL
+- IDE: IntelliJ IDEA
+- Mon module: [REMPLACER PAR VOTRE MODULE - ex: gestion-alertes]
+
+**STRUCTURE DES BRANCHES (CRITIQUE - À RESPECTER ABSOLUMENT):**
+
+STRUCTURE OBLIGATOIRE:
+main (production - NE JAMAIS TOUCHER)
+  ↓
+dev (développement - intégration de tous les modules - NE JAMAIS PUSHER DIRECTEMENT)
+  ↓
+feature/mon-module (MA branche de travail - C'EST ICI QUE JE TRAVAILLE)
+
+RÈGLES DES BRANCHES:
+1. main = Code stable en production - INTERDIT de pusher directement
+2. dev = Branche d'intégration - INTERDIT de pusher directement - Seulement via Pull Request
+3. feature/mon-module = MA branche personnelle - C'EST LA SEULE où je peux pusher directement
+
+FORMAT DES BRANCHES FEATURE (OBLIGATOIRE):
+Format: feature/nom-en-minuscules-avec-tirets
+Exemples: feature/gestion-alertes, feature/statistiques, feature/authentification
+PAS D'ESPACES, PAS DE MAJUSCULES, PAS DE CARACTÈRES SPÉCIAUX
+
+**STRUCTURE DU CODE (SUGGESTION - PAS OBLIGATOIRE):**
+Tu peux organiser ton code comme tu veux. Voici une suggestion:
+```
+src/main/java/
+├── controller/     (Contrôleurs JavaFX - optionnel)
+├── dao/           (Accès base de données - optionnel)
+├── model/         (Classes modèles - optionnel)
+└── utils/         (Services - optionnel)
+
+src/main/resources/
+├── fxml/          (Interfaces JavaFX)
+├── css/           (Styles)
+└── image/         (Images)
+```
+⚠️ L'IMPORTANT: Que ton module FONCTIONNE. La structure sera ajustée lors de l'intégration.
+
+**BASE DE DONNÉES:**
+⚠️ IMPORTANT: Chaque membre utilise SA PROPRE base de données locale pour le développement.
+- Nous n'avons PAS encore de base de données commune
+- Chaque module peut avoir des tables différentes selon les besoins
+- Utilise ta propre structure de base de données pour ton module
+- Configuration suggérée:
+  * Host: localhost
+  * Database: forestguard (ou ton propre nom)
+  * User: root
+  * Password: [ton mot de passe]
+- Le chef de projet (Yassine) intégrera et harmonisera les bases de données lors du merge
+- NE T'INQUIÈTE PAS si ta structure est différente - c'est normal à ce stade
+
+**INTÉGRATION AVEC LE CODE EXISTANT:**
+Le projet contient déjà du code de base (gestion interventions, IA, notifications, etc.).
+
+⚠️ IMPORTANT POUR TON MODULE:
+- Développe ton module de manière INDÉPENDANTE
+- Utilise TA PROPRE structure de code (pas besoin de suivre l'existant)
+- Utilise TA PROPRE base de données locale pour les tests
+- Ne t'inquiète pas des conflits ou différences avec les autres
+- Le chef de projet (Yassine) intégrera TOUT lors du merge final
+- **Focus: Que ton module FONCTIONNE, le reste sera ajusté**
+
+**WORKFLOW COMPLET ÉTAPE PAR ÉTAPE:**
+
+ÉTAPE 1 - CLONAGE:
+Dans IntelliJ: File → New → Project from Version Control → URL: https://github.com/yassine-azibi/forestguard.git → Clone
+Attendre que Maven télécharge les dépendances
+
+ÉTAPE 2 - VÉRIFICATION:
+Vérifier JDK 17: File → Project Structure → Project SDK → Java 17
+Rebuild: Build → Rebuild Project (Ctrl+Shift+F9)
+Vérifier aucune erreur de compilation
+
+ÉTAPE 3 - CRÉATION BRANCHE FEATURE (CRITIQUE):
+Git → Branches... → Sélectionner "dev" → New Branch → Nom: feature/mon-module → Cocher "Checkout branch" → Create
+Vérifier en bas à droite: doit afficher "feature/mon-module"
+
+ÉTAPE 4 - DÉVELOPPEMENT:
+Développe ton module avec ta propre structure de code
+Utilise ta propre base de données locale pour les tests
+Le chef de projet intégrera tout lors du merge
+
+ÉTAPE 5 - TESTS:
+Build → Rebuild Project (Ctrl+Shift+F9)
+Tester toutes les fonctionnalités de ton module
+
+ÉTAPE 6 - COMMIT:
+Git → Commit (Ctrl+K)
+Sélectionner tes fichiers (PAS .idea/, PAS target/)
+Message: "✨ Description claire de ce que tu as fait"
+Commit (PAS "Commit and Push")
+
+ÉTAPE 7 - VÉRIFICATION AVANT PUSH:
+Vérifier en bas à droite: "feature/mon-module" (PAS "dev")
+Vérifier qu'aucun fichier .idea/ ou target/ n'est commité
+
+ÉTAPE 8 - PUSH:
+Git → Push (Ctrl+Shift+K)
+Vérifier: feature/mon-module → origin/feature/mon-module
+Push
+
+ÉTAPE 9 - PULL REQUEST:
+Navigateur → https://github.com/yassine-azibi/forestguard
+Cliquer "Compare & pull request"
+Vérifier: Base: dev ← Compare: feature/mon-module
+Titre: "✨ Module [nom]"
+Description: Liste des fonctionnalités ajoutées
+Assigner Yassine Azibi comme reviewer
+Create pull request
+
+ÉTAPE 10 - ATTENDRE REVIEW:
+Ne PAS merger soi-même
+Attendre validation du chef de projet
+Si modifications demandées: modifier sur feature/mon-module, commit, push
+
+**COMMANDES GIT (ALTERNATIVE LIGNE DE COMMANDE):**
+Étape 1 - Cloner: git clone https://github.com/yassine-azibi/forestguard.git
+Étape 2 - Vérifier branche actuelle: git branch (doit afficher "dev")
+Étape 3 - Créer MA branche: git checkout -b feature/mon-module
+Étape 4 - Vérifier que je suis sur MA branche: git branch (doit afficher "* feature/mon-module")
+Étape 5 - Travailler sur mon code
+Étape 6 - Commit: git add . puis git commit -m "✨ Description"
+Étape 7 - Push MA branche: git push origin feature/mon-module
+Étape 8 - Créer Pull Request sur GitHub: feature/mon-module → dev
+
+**VÉRIFICATIONS CRITIQUES AVANT CHAQUE PUSH:**
+✅ Je suis sur MA branche feature/mon-module (vérifier en bas à droite d'IntelliJ)
+✅ Je ne suis PAS sur dev ou main
+✅ Quand je push, la destination est origin/feature/mon-module, PAS origin/dev
+✅ Ma Pull Request va de feature/mon-module vers dev, PAS vers main
+✅ Le code compile sans erreurs
+✅ Pas de fichiers .idea/ ou target/ dans le commit
+✅ Tu peux pusher les clés API (sécurité désactivée temporairement)
+
+**FICHIERS À NE JAMAIS COMMITER:**
+❌ .idea/ (configuration IntelliJ)
+❌ target/ (fichiers compilés)
+❌ .class (classes compilées)
+❌ Fichiers temporaires
+
+**ERREURS À ÉVITER ABSOLUMENT:**
+❌ Pusher directement sur dev → INTERDIT
+❌ Pusher directement sur main → INTERDIT
+❌ Créer une branche depuis main → TOUJOURS créer depuis dev
+❌ Merger ma propre Pull Request → Attendre la review du chef
+❌ Travailler directement sur dev → TOUJOURS créer une branche feature
+
+**MESSAGES DE COMMIT:**
+✨ Nouvelle fonctionnalité (ex: "✨ Ajout de mon module")
+🐛 Correction bug (ex: "🐛 Correction erreur affichage")
+📝 Documentation (ex: "📝 Documentation du module")
+🎨 Amélioration UI (ex: "🎨 Design interface")
+♻️ Refactoring (ex: "♻️ Refactoring code")
+🔧 Configuration (ex: "🔧 Config base de données")
+
+**CONVENTION DE NOMMAGE:**
+- Classes: PascalCase (ex: GestionAlertesController)
+- Méthodes: camelCase (ex: creerNouvelleAlerte)
+- Fichiers FXML: PascalCase.fxml (ex: GestionAlertes.fxml)
+- Packages: lowercase (ex: controller, dao, model, utils)
+
+**DÉPENDANCES MAVEN (déjà configurées):**
+- JavaFX 17 (base, graphics, controls, fxml, media, web)
+- MySQL Connector
+- JSON
+- OpenPDF
+
+**EN CAS DE PROBLÈME:**
+- "J'ai des conflits Git sur [fichiers]. Aide-moi à résoudre."
+- "J'ai des erreurs de compilation: [erreurs]. Aide-moi."
+- "Comment créer ma branche feature correctement?"
+- "Comment faire une Pull Request?"
+
+**CONTACT:**
+En cas de problème, contacter Yassine Azibi (chef de projet).
+
+**COMMENCE PAR ME DEMANDER:** "Quel est le nom de ton module?" puis remplace "mon-module" par ce nom partout dans tes instructions. Ensuite, guide-moi étape par étape en insistant sur la structure des branches. Vérifie que je comprends bien: je dois créer MA branche feature/[nom-de-mon-module] depuis dev, travailler dessus, pusher sur feature/[nom-de-mon-module], puis créer une Pull Request vers dev. Je ne dois JAMAIS pusher directement sur dev ou main.
+
+═══════════════════════════════════════════════════════════════════════════════
+FIN DU PROMPT
+═══════════════════════════════════════════════════════════════════════════════
+
+INSTRUCTIONS POUR UTILISER CE PROMPT:
+
+1. Copiez TOUT le texte entre "PROMPT POUR KIRO AI" et "FIN DU PROMPT"
+2. Remplacez [mon-module] par le nom de votre module (ex: gestion-alertes)
+3. Collez ce prompt dans Kiro AI
+4. Suivez les étapes indiquées
+5. Kiro AI vous guidera étape par étape
+
+RÈGLES D'OR POUR L'ÉQUIPE:
+- ✅ Vous pouvez TOUS travailler EN PARALLÈLE (pas besoin d'attendre les autres)
+- ✅ Chacun travaille sur SA branche feature/[son-module]
+- ✅ Pas de conflit possible car chacun a sa propre branche
+- ✅ Yassine (chef) mergera les Pull Requests une par une
+- ❌ Ne JAMAIS pusher sur dev ou main directement
+- ✅ TOUJOURS créer une branche feature/[votre-module]
+- ✅ Annoncez votre module dans le groupe AVANT de commencer
+
+═══════════════════════════════════════════════════════════════════════════════

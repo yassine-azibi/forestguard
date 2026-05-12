@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.pompier.controllers.PompierController"
+      prefWidth="1280" prefHeight="800"
+      minWidth="900" minHeight="600"
+      style="-fx-background-color: #0d1f14;">
+
+    <!-- SIDEBAR -->
+    <VBox fx:id="menuLateral" prefWidth="240"
+          style="-fx-background-color: #111c14; -fx-border-color: #1e3322; -fx-border-width: 0 1 0 0; -fx-min-width: 72;">
+        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 24 16 20 16;">
+            <ImageView fitWidth="44" fitHeight="44" preserveRatio="true"><image><Image url="@logo.png"/></image></ImageView>
+            <VBox fx:id="logoNom" spacing="2">
+                <Label text="ForestGuard" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Label text="Surveillance Intelligente" style="-fx-font-size: 10; -fx-text-fill: #4ade80;"/>
+            </VBox>
+        </HBox>
+        <Separator style="-fx-background-color: #1e3322; -fx-opacity: 0.6;"/>
+        <VBox spacing="3" style="-fx-padding: 16 10 0 10;" VBox.vgrow="ALWAYS">
+            <Button fx:id="btnDashboard" prefWidth="220" prefHeight="46" text="&#x1F3E0;  Dashboard" onAction="#afficherVueDashboard"
+                    style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.4),10,0,0,3);"/>
+            <Button fx:id="btnPompiers" prefWidth="220" prefHeight="46" text="&#x1F692;  Pompiers" onAction="#afficherVuePompiers"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-font-size: 13; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnForets" prefWidth="220" prefHeight="46" text="&#x1F332;  Forets" style="-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-font-size: 13; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnCapteurs" prefWidth="220" prefHeight="46" text="&#x1F4E1;  Capteurs" style="-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-font-size: 13; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnDonnees" prefWidth="220" prefHeight="46" text="&#x1F4CA;  Donnees" style="-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-font-size: 13; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnAlertes" prefWidth="220" prefHeight="46" text="&#x1F6A8;  Alertes" style="-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-font-size: 13; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnUtilisateurs" prefWidth="220" prefHeight="46" text="&#x1F464;  Utilisateurs" style="-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-font-size: 13; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS" style="-fx-background-color: linear-gradient(to top,rgba(22,163,74,0.12),transparent); -fx-min-height: 60;"/>
+        <!-- Bouton Déconnexion -->
+        <VBox style="-fx-padding: 10 10 6 10; -fx-border-color: #1e3322; -fx-border-width: 1 0 0 0;">
+            <Button fx:id="btnDeconnexion" prefWidth="220" prefHeight="42"
+                    text="&#x1F511;  Deconnexion" onAction="#handleDeconnexion"
+                    style="-fx-background-color: rgba(220,38,38,0.12); -fx-text-fill: #fca5a5;
+                           -fx-font-size: 13; -fx-font-weight: bold; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;
+                           -fx-border-color: rgba(220,38,38,0.25); -fx-border-radius: 12; -fx-border-width: 1;"/>
+        </VBox>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10 16 14 16; -fx-border-color: #1e3322; -fx-border-width: 1 0 0 0;">
+            <Button prefWidth="44" prefHeight="34" text="&lt;" onAction="#toggleMenu"
+                    style="-fx-background-color: #1a2e1e; -fx-background-radius: 10; -fx-border-color: #2d5a37; -fx-border-radius: 10; -fx-font-size: 13; -fx-font-weight: bold; -fx-text-fill: #4ade80; -fx-cursor: hand;"/>
+            <Label text="Reduire" style="-fx-font-size: 12; -fx-text-fill: #64748b; -fx-font-weight: bold;"/>
+        </HBox>
+    </VBox>
+
+    <!-- CONTENU PRINCIPAL -->
+    <StackPane HBox.hgrow="ALWAYS" fx:id="mainStackPane">
+        <ImageView fx:id="bgImageView" fitWidth="1920" fitHeight="1080" preserveRatio="false" opacity="0.55">
+            <image><Image url="@foret.png"/></image>
+        </ImageView>
+        <VBox style="-fx-background-color: rgba(5,20,8,0.38);" maxWidth="Infinity" maxHeight="Infinity" StackPane.alignment="TOP_LEFT"/>
+
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+            <VBox spacing="0" style="-fx-background-color: transparent;">
+
+                <!-- HEADER -->
+                <VBox fx:id="headerPrincipal" style="-fx-padding: 30 30 18 30;" spacing="16">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label fx:id="lblTitrePage" text="Tableau de Bord" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: white; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.7),10,0,0,3);"/>
+                            <Label fx:id="lblSousTitrePage" text="Vue d'ensemble de l'application ForestGuard" style="-fx-font-size: 13; -fx-text-fill: rgba(255,255,255,0.65);"/>
+                        </VBox>
+                        <Button fx:id="btnActionHeader" text="+ Ajouter un Pompier" onAction="#ouvrirAjout"
+                                visible="false" managed="false"
+                                style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-font-size: 12; -fx-font-weight: bold; -fx-padding: 10 22; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.6),14,0,0,4);"/>
+                        <Button fx:id="btnExportHeader" text="&#x1F4C4; Export PDF" onAction="#ouvrirMenuExport"
+                                visible="false" managed="false"
+                                style="-fx-background-color: #dc2626; -fx-text-fill: white; -fx-font-size: 12; -fx-font-weight: bold; -fx-padding: 10 18; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian,rgba(220,38,38,0.5),10,0,0,3);"/>
+                    </HBox>
+
+                    <!-- Stats (cachées sur le dashboard, visibles sur les autres vues) -->
+                    <HBox fx:id="statsBar" spacing="14" visible="false" managed="false">
+                        <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS" style="-fx-background-color: rgba(255,255,255,0.12); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.2); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 16 20;">
+                            <Label text="DISPONIBLES" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                            <Label fx:id="lblDisponibles" text="--" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS" style="-fx-background-color: rgba(255,255,255,0.12); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.2); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 16 20;">
+                            <Label text="EN MISSION" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #fca5a5;"/>
+                            <Label fx:id="lblEnMission" text="--" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #fca5a5;"/>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS" style="-fx-background-color: rgba(255,255,255,0.12); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.2); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 16 20;">
+                            <Label text="TOTAL POMPIERS" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                            <Label fx:id="lblTotal" text="--" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS" style="-fx-background-color: rgba(255,255,255,0.12); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.2); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 16 20;">
+                            <Label text="GARDES ACTIVES" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #fbbf24;"/>
+                            <Label fx:id="lblGardes" text="--" style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #fbbf24;"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- ONGLETS : Pompiers | Gardes | Affectations (cachés sur le dashboard) -->
+                    <HBox fx:id="barreOnglets" spacing="0" alignment="CENTER_LEFT" visible="false" managed="false">
+                        <Button fx:id="btnTabPompiers" text="  Pompiers" onAction="#afficherVuePompiers"
+                                prefHeight="40" prefWidth="160"
+                                style="-fx-background-color: rgba(255,255,255,0.35); -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold; -fx-padding: 8 20; -fx-cursor: hand; -fx-background-radius: 10 0 0 10; -fx-border-color: rgba(255,255,255,0.5); -fx-border-width: 1; -fx-border-radius: 10 0 0 10;"/>
+                        <Button fx:id="btnTabGardes" text="  Gardes" onAction="#afficherVueGardes"
+                                prefHeight="40" prefWidth="160"
+                                style="-fx-background-color: rgba(255,255,255,0.10); -fx-text-fill: rgba(255,255,255,0.65); -fx-font-size: 13; -fx-font-weight: bold; -fx-padding: 8 20; -fx-cursor: hand; -fx-background-radius: 0; -fx-border-color: rgba(255,255,255,0.2); -fx-border-width: 1; -fx-border-radius: 0;"/>
+                        <Button fx:id="btnTabAffectations" text="  Affectations" onAction="#afficherVueAffectations"
+                                prefHeight="40" prefWidth="180"
+                                style="-fx-background-color: rgba(255,255,255,0.10); -fx-text-fill: rgba(255,255,255,0.65); -fx-font-size: 13; -fx-font-weight: bold; -fx-padding: 8 20; -fx-cursor: hand; -fx-background-radius: 0; -fx-border-color: rgba(255,255,255,0.2); -fx-border-width: 1; -fx-border-radius: 0;"/>
+                        <Button fx:id="btnTabIA" text="  IA Perf." onAction="#afficherVueIA"
+                                prefHeight="40" prefWidth="140"
+                                style="-fx-background-color: rgba(255,255,255,0.10); -fx-text-fill: rgba(255,255,255,0.65); -fx-font-size: 13; -fx-font-weight: bold; -fx-padding: 8 20; -fx-cursor: hand; -fx-background-radius: 0; -fx-border-color: rgba(255,255,255,0.2); -fx-border-width: 1; -fx-border-radius: 0;"/>
+                        <Button fx:id="btnTabChatbot" text="  Assistant IA" onAction="#afficherVueChatbot"
+                                prefHeight="40" prefWidth="160"
+                                style="-fx-background-color: rgba(255,255,255,0.10); -fx-text-fill: rgba(255,255,255,0.65); -fx-font-size: 13; -fx-font-weight: bold; -fx-padding: 8 20; -fx-cursor: hand; -fx-background-radius: 0 10 10 0; -fx-border-color: rgba(255,255,255,0.2); -fx-border-width: 1; -fx-border-radius: 0 10 10 0;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- CORPS -->
+                <VBox spacing="14" style="-fx-padding: 0 24 24 24;">
+
+                    <!-- Barre de recherche (visible uniquement en mode Pompiers) -->
+                    <HBox fx:id="barreRecherche" visible="false" managed="false"
+                          style="-fx-background-color: rgba(255,255,255,0.93); -fx-background-radius: 16; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 16; -fx-border-width: 1; -fx-padding: 14 18; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.18),14,0,0,4);">
+                        <TextField fx:id="tfRecherche" promptText="Rechercher par nom, prenom, email..." HBox.hgrow="ALWAYS"
+                                   style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e2e8f0; -fx-padding: 9 14; -fx-font-size: 13;"/>
+                    </HBox>
+
+                    <!-- ═══════════════════════════════════════════ -->
+                    <!-- VUE DASHBOARD (affichée par défaut)         -->
+                    <!-- ═══════════════════════════════════════════ -->
+                    <VBox fx:id="vueDashboard" spacing="20">
+
+                        <!-- Message de bienvenue -->
+                        <VBox spacing="6" style="-fx-background-color: rgba(22,163,74,0.15); -fx-background-radius: 18; -fx-border-color: rgba(74,222,128,0.35); -fx-border-radius: 18; -fx-border-width: 1.5; -fx-padding: 22 28;">
+                            <HBox spacing="14" alignment="CENTER_LEFT">
+                                <Label text="&#x1F44B;" style="-fx-font-size: 32;"/>
+                                <VBox spacing="4">
+                                    <Label text="Bienvenue, Administrateur" style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                    <Label fx:id="lblDateHeure" text="" style="-fx-font-size: 13; -fx-text-fill: rgba(134,239,172,0.85);"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Cartes de stats globales -->
+                        <HBox spacing="16">
+                            <!-- Pompiers disponibles -->
+                            <VBox fx:id="cardDispo" alignment="CENTER" spacing="10" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVuePompiers"
+                                  style="-fx-background-color: rgba(22,163,74,0.18); -fx-background-radius: 20; -fx-border-color: rgba(74,222,128,0.45); -fx-border-radius: 20; -fx-border-width: 1.5; -fx-padding: 28 20; -fx-cursor: hand;">
+                                <Label text="&#x1F7E2;" style="-fx-font-size: 36;"/>
+                                <Label fx:id="lblDashDispo" text="--" style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                                <Label text="DISPONIBLES" style="-fx-font-size: 11; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                                <Label text="Cliquer pour voir" style="-fx-font-size: 10; -fx-text-fill: rgba(74,222,128,0.55);"/>
+                            </VBox>
+                            <!-- En mission -->
+                            <VBox fx:id="cardMission" alignment="CENTER" spacing="10" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVuePompiers"
+                                  style="-fx-background-color: rgba(239,68,68,0.15); -fx-background-radius: 20; -fx-border-color: rgba(252,165,165,0.40); -fx-border-radius: 20; -fx-border-width: 1.5; -fx-padding: 28 20; -fx-cursor: hand;">
+                                <Label text="&#x1F692;" style="-fx-font-size: 36;"/>
+                                <Label fx:id="lblDashMission" text="--" style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #fca5a5;"/>
+                                <Label text="EN MISSION" style="-fx-font-size: 11; -fx-font-weight: bold; -fx-text-fill: #fca5a5;"/>
+                                <Label text="Cliquer pour voir" style="-fx-font-size: 10; -fx-text-fill: rgba(252,165,165,0.55);"/>
+                            </VBox>
+                            <!-- Total pompiers -->
+                            <VBox fx:id="cardTotal" alignment="CENTER" spacing="10" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVuePompiers"
+                                  style="-fx-background-color: rgba(255,255,255,0.10); -fx-background-radius: 20; -fx-border-color: rgba(255,255,255,0.25); -fx-border-radius: 20; -fx-border-width: 1.5; -fx-padding: 28 20; -fx-cursor: hand;">
+                                <Label text="&#x1F464;" style="-fx-font-size: 36;"/>
+                                <Label fx:id="lblDashTotal" text="--" style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                <Label text="TOTAL POMPIERS" style="-fx-font-size: 11; -fx-font-weight: bold; -fx-text-fill: rgba(255,255,255,0.85);"/>
+                                <Label text="Cliquer pour voir" style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.40);"/>
+                            </VBox>
+                            <!-- Gardes actives -->
+                            <VBox fx:id="cardGardes" alignment="CENTER" spacing="10" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVueGardes"
+                                  style="-fx-background-color: rgba(251,191,36,0.15); -fx-background-radius: 20; -fx-border-color: rgba(251,191,36,0.40); -fx-border-radius: 20; -fx-border-width: 1.5; -fx-padding: 28 20; -fx-cursor: hand;">
+                                <Label text="&#x1F550;" style="-fx-font-size: 36;"/>
+                                <Label fx:id="lblDashGardes" text="--" style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #fbbf24;"/>
+                                <Label text="GARDES ACTIVES" style="-fx-font-size: 11; -fx-font-weight: bold; -fx-text-fill: #fbbf24;"/>
+                                <Label text="Cliquer pour voir" style="-fx-font-size: 10; -fx-text-fill: rgba(251,191,36,0.55);"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Modules de navigation -->
+                        <Label text="Modules de l'application" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: rgba(255,255,255,0.85); -fx-padding: 8 0 0 0;"/>
+
+                        <HBox spacing="16">
+                            <!-- Gestion Pompiers -->
+                            <VBox fx:id="navPompiers" spacing="12" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVuePompiers"
+                                  style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.15); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 22 20; -fx-cursor: hand;">
+                                <Label text="&#x1F692;" style="-fx-font-size: 30;"/>
+                                <Label text="Gestion Pompiers" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                <Label text="Ajouter, modifier, supprimer&#10;et consulter les pompiers" wrapText="true"
+                                       style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.55); -fx-line-spacing: 3;"/>
+                            </VBox>
+                            <!-- Gestion Gardes -->
+                            <VBox fx:id="navGardes" spacing="12" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVueGardes"
+                                  style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.15); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 22 20; -fx-cursor: hand;">
+                                <Label text="&#x1F4C5;" style="-fx-font-size: 30;"/>
+                                <Label text="Gestion des Gardes" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                <Label text="Planifier et suivre les gardes&#10;et creneaux des pompiers" wrapText="true"
+                                       style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.55); -fx-line-spacing: 3;"/>
+                            </VBox>
+                            <!-- Affectations -->
+                            <VBox fx:id="navAffectations" spacing="12" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVueAffectations"
+                                  style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.15); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 22 20; -fx-cursor: hand;">
+                                <Label text="&#x1F6A8;" style="-fx-font-size: 30;"/>
+                                <Label text="Affectations" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                <Label text="Gerer les alertes et affecter&#10;les pompiers aux interventions" wrapText="true"
+                                       style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.55); -fx-line-spacing: 3;"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="16">
+                            <!-- IA Performance -->
+                            <VBox fx:id="navIA" spacing="12" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVueIA"
+                                  style="-fx-background-color: rgba(139,92,246,0.15); -fx-background-radius: 18; -fx-border-color: rgba(167,139,250,0.35); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 22 20; -fx-cursor: hand;">
+                                <Label text="&#x1F4CA;" style="-fx-font-size: 30;"/>
+                                <Label text="IA Performance" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #c4b5fd;"/>
+                                <Label text="Analyser les performances&#10;des pompiers par IA" wrapText="true"
+                                       style="-fx-font-size: 11; -fx-text-fill: rgba(196,181,253,0.60); -fx-line-spacing: 3;"/>
+                            </VBox>
+                            <!-- Assistant IA -->
+                            <VBox fx:id="navChatbot" spacing="12" HBox.hgrow="ALWAYS"
+                                  onMouseClicked="#afficherVueChatbot"
+                                  style="-fx-background-color: rgba(6,182,212,0.12); -fx-background-radius: 18; -fx-border-color: rgba(103,232,249,0.30); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 22 20; -fx-cursor: hand;">
+                                <Label text="&#x1F916;" style="-fx-font-size: 30;"/>
+                                <Label text="Assistant IA" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #67e8f9;"/>
+                                <Label text="Posez vos questions a&#10;l'assistant intelligent" wrapText="true"
+                                       style="-fx-font-size: 11; -fx-text-fill: rgba(103,232,249,0.55); -fx-line-spacing: 3;"/>
+                            </VBox>
+                            <!-- Placeholder -->
+                            <VBox HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: rgba(255,255,255,0.04); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.08); -fx-border-radius: 18; -fx-border-width: 1; -fx-padding: 22 20;">
+                                <Label text="&#x1F332;" style="-fx-font-size: 30;"/>
+                                <Label text="ForestGuard" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: rgba(255,255,255,0.35);"/>
+                                <Label text="Surveillance intelligente&#10;des forets en temps reel" wrapText="true"
+                                       style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.25); -fx-line-spacing: 3;"/>
+                            </VBox>
+                        </HBox>
+
+                    </VBox>
+                    <!-- FIN VUE DASHBOARD -->
+
+                    <!-- ═══════════════════════════════════════════ -->
+                    <!-- VUE POMPIERS                                -->
+                    <!-- ═══════════════════════════════════════════ -->
+                    <VBox fx:id="vuePompiers" visible="false" managed="false"
+                          style="-fx-background-color: rgba(255,255,255,0.93); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 18; -fx-border-width: 1; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.22),16,0,0,4);" spacing="0">
+                        <HBox style="-fx-padding: 14 16; -fx-background-color: rgba(248,250,252,0.98); -fx-background-radius: 16 16 0 0; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;">
+                            <Label text="Liste des Pompiers" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #0f172a;" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                        <ListView fx:id="listView" prefHeight="500" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-background-insets: 0; -fx-padding: 4;"/>
+                    </VBox>
+
+                    <!-- ═══════════════════════════════════════════ -->
+                    <!-- VUE GARDES                                  -->
+                    <!-- ═══════════════════════════════════════════ -->
+                    <VBox fx:id="vueGardes" managed="false" visible="false" spacing="14">
+
+                        <!-- Filtre global par forêt -->
+                        <HBox spacing="10" alignment="CENTER_LEFT"
+                              style="-fx-background-color: rgba(255,255,255,0.90); -fx-background-radius: 14; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 14; -fx-border-width: 1; -fx-padding: 10 16; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.12),10,0,0,3);">
+                            <Label text="&#x1F332;" style="-fx-font-size: 16;"/>
+                            <Label text="Filtrer par foret :" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                            <ComboBox fx:id="cbFiltreForetGardes" prefWidth="220"
+                                      style="-fx-background-radius: 8; -fx-border-color: #86efac; -fx-border-radius: 8; -fx-font-size: 12;"/>
+                            <Button text="&#x2715; Toutes les forets" onAction="#reinitialiserFiltreForetGardes"
+                                    style="-fx-background-color: #fee2e2; -fx-text-fill: #dc2626; -fx-background-radius: 8; -fx-font-size: 11; -fx-font-weight: bold; -fx-padding: 6 12; -fx-cursor: hand;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label fx:id="lblInfoFiltreForet" text=""
+                                   style="-fx-font-size: 10; -fx-text-fill: #64748b; -fx-font-style: italic;"/>
+                        </HBox>
+
+                        <HBox spacing="14">
+                            <!-- Liste pompiers — version améliorée -->
+                            <VBox HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 18; -fx-border-width: 1; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.18),14,0,0,4);"
+                                  spacing="0">
+
+                                <!-- En-tête avec titre + bouton Prédiction IA -->
+                                <HBox style="-fx-padding: 14 16; -fx-background-color: linear-gradient(to right,#f0fdf4,#f8fafc); -fx-background-radius: 16 16 0 0; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                    <Label text="&#x1F468;&#x200D;&#x1F692;" style="-fx-font-size: 18; -fx-padding: 0 8 0 0;"/>
+                                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                        <Label text="Choisir un pompier" style="-fx-font-size: 13; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+                                        <Label text="Cliquez sur un pompier pour le selectionner" style="-fx-font-size: 10; -fx-text-fill: #64748b;"/>
+                                    </VBox>
+                                    <Button text="&#x1F916; Prediction IA" onAction="#afficherPrediction"
+                                            style="-fx-background-color: #f0fdf4; -fx-text-fill: #166534; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-color: #86efac; -fx-border-radius: 10; -fx-border-width: 1.5; -fx-padding: 6 14; -fx-cursor: hand; -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.3),6,0,0,2);"/>
+                                </HBox>
+
+                                <!-- Barre de recherche stylisée -->
+                                <HBox style="-fx-padding: 10 14; -fx-background-color: #f8fafc; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT" spacing="8">
+                                    <Label text="&#x1F50D;" style="-fx-font-size: 14; -fx-text-fill: #94a3b8;"/>
+                                    <TextField fx:id="tfRechercheGardes"
+                                               promptText="Rechercher par nom, prenom ou telephone..."
+                                               HBox.hgrow="ALWAYS"
+                                               style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 6 0; -fx-font-size: 12; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8;"/>
+                                </HBox>
+
+                                <!-- Pompier sélectionné (badge) -->
+                                <HBox fx:id="hboxPompierSelectionne" style="-fx-padding: 8 14; -fx-background-color: #dcfce7; -fx-border-color: #86efac; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT" spacing="8">
+                                    <Label text="&#x2705;" style="-fx-font-size: 13;"/>
+                                    <Label fx:id="lblPompierSelectionne" text="Aucun pompier selectionne"
+                                           HBox.hgrow="ALWAYS"
+                                           style="-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                                </HBox>
+
+                                <!-- Liste -->
+                                <ListView fx:id="listPompiers" prefHeight="320"
+                                          style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 4;"/>
+                            </VBox>
+
+                            <!-- Formulaire garde -->
+                            <VBox fx:id="panneauFormGarde" prefWidth="360"
+                                  style="-fx-background-color: rgba(255,255,255,0.97); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 18; -fx-border-width: 1; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.22),16,0,0,4);" spacing="0">
+                                <VBox style="-fx-background-color: #16a34a; -fx-background-radius: 16 16 0 0; -fx-padding: 18 20 16 20;" spacing="4">
+                                    <HBox alignment="CENTER_LEFT" spacing="12">
+                                        <ImageView fitWidth="38" fitHeight="38" preserveRatio="true"><image><Image url="@logo.png"/></image></ImageView>
+                                        <VBox spacing="2">
+                                            <Label fx:id="lblTitreForm" text="Nouvelle Garde" style="-fx-font-size: 17; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                            <Label text="Remplissez tous les champs *" style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.8);"/>
+                                        </VBox>
+                                    </HBox>
+                                </VBox>
+                                <VBox spacing="14" style="-fx-padding: 20 20 0 20;">
+                                    <VBox spacing="5">
+                                        <Label text="POMPIER SELECTIONNE *" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                        <Label fx:id="lblPompierSelectionne" text="Aucun pompier selectionne"
+                                               style="-fx-background-color: #f1f5f9; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8; -fx-padding: 9 12; -fx-font-size: 12; -fx-text-fill: #475569; -fx-wrap-text: true;"/>
+                                    </VBox>
+
+                                    <!-- DATE DE GARDE -->
+                                    <VBox spacing="8">
+                                        <Label text="PERIODE *" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                        <HBox spacing="10" alignment="CENTER_LEFT">
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="Du" style="-fx-font-size: 10; -fx-text-fill: #64748b;"/>
+                                                <DatePicker fx:id="dpDateDebut" prefWidth="148" style="-fx-background-radius: 8; -fx-font-size: 12;"/>
+                                            </VBox>
+                                            <Label text="→" style="-fx-font-size: 16; -fx-text-fill: #94a3b8; -fx-padding: 14 0 0 0;"/>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="Au" style="-fx-font-size: 10; -fx-text-fill: #64748b;"/>
+                                                <DatePicker fx:id="dpDateFin" prefWidth="148" style="-fx-background-radius: 8; -fx-font-size: 12;"/>
+                                            </VBox>
+                                        </HBox>
+                                        <Label text="(Pour un seul jour, laissez les deux dates identiques)"
+                                               style="-fx-font-size: 10; -fx-text-fill: #94a3b8; -fx-font-style: italic;"/>
+                                    </VBox>
+
+                                    <!-- CRENEAU + HORAIRE AUTOMATIQUE -->
+                                    <VBox spacing="5">
+                                        <Label text="CRENEAU *" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                        <ComboBox fx:id="cbCreneau" prefWidth="320"
+                                                  style="-fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8; -fx-font-size: 13;"/>
+                                        <!-- Affichage automatique des heures du créneau -->
+                                        <HBox fx:id="hboxHoraireCreneau" spacing="8" alignment="CENTER_LEFT"
+                                              style="-fx-background-color: #f0fdf4; -fx-background-radius: 8; -fx-border-color: #86efac; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 8 12;">
+                                            <Label text="&#x1F550;" style="-fx-font-size: 14;"/>
+                                            <Label fx:id="lblHoraireCreneau" text="Selectionnez un creneau"
+                                                   style="-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                                        </HBox>
+                                    </VBox>
+                                    <!-- Champs heures cachés (non utilisés mais déclarés pour compatibilité) -->
+                                    <ComboBox fx:id="cbHeureDebut" visible="false" managed="false" prefWidth="0"/>
+                                    <ComboBox fx:id="cbHeureFin"   visible="false" managed="false" prefWidth="0"/>
+                                    <Label fx:id="lblErreurGarde" text="" wrapText="true"
+                                           style="-fx-text-fill: #C62828; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-color: #FFEBEE; -fx-background-radius: 6; -fx-padding: 6 10;"/>
+                                </VBox>
+                                <Region VBox.vgrow="ALWAYS" style="-fx-min-height: 16;"/>
+                                <HBox spacing="12" alignment="CENTER_RIGHT"
+                                      style="-fx-padding: 14 20 20 20; -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0;">
+                                    <Button text="Annuler" onAction="#annulerEdition" prefWidth="100" prefHeight="38"
+                                            style="-fx-background-color: white; -fx-text-fill: #374151; -fx-font-size: 13; -fx-font-weight: bold; -fx-border-color: #e2e8f0; -fx-border-radius: 10; -fx-background-radius: 10; -fx-cursor: hand;"/>
+                                    <Button fx:id="btnSauvegarder" text="Enregistrer" onAction="#sauvegarderGarde"
+                                            prefWidth="130" prefHeight="38"
+                                            style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.5),10,0,0,3);"/>
+                                </HBox>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Panneau Prédiction IA (collapsible) -->
+                        <VBox fx:id="panneauPrediction" managed="false" visible="false"
+                              style="-fx-background-color: rgba(255,255,255,0.93); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 18; -fx-border-width: 1; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.22),16,0,0,4);"
+                              spacing="0">
+                            <!-- En-tête -->
+                            <HBox style="-fx-padding: 14 18; -fx-background-color: linear-gradient(to right,rgba(22,163,74,0.12),rgba(251,191,36,0.08)); -fx-background-radius: 16 16 0 0; -fx-border-color: #86efac; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                <Label text="&#x1F916;" style="-fx-font-size: 20; -fx-padding: 0 8 0 0;"/>
+                                <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                    <Label text="Planification IA — Qui est disponible quel jour ?" style="-fx-font-size: 13; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                                    <Label text="Selectionnez une semaine et un jour pour voir les disponibilites" style="-fx-font-size: 10; -fx-text-fill: #15803d;"/>
+                                </VBox>
+                                <Button text="&#x21BA; Analyser" onAction="#lancerPrediction"
+                                        style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 14; -fx-cursor: hand; -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.5),8,0,0,2);"/>
+                                <Button text="&#x2715;" onAction="#cacherPrediction"
+                                        style="-fx-background-color: #fee2e2; -fx-text-fill: #dc2626; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 10; -fx-cursor: hand; -fx-margin: 0 0 0 6;"/>
+                            </HBox>
+                            <!-- Sélecteur de semaine + onglets jours -->
+                            <HBox spacing="10" style="-fx-padding: 10 16; -fx-background-color: #f8fafc; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                <Label text="Semaine du :" style="-fx-font-size: 11; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                <DatePicker fx:id="dpSemainePrediction" prefWidth="148"
+                                            style="-fx-background-radius: 8; -fx-font-size: 11;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="lblSemaineInfo" text=""
+                                       style="-fx-font-size: 10; -fx-text-fill: #64748b; -fx-font-style: italic;"/>
+                            </HBox>
+                            <!-- Onglets jours -->
+                            <HBox fx:id="hboxJoursPrediction" spacing="4"
+                                  style="-fx-padding: 8 16; -fx-background-color: #f8fafc; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                <Button fx:id="btnJourLun" text="Lun" onAction="#filtrerParJour"
+                                        style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                                <Button fx:id="btnJourMar" text="Mar" onAction="#filtrerParJour"
+                                        style="-fx-background-color: #f1f5f9; -fx-text-fill: #374151; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                                <Button fx:id="btnJourMer" text="Mer" onAction="#filtrerParJour"
+                                        style="-fx-background-color: #f1f5f9; -fx-text-fill: #374151; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                                <Button fx:id="btnJourJeu" text="Jeu" onAction="#filtrerParJour"
+                                        style="-fx-background-color: #f1f5f9; -fx-text-fill: #374151; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                                <Button fx:id="btnJourVen" text="Ven" onAction="#filtrerParJour"
+                                        style="-fx-background-color: #f1f5f9; -fx-text-fill: #374151; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                                <Button fx:id="btnJourSam" text="Sam" onAction="#filtrerParJour"
+                                        style="-fx-background-color: #f1f5f9; -fx-text-fill: #374151; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                                <Button fx:id="btnJourDim" text="Dim" onAction="#filtrerParJour"
+                                        style="-fx-background-color: #f1f5f9; -fx-text-fill: #374151; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="lblJourSelectionne" text="Lundi"
+                                       style="-fx-font-size: 11; -fx-font-weight: bold; -fx-text-fill: #16a34a;"/>
+                            </HBox>
+                            <ListView fx:id="listPredictions" prefHeight="240"
+                                      style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 4;"/>
+                        </VBox>
+
+                        <!-- Tableau des gardes -->
+                        <VBox style="-fx-background-color: rgba(255,255,255,0.93); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 18; -fx-border-width: 1; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.22),16,0,0,4);" spacing="0">
+                            <HBox style="-fx-padding: 14 16; -fx-background-color: rgba(248,250,252,0.98); -fx-background-radius: 16 16 0 0; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                <Label text="&#x1F4C5;  Liste des Gardes" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #0f172a;" HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="lblNbGardesFiltrees" text=""
+                                       style="-fx-background-color: #dcfce7; -fx-text-fill: #166534; -fx-background-radius: 20; -fx-padding: 3 10; -fx-font-size: 11; -fx-font-weight: bold;"/>
+                                <Button text="&#x1F916; Prediction IA" onAction="#afficherPrediction"
+                                        style="-fx-background-color: #f0fdf4; -fx-text-fill: #166534; -fx-font-size: 11; -fx-font-weight: bold; -fx-background-radius: 8; -fx-border-color: #86efac; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 5 12; -fx-cursor: hand; -fx-margin: 0 0 0 8;"/>
+                            </HBox>
+                            <!-- Barre de filtres gardes -->
+                            <HBox spacing="8" style="-fx-padding: 8 14; -fx-background-color: #f8fafc; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                <ComboBox fx:id="cbFiltreCreneauGarde" promptText="Tous les creneaux"
+                                          prefWidth="160" style="-fx-background-radius: 8; -fx-font-size: 11;"/>
+                                <TextField fx:id="tfFiltreNomGarde" promptText="&#x1F50D; Nom du pompier"
+                                           prefWidth="150"
+                                           style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e8f0; -fx-padding: 6 10; -fx-font-size: 11;"/>
+                                <TextField fx:id="tfFiltreTelGarde" promptText="&#x1F4DE; Telephone"
+                                           prefWidth="130"
+                                           style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e8f0; -fx-padding: 6 10; -fx-font-size: 11;"/>
+                                <Button text="Reset" onAction="#reinitialiserFiltresGardes"
+                                        style="-fx-background-color: #fee2e2; -fx-text-fill: #dc2626; -fx-background-radius: 8; -fx-font-size: 11; -fx-font-weight: bold; -fx-padding: 6 10; -fx-cursor: hand;"/>
+                            </HBox>
+                            <ListView fx:id="listGardes" prefHeight="320" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 0;"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- ═══════════════════════════════════════════ -->
+                    <!-- VUE AFFECTATIONS                            -->
+                    <!-- ═══════════════════════════════════════════ -->
+                    <VBox fx:id="vueAffectations" managed="false" visible="false" spacing="14">
+
+                        <!-- En-tête avec badge statut -->
+                        <HBox alignment="CENTER_LEFT" spacing="14"
+                              style="-fx-background-color: rgba(255,255,255,0.15); -fx-background-radius: 14; -fx-padding: 14 20; -fx-border-color: rgba(255,255,255,0.25); -fx-border-radius: 14; -fx-border-width: 1;">
+                            <Label text="&#x1F6A8;" style="-fx-font-size: 22;"/>
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Affectations &amp; Interventions" style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                                <Label text="Affectations automatiques et interventions volontaires — triees par date decroissante" style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.7);"/>
+                            </VBox>
+                            <Label fx:id="lblStatutAffectation" text="..."
+                                   style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 4 12; -fx-font-weight: bold; -fx-font-size: 11;"/>
+                            <Button text="&#x21BA; Actualiser" onAction="#afficherVueAffectations"
+                                    style="-fx-background-color: rgba(255,255,255,0.18); -fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold; -fx-border-color: rgba(255,255,255,0.35); -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 5 14; -fx-cursor: hand;"/>
+                            <!-- champs cachés conservés pour compatibilité code -->
+                            <ComboBox fx:id="cbAlertes" visible="false" managed="false"/>
+                            <Label fx:id="lblResultatAffectation" visible="false" managed="false"/>
+                            <!-- listAffectations caché pour compatibilité watcher -->
+                            <ListView fx:id="listAffectations" visible="false" managed="false" prefHeight="0"/>
+                        </HBox>
+
+                        <!-- Deux colonnes : Affectations auto | Interventions -->
+                        <HBox spacing="14" VBox.vgrow="ALWAYS">
+
+                            <!-- ── COLONNE GAUCHE : Affectations automatiques ── -->
+                            <VBox HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: rgba(255,255,255,0.93); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 18; -fx-border-width: 1; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.22),16,0,0,4);"
+                                  spacing="0">
+                                <!-- En-tête colonne gauche -->
+                                <HBox style="-fx-padding: 14 18; -fx-background-color: rgba(220,38,38,0.08); -fx-background-radius: 16 16 0 0; -fx-border-color: #fca5a5; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                    <Label text="&#x1F916;" style="-fx-font-size: 18; -fx-padding: 0 6 0 0;"/>
+                                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                        <Label text="Affectations Automatiques" style="-fx-font-size: 13; -fx-font-weight: bold; -fx-text-fill: #991b1b;"/>
+                                        <Label text="Pompiers affectes par le systeme IA" style="-fx-font-size: 10; -fx-text-fill: #b91c1c;"/>
+                                    </VBox>
+                                    <Label fx:id="lblNbAffectations" text="0"
+                                           style="-fx-background-color: #fee2e2; -fx-text-fill: #dc2626; -fx-background-radius: 20; -fx-padding: 3 10; -fx-font-size: 11; -fx-font-weight: bold;"/>
+                                </HBox>
+                                <!-- Barre de filtres affectations -->
+                                <HBox spacing="8" style="-fx-padding: 8 14; -fx-background-color: #fef2f2; -fx-border-color: #fecaca; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                    <DatePicker fx:id="dpFiltreDateAff" promptText="Filtrer par date"
+                                                prefWidth="148" style="-fx-background-radius: 8; -fx-font-size: 11;"/>
+                                    <TextField fx:id="tfFiltreNomAff" promptText="Nom / Prenom"
+                                               prefWidth="130"
+                                               style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #fecaca; -fx-padding: 6 10; -fx-font-size: 11;"/>
+                                    <TextField fx:id="tfFiltreZoneAff" promptText="Zone / Lieu"
+                                               prefWidth="120"
+                                               style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #fecaca; -fx-padding: 6 10; -fx-font-size: 11;"/>
+                                    <Button text="Reset" onAction="#reinitialiserFiltresAff"
+                                            style="-fx-background-color: #fee2e2; -fx-text-fill: #dc2626; -fx-background-radius: 8; -fx-font-size: 11; -fx-font-weight: bold; -fx-padding: 6 10; -fx-cursor: hand;"/>
+                                </HBox>
+                                <!-- Colonnes en-tête tableau -->
+                                <HBox style="-fx-padding: 7 16; -fx-background-color: #fef2f2; -fx-border-color: #fecaca; -fx-border-width: 0 0 1 0;">
+                                    <Label text="DATE" prefWidth="130" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #991b1b;"/>
+                                    <Label text="ALERTE / LIEU" prefWidth="160" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #991b1b;"/>
+                                    <Label text="POMPIER" HBox.hgrow="ALWAYS" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #991b1b;"/>
+                                    <Label text="STATUT" prefWidth="90" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #991b1b;"/>
+                                </HBox>
+                                <ListView fx:id="listAffectationsAuto" prefHeight="500"
+                                          style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 4;"/>
+                            </VBox>
+
+                            <!-- ── COLONNE DROITE : Interventions volontaires ── -->
+                            <VBox HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: rgba(255,255,255,0.93); -fx-background-radius: 18; -fx-border-color: rgba(255,255,255,0.98); -fx-border-radius: 18; -fx-border-width: 1; -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.22),16,0,0,4);"
+                                  spacing="0">
+                                <!-- En-tête colonne droite -->
+                                <HBox style="-fx-padding: 14 18; -fx-background-color: rgba(22,163,74,0.08); -fx-background-radius: 16 16 0 0; -fx-border-color: #86efac; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                    <Label text="&#x1F9B8;" style="-fx-font-size: 18; -fx-padding: 0 6 0 0;"/>
+                                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                        <Label text="Interventions Volontaires" style="-fx-font-size: 13; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                                        <Label text="Agents intervenus de leur propre initiative" style="-fx-font-size: 10; -fx-text-fill: #15803d;"/>
+                                    </VBox>
+                                    <Label fx:id="lblNbInterventions" text="0"
+                                           style="-fx-background-color: #dcfce7; -fx-text-fill: #16a34a; -fx-background-radius: 20; -fx-padding: 3 10; -fx-font-size: 11; -fx-font-weight: bold;"/>
+                                </HBox>
+                                <!-- Barre de filtres interventions -->
+                                <HBox spacing="8" style="-fx-padding: 8 14; -fx-background-color: #f0fdf4; -fx-border-color: #bbf7d0; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+                                    <DatePicker fx:id="dpFiltreDate" promptText="Filtrer par date"
+                                                prefWidth="148" style="-fx-background-radius: 8; -fx-font-size: 11;"/>
+                                    <TextField fx:id="tfFiltreNom" promptText="Nom / Prenom"
+                                               prefWidth="130"
+                                               style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bbf7d0; -fx-padding: 6 10; -fx-font-size: 11;"/>
+                                    <TextField fx:id="tfFiltreZone" promptText="Zone / Lieu"
+                                               prefWidth="120"
+                                               style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #bbf7d0; -fx-padding: 6 10; -fx-font-size: 11;"/>
+                                    <Button text="Reset" onAction="#reinitialiserFiltres"
+                                            style="-fx-background-color: #fee2e2; -fx-text-fill: #dc2626; -fx-background-radius: 8; -fx-font-size: 11; -fx-font-weight: bold; -fx-padding: 6 10; -fx-cursor: hand;"/>
+                                </HBox>
+                                <!-- Colonnes en-tête tableau -->
+                                <HBox style="-fx-padding: 7 16; -fx-background-color: #f0fdf4; -fx-border-color: #bbf7d0; -fx-border-width: 0 0 1 0;">
+                                    <Label text="DATE" prefWidth="130" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                                    <Label text="ALERTE / LIEU" prefWidth="160" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                                    <Label text="AGENT" HBox.hgrow="ALWAYS" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                                    <Label text="STATUT" prefWidth="90" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #166534;"/>
+                                </HBox>
+                                <ListView fx:id="listInterventions" prefHeight="500"
+                                          style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 4;"/>
+                            </VBox>
+
+                        </HBox>
+
+                    </VBox>
+                    <!-- FIN VUE AFFECTATIONS -->
+
+                    <!-- ═══════════════════════════════════════════ -->
+                    <!-- VUE IA PERFORMANCE                         -->
+                    <!-- ═══════════════════════════════════════════ -->
+                    <VBox fx:id="vueIA" managed="false" visible="false" spacing="14">
+
+                        <!-- En-tête -->
+                        <HBox alignment="CENTER_LEFT" spacing="14"
+                              style="-fx-background-color:rgba(22,163,74,0.25);-fx-background-radius:14;-fx-padding:14 20;-fx-border-color:rgba(22,163,74,0.5);-fx-border-radius:14;-fx-border-width:1;">
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Performance IA - Meilleur pompier du mois" style="-fx-font-size:15;-fx-font-weight:bold;-fx-text-fill:white;"/>
+                                <Label text="Scoring base sur interventions, gardes, rapidite et difficulte des missions" style="-fx-font-size:11;-fx-text-fill:rgba(255,255,255,0.7);"/>
+                            </VBox>
+                            <ComboBox fx:id="cbPeriodeIA" prefWidth="150" style="-fx-background-radius:8;-fx-font-size:12;"/>
+                            <Button text="Analyser" onAction="#chargerPerformances"
+                                    style="-fx-background-color:#16a34a;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:10;-fx-padding:8 18;-fx-cursor:hand;-fx-effect:dropshadow(gaussian,rgba(22,163,74,0.6),10,0,0,3);"/>
+                        </HBox>
+
+                        <!-- Podium + Classement : géré entièrement par Java -->
+                        <!-- Labels cachés pour compatibilité -->
+                        <Label fx:id="lblGagnantTitre"  visible="false" managed="false" text=""/>
+                        <Label fx:id="lblGagnantNom"    visible="false" managed="false" text=""/>
+                        <Label fx:id="lblGagnantScore"  visible="false" managed="false" text=""/>
+                        <Label fx:id="lblGagnantExplication" visible="false" managed="false" text=""/>
+                        <VBox fx:id="panneauGagnant"    visible="false" managed="false"/>
+
+                        <!-- Zone podium + tableau générée dynamiquement -->
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                                    style="-fx-background-color:transparent;-fx-background:transparent;-fx-border-color:transparent;">
+                            <ListView fx:id="listPerformances" prefHeight="660"
+                                      style="-fx-background-color:transparent;-fx-border-color:transparent;-fx-padding:0;"/>
+                        </ScrollPane>
+
+                    </VBox>
+                    <!-- FIN VUE IA -->
+
+                    <!-- ═══════════════════════════════════════════ -->
+                    <!-- VUE CHATBOT                                 -->
+                    <!-- ═══════════════════════════════════════════ -->
+                    <VBox fx:id="vueChatbot" managed="false" visible="false" spacing="0"
+                          style="-fx-background-color:rgba(10,25,12,0.82);-fx-background-radius:22;-fx-border-color:rgba(74,222,128,0.35);-fx-border-radius:22;-fx-border-width:1.5;-fx-effect:dropshadow(gaussian,rgba(22,163,74,0.45),28,0,0,8);">
+
+                        <!-- En-tête forêt -->
+                        <VBox spacing="0">
+                            <HBox alignment="CENTER_LEFT" spacing="14"
+                                  style="-fx-background-color:linear-gradient(to right,rgba(20,83,45,0.95),rgba(5,46,22,0.95));-fx-background-radius:20 20 0 0;-fx-padding:18 22 14 22;-fx-border-color:rgba(74,222,128,0.2);-fx-border-width:0 0 1 0;">
+                                <!-- Icône arbre animé -->
+                                <StackPane style="-fx-background-color:rgba(74,222,128,0.15);-fx-background-radius:50;-fx-min-width:44;-fx-min-height:44;-fx-border-color:rgba(74,222,128,0.4);-fx-border-radius:50;-fx-border-width:1.5;">
+                                    <Label text="&#127807;" style="-fx-font-size:22;"/>
+                                </StackPane>
+                                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                    <Label text="Assistant ForestGuard" style="-fx-font-size:16;-fx-font-weight:bold;-fx-text-fill:white;-fx-effect:dropshadow(gaussian,rgba(74,222,128,0.6),8,0,0,2);"/>
+                                    <Label text="Intelligence artificielle — donnees en temps reel" style="-fx-font-size:10;-fx-text-fill:rgba(134,239,172,0.85);"/>
+                                </VBox>
+                                <!-- Badge pulse vert -->
+                                <HBox spacing="5" alignment="CENTER"
+                                      style="-fx-background-color:rgba(22,163,74,0.25);-fx-background-radius:20;-fx-padding:5 12;-fx-border-color:rgba(74,222,128,0.5);-fx-border-radius:20;-fx-border-width:1;">
+                                    <StackPane style="-fx-background-color:#4ade80;-fx-background-radius:50;-fx-min-width:7;-fx-min-height:7;-fx-effect:dropshadow(gaussian,#4ade80,6,0.8,0,0);"/>
+                                    <Label text="En ligne" style="-fx-font-size:10;-fx-font-weight:bold;-fx-text-fill:#4ade80;"/>
+                                </HBox>
+                            </HBox>
+                            <!-- Barre décorative gradient -->
+                            <Region prefHeight="3"
+                                    style="-fx-background-color:linear-gradient(to right,#16a34a,#4ade80,#86efac,#4ade80,#16a34a);"/>
+                        </VBox>
+
+                        <!-- Zone messages — fond sombre forêt -->
+                        <ScrollPane fx:id="scrollChat" fitToWidth="true" VBox.vgrow="ALWAYS"
+                                    prefHeight="430"
+                                    style="-fx-background-color:transparent;-fx-background:transparent;-fx-border-color:transparent;-fx-padding:0;">
+                            <VBox fx:id="vboxMessages" spacing="14"
+                                  style="-fx-padding:20 18;-fx-background-color:transparent;"/>
+                        </ScrollPane>
+
+                        <!-- Suggestions rapides -->
+                        <HBox spacing="8" alignment="CENTER_LEFT"
+                              style="-fx-padding:8 18 6 18;-fx-background-color:rgba(5,46,22,0.6);">
+                            <Label text="Suggestions :" style="-fx-font-size:10;-fx-text-fill:rgba(134,239,172,0.7);-fx-font-weight:bold;"/>
+                            <Button text="Pompiers disponibles" onAction="#envoyerSuggestion1"
+                                    style="-fx-background-color:rgba(22,163,74,0.2);-fx-text-fill:#86efac;-fx-background-radius:12;-fx-padding:3 10;-fx-font-size:10;-fx-cursor:hand;-fx-border-color:rgba(74,222,128,0.3);-fx-border-radius:12;-fx-border-width:1;"/>
+                            <Button text="Meilleur pompier" onAction="#envoyerSuggestion2"
+                                    style="-fx-background-color:rgba(22,163,74,0.2);-fx-text-fill:#86efac;-fx-background-radius:12;-fx-padding:3 10;-fx-font-size:10;-fx-cursor:hand;-fx-border-color:rgba(74,222,128,0.3);-fx-border-radius:12;-fx-border-width:1;"/>
+                            <Button text="Alertes recentes" onAction="#envoyerSuggestion3"
+                                    style="-fx-background-color:rgba(22,163,74,0.2);-fx-text-fill:#86efac;-fx-background-radius:12;-fx-padding:3 10;-fx-font-size:10;-fx-cursor:hand;-fx-border-color:rgba(74,222,128,0.3);-fx-border-radius:12;-fx-border-width:1;"/>
+                        </HBox>
+
+                        <!-- Zone saisie élégante -->
+                        <HBox spacing="10" alignment="CENTER"
+                              style="-fx-padding:12 18 16 18;-fx-background-color:rgba(5,46,22,0.8);-fx-background-radius:0 0 20 20;-fx-border-color:rgba(74,222,128,0.2);-fx-border-width:1 0 0 0;">
+                            <TextField fx:id="tfMessageChat"
+                                       promptText="Posez votre question a l'assistant..."
+                                       HBox.hgrow="ALWAYS" prefHeight="44"
+                                       style="-fx-background-color:rgba(255,255,255,0.08);-fx-background-radius:22;-fx-border-radius:22;-fx-border-color:rgba(74,222,128,0.4);-fx-border-width:1.5;-fx-padding:8 18;-fx-font-size:13;-fx-text-fill:white;-fx-prompt-text-fill:rgba(134,239,172,0.5);"
+                                       onAction="#envoyerMessageChat"/>
+                            <Button text="Envoyer" onAction="#envoyerMessageChat"
+                                    prefHeight="44" prefWidth="100"
+                                    style="-fx-background-color:linear-gradient(to bottom,#16a34a,#15803d);-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:22;-fx-cursor:hand;-fx-font-size:12;-fx-effect:dropshadow(gaussian,rgba(22,163,74,0.7),12,0,0,3);-fx-border-color:rgba(74,222,128,0.5);-fx-border-radius:22;-fx-border-width:1;"/>
+                        </HBox>
+                    </VBox>
+                    <!-- FIN VUE CHATBOT -->
+
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </StackPane>
+</HBox>

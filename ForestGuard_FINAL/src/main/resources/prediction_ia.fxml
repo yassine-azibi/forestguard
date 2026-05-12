@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.capteur.controllers.AIPredictionController"
+      prefWidth="600" prefHeight="680" spacing="0"
+      style="-fx-background-color: #f8fafc;">
+
+    <!-- ══ HEADER ══ -->
+    <HBox alignment="CENTER_LEFT" spacing="14"
+          style="-fx-padding: 18 24 16 24;
+                 -fx-background-color: linear-gradient(to right, #14532d, #16a34a);
+                 -fx-border-color: #15803d; -fx-border-width: 0 0 1 0;">
+        <Label text="🤖"
+               style="-fx-font-size: 26;
+                      -fx-background-color: rgba(255,255,255,0.2);
+                      -fx-background-radius: 50; -fx-padding: 8;"/>
+        <VBox spacing="3" HBox.hgrow="ALWAYS">
+            <Label text="Prédiction IA – ForestGuard"
+                   style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <Label text="●" style="-fx-font-size: 8; -fx-text-fill: #bbf7d0;"/>
+                <Label fx:id="lblSourceIA" text="Ollama Llama3 + OpenWeatherMap"
+                       style="-fx-font-size: 11; -fx-text-fill: #bbf7d0;"/>
+            </HBox>
+        </VBox>
+        <Button text="✕" onAction="#fermer"
+                style="-fx-background-color: rgba(255,255,255,0.2);
+                       -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;
+                       -fx-background-radius: 8; -fx-cursor: hand;
+                       -fx-min-width: 32; -fx-min-height: 32;"/>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                style="-fx-background-color: #f8fafc; -fx-background: #f8fafc;
+                       -fx-border-color: transparent;">
+        <VBox spacing="12" style="-fx-padding: 16 22 12 22; -fx-background-color: #f8fafc;">
+
+            <!-- ══ INFOS CAPTEUR (sans batterie) ══ -->
+            <HBox spacing="14" alignment="CENTER_LEFT"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 14; -fx-border-color: #e2e8f0;
+                         -fx-border-radius: 14; -fx-border-width: 1;
+                         -fx-padding: 14 18;
+                         -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label fx:id="lblNomCapteur" text="Capteur –"
+                           style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label fx:id="lblTypeCapteur" text="type"
+                               style="-fx-background-color: #ede9fe; -fx-text-fill: #7c3aed;
+                                      -fx-font-size: 10; -fx-font-weight: bold;
+                                      -fx-background-radius: 20; -fx-padding: 3 10;"/>
+                        <Label fx:id="lblLocCapteur" text="localisation"
+                               style="-fx-font-size: 11; -fx-text-fill: #64748b;"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- ══ MÉTÉO + SEUILS ══ -->
+            <VBox fx:id="boxMeteo" spacing="10" visible="false"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 14; -fx-border-color: #bae6fd;
+                         -fx-border-radius: 14; -fx-border-width: 1;
+                         -fx-padding: 14 18;
+                         -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="CONDITIONS ENVIRONNEMENTALES"
+                           style="-fx-font-size: 9; -fx-font-weight: bold;
+                                  -fx-text-fill: #0284c7; -fx-letter-spacing: 1.5;"
+                           HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="lblMeteoRisqueIncendie" text="—"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #16a34a; -fx-background-color: #dcfce7;
+                                  -fx-background-radius: 20; -fx-padding: 3 10;"/>
+                </HBox>
+
+                <!-- 3 colonnes : Temp | Humidité | Vent -->
+                <HBox spacing="0">
+                    <!-- Température -->
+                    <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
+                        <Label fx:id="lblMeteoIcone" text="🌡" style="-fx-font-size: 28;"/>
+                        <Label fx:id="lblMeteoTemp" text="—°C"
+                               style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+                        <Label text="TEMPÉRATURE"
+                               style="-fx-font-size: 8; -fx-text-fill: #94a3b8;
+                                      -fx-font-weight: bold; -fx-letter-spacing: 1;"/>
+                        <Label fx:id="lblSeuilTemp" text="—"
+                               style="-fx-font-size: 10; -fx-text-fill: #16a34a;"/>
+                    </VBox>
+                    <Separator orientation="VERTICAL"
+                               style="-fx-background-color: #e2e8f0; -fx-opacity: 1;"/>
+                    <!-- Humidité -->
+                    <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS"
+                          style="-fx-padding: 0 12;">
+                        <Label text="💧" style="-fx-font-size: 22;"/>
+                        <Label fx:id="lblMeteoHumidite" text="—%"
+                               style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: #0284c7;"/>
+                        <Label text="HUMIDITÉ"
+                               style="-fx-font-size: 8; -fx-text-fill: #94a3b8;
+                                      -fx-font-weight: bold; -fx-letter-spacing: 1;"/>
+                        <Label fx:id="lblSeuilHumid" text="—"
+                               style="-fx-font-size: 10; -fx-text-fill: #16a34a;"/>
+                    </VBox>
+                    <Separator orientation="VERTICAL"
+                               style="-fx-background-color: #e2e8f0; -fx-opacity: 1;"/>
+                    <!-- Vent + description -->
+                    <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS"
+                          style="-fx-padding: 0 0 0 12;">
+                        <Label text="💨" style="-fx-font-size: 22;"/>
+                        <Label fx:id="lblMeteoVent" text="— km/h"
+                               style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: #0284c7;"/>
+                        <Label text="VENT"
+                               style="-fx-font-size: 8; -fx-text-fill: #94a3b8;
+                                      -fx-font-weight: bold; -fx-letter-spacing: 1;"/>
+                        <Label fx:id="lblMeteoDesc" text="—"
+                               style="-fx-font-size: 10; -fx-text-fill: #94a3b8;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- ══ CHARGEMENT ══ -->
+            <HBox alignment="CENTER" spacing="10" style="-fx-padding: 14 0;">
+                <Label fx:id="lblChargement" text="⏳  Analyse IA + météo en cours..."
+                       style="-fx-font-size: 13; -fx-text-fill: #94a3b8;"/>
+            </HBox>
+
+            <!-- ══ RÉSULTAT IA ══ -->
+            <VBox fx:id="boxResultat" spacing="12" visible="false">
+
+                <!-- Score + Jauge -->
+                <VBox spacing="10"
+                      style="-fx-background-color: white;
+                             -fx-background-radius: 14; -fx-border-color: #e2e8f0;
+                             -fx-border-radius: 14; -fx-border-width: 1;
+                             -fx-padding: 16 18;
+                             -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <VBox spacing="2" HBox.hgrow="ALWAYS">
+                            <Label text="SCORE DE RISQUE PANNE"
+                                   style="-fx-font-size: 9; -fx-font-weight: bold;
+                                          -fx-text-fill: #94a3b8; -fx-letter-spacing: 1.5;"/>
+                            <Label fx:id="lblScoreValeur" text="—/100"
+                                   style="-fx-font-size: 26; -fx-font-weight: bold;
+                                          -fx-text-fill: #0f172a;"/>
+                        </VBox>
+                        <Label fx:id="lblNiveauBadge" text="—"
+                               style="-fx-font-size: 12; -fx-font-weight: bold;
+                                      -fx-background-radius: 20; -fx-padding: 6 16;
+                                      -fx-text-fill: #16a34a; -fx-background-color: #dcfce7;"/>
+                    </HBox>
+                    <ProgressBar fx:id="barScore" maxWidth="Infinity" prefHeight="12"
+                                 style="-fx-background-color: #f1f5f9;
+                                        -fx-background-radius: 6; -fx-accent: #16a34a;"/>
+                </VBox>
+
+                <!-- Analyse -->
+                <VBox spacing="8"
+                      style="-fx-background-color: white;
+                             -fx-background-radius: 14; -fx-border-color: #e2e8f0;
+                             -fx-border-radius: 14; -fx-border-width: 1;
+                             -fx-padding: 16 18;
+                             -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Label text="🔍" style="-fx-font-size: 12;"/>
+                        <Label text="ANALYSE"
+                               style="-fx-font-size: 9; -fx-font-weight: bold;
+                                      -fx-text-fill: #94a3b8; -fx-letter-spacing: 1.5;"/>
+                    </HBox>
+                    <Label fx:id="lblAnalyse" text="—" wrapText="true"
+                           style="-fx-font-size: 13; -fx-text-fill: #334155;
+                                  -fx-line-spacing: 4;"/>
+                </VBox>
+
+                <!-- Actions -->
+                <VBox spacing="8"
+                      style="-fx-background-color: white;
+                             -fx-background-radius: 14; -fx-border-color: #e2e8f0;
+                             -fx-border-radius: 14; -fx-border-width: 1;
+                             -fx-padding: 16 18;
+                             -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Label text="✅" style="-fx-font-size: 12;"/>
+                        <Label text="ACTIONS RECOMMANDÉES"
+                               style="-fx-font-size: 9; -fx-font-weight: bold;
+                                      -fx-text-fill: #94a3b8; -fx-letter-spacing: 1.5;"/>
+                    </HBox>
+                    <Label fx:id="lblAction1" text="① —" wrapText="true"
+                           style="-fx-font-size: 12; -fx-text-fill: #0f172a;
+                                  -fx-padding: 8 12; -fx-background-color: #f0fdf4;
+                                  -fx-background-radius: 8; -fx-border-color: #bbf7d0;
+                                  -fx-border-radius: 8; -fx-border-width: 1;"/>
+                    <Label fx:id="lblAction2" text="② —" wrapText="true"
+                           style="-fx-font-size: 12; -fx-text-fill: #334155;
+                                  -fx-padding: 8 12; -fx-background-color: #f8fafc;
+                                  -fx-background-radius: 8; -fx-border-color: #e2e8f0;
+                                  -fx-border-radius: 8; -fx-border-width: 1;"/>
+                    <Label fx:id="lblAction3" text="③ —" wrapText="true"
+                           style="-fx-font-size: 12; -fx-text-fill: #64748b;
+                                  -fx-padding: 8 12; -fx-background-color: #f8fafc;
+                                  -fx-background-radius: 8; -fx-border-color: #e2e8f0;
+                                  -fx-border-radius: 8; -fx-border-width: 1;"/>
+                </VBox>
+
+                <!-- Délai + horodatage -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label fx:id="lblDelai" text="⏱ —"
+                           style="-fx-font-size: 12; -fx-font-weight: bold;
+                                  -fx-text-fill: #d97706; -fx-background-color: #fffbeb;
+                                  -fx-background-radius: 20; -fx-padding: 6 16;
+                                  -fx-border-color: #fde68a; -fx-border-radius: 20;
+                                  -fx-border-width: 1;"
+                           HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="lblHorodatage" text=""
+                           style="-fx-font-size: 10; -fx-text-fill: #94a3b8;"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </ScrollPane>
+
+    <!-- ══ FOOTER ══ -->
+    <HBox spacing="10" alignment="CENTER_RIGHT"
+          style="-fx-padding: 14 22 18 22; -fx-background-color: white;
+                 -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0;">
+        <Button text="🔄  Relancer" onAction="#relancerAnalyse"
+                style="-fx-background-color: #f0fdf4; -fx-text-fill: #16a34a;
+                       -fx-font-weight: bold; -fx-font-size: 12;
+                       -fx-background-radius: 9; -fx-cursor: hand; -fx-padding: 9 16;
+                       -fx-border-color: #bbf7d0; -fx-border-radius: 9;"/>
+        <Button text="🔧  Planifier Maintenance" onAction="#planifierMaintenance"
+                style="-fx-background-color: #d97706; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-font-size: 12;
+                       -fx-background-radius: 9; -fx-cursor: hand; -fx-padding: 9 18;
+                       -fx-effect: dropshadow(gaussian,rgba(217,119,6,0.3),8,0,0,2);"/>
+        <Button text="Fermer" onAction="#fermer"
+                style="-fx-background-color: #f1f5f9; -fx-text-fill: #64748b;
+                       -fx-font-size: 12; -fx-background-radius: 9;
+                       -fx-cursor: hand; -fx-padding: 9 16;
+                       -fx-border-color: #e2e8f0; -fx-border-radius: 9;"/>
+    </HBox>
+</VBox>

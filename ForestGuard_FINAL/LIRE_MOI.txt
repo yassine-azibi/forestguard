@@ -1,0 +1,2 @@
+NOTE: logo.png (l'image du logo ForestGuard) doit etre placée dans src/main/resources/
+forest.jpg est deja present dans resources/

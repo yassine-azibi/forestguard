@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<title>Perimetre Incendie</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a1a0e;font-family:Arial,sans-serif}
+#map{width:100%;height:100%}
+/* Leaflet CSS minimal inline */
+.leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile-container,.leaflet-pane>svg,.leaflet-pane>canvas,.leaflet-zoom-box,.leaflet-image-layer,.leaflet-layer{position:absolute;left:0;top:0}
+.leaflet-container{overflow:hidden}
+.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none}
+.leaflet-tile::selection{background:transparent}.leaflet-tile::-moz-selection{background:transparent}
+.leaflet-tile{visibility:hidden}.leaflet-tile-loaded{visibility:inherit}
+.leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800}
+.leaflet-overlay-pane svg{-moz-user-select:none}
+.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}
+.leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}
+.leaflet-popup-pane{z-index:700}.leaflet-map-pane canvas{z-index:100}.leaflet-map-pane svg{z-index:200}
+.leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto}
+.leaflet-top,.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none}
+.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}
+.leaflet-control{float:left;clear:both}.leaflet-right .leaflet-control{float:right}
+.leaflet-top .leaflet-control{margin-top:10px}.leaflet-bottom .leaflet-control{margin-bottom:10px}
+.leaflet-left .leaflet-control{margin-left:10px}.leaflet-right .leaflet-control{margin-right:10px}
+.leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity .2s linear;transition:opacity .2s linear}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1}
+.leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}
+.leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform .25s cubic-bezier(0,0,.25,1);transition:transform .25s cubic-bezier(0,0,.25,1)}
+.leaflet-zoom-anim .leaflet-tile,.leaflet-pan-anim .leaflet-tile{-webkit-transition:none;transition:none}
+.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:grab}
+.leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair}
+.leaflet-popup-pane,.leaflet-control{cursor:auto}
+.leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:grabbing}
+.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-image-layer,.leaflet-pane>svg path,.leaflet-tile-container{pointer-events:none}
+.leaflet-marker-icon.leaflet-interactive,.leaflet-image-layer.leaflet-interactive,.leaflet-pane>svg path.leaflet-interactive{pointer-events:visiblePainted;pointer-events:auto}
+.leaflet-container{background:#0d1f12;outline-offset:1px;-webkit-tap-highlight-color:transparent}
+.leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,.5)}
+.leaflet-container{font-size:12px}
+.leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:4px}
+.leaflet-bar a{background-color:rgba(8,22,13,0.95);border-bottom:1px solid rgba(74,222,128,0.15);width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:#4ade80}
+.leaflet-bar a:hover,.leaflet-bar a:focus{background-color:rgba(74,222,128,0.15);color:#4ade80}
+.leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px}
+.leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none}
+.leaflet-bar a.leaflet-disabled{cursor:default;background-color:rgba(8,22,13,0.5);color:#1e3a1e}
+.leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px 'Lucida Console',Monaco,monospace;text-indent:1px}
+.leaflet-control-attribution{background:rgba(8,22,13,0.7);color:rgba(255,255,255,0.3);margin:0;font-size:9px;padding:2px 6px;display:none!important}
+.leaflet-tooltip{position:absolute;padding:6px;background-color:rgba(8,22,13,0.92);border:1px solid rgba(74,222,128,0.3);border-radius:8px;color:#e2e8f0;white-space:nowrap;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.6)}
+/* Panneau dessin */
+.ctrl{position:absolute;top:14px;left:14px;z-index:1000;background:rgba(8,22,13,0.92);border-radius:14px;padding:12px 14px;min-width:175px;border:1px solid rgba(74,222,128,0.25);box-shadow:0 4px 24px rgba(0,0,0,0.5)}
+.ctrl-sec{font-size:10px;color:rgba(74,222,128,0.55);letter-spacing:1px;margin:10px 0 5px;font-weight:700;text-transform:uppercase}
+.ctrl-sec:first-child{margin-top:0}
+.cb{display:block;width:100%;margin:3px 0;padding:8px 12px;background:rgba(74,222,128,0.08);color:#4ade80;border:1px solid rgba(74,222,128,0.2);border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;text-align:left;transition:all 0.15s}
+.cb:hover{background:rgba(74,222,128,0.18);border-color:rgba(74,222,128,0.4)}
+.cb.on{background:#16a34a;border-color:#16a34a;color:white}
+.cb.red{color:#fca5a5;border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08)}
+.cb.red:hover{background:rgba(239,68,68,0.18)}
+/* Barre statut */
+.sb{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(22,163,74,0.92);border-radius:20px;padding:8px 22px;font-size:12px;color:white;white-space:nowrap;box-shadow:0 2px 16px rgba(0,0,0,0.4);font-weight:600}
+/* Status chargement */
+#status{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2000;background:rgba(8,22,13,0.97);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:20px 32px;color:#4ade80;font-size:14px;text-align:center}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="status">Chargement de la carte...</div>
+
+<div class="ctrl">
+  <div class="ctrl-sec">DESSIN</div>
+  <button class="cb" id="bPlacer">&#9654; Placer des points</button>
+  <button class="cb" id="bFermer" style="opacity:0.35;cursor:not-allowed;">&#9711; Fermer le perimetre</button>
+  <button class="cb red" id="bReset">&#128465; Reinitialiser</button>
+</div>
+<div class="sb" id="sb">Activez Placer des points puis cliquez sur la carte.</div>
+
+<script>
+// ── PORT injecté par Java (même mécanisme que CarteForestGuard) ──
+var PROXY_PORT = '__PORT__';
+
+var TILE_SOURCES = {
+    osm: {
+        proxy:  'http://127.0.0.1:' + PROXY_PORT + '/tiles/{z}/{x}/{y}.png',
+        direct: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
+        attribution: '&copy; OpenStreetMap'
+    }
+};
+
+// Charger Leaflet via proxy local puis CDN fallback
+var LEAFLET_URLS = [];
+if (PROXY_PORT && PROXY_PORT !== '__PORT__') {
+    LEAFLET_URLS.push('http://127.0.0.1:' + PROXY_PORT + '/leaflet/leaflet.js');
+}
+LEAFLET_URLS.push(
+    'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js',
+    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+);
+
+var leafletTentative = 0;
+function chargerLeaflet() {
+    if (leafletTentative >= LEAFLET_URLS.length) { return; }
+    var url = LEAFLET_URLS[leafletTentative++];
+    var script = document.createElement('script');
+    script.src = url;
+    script.onload = function() {
+        document.getElementById('status').style.display = 'none';
+        initCarte();
+    };
+    script.onerror = function() { chargerLeaflet(); };
+    document.head.appendChild(script);
+}
+
+var map, layerCourant;
+
+function initCarte() {
+    map = L.map('map', {center:[33.8869,9.5375], zoom:7, zoomControl:true, attributionControl:false});
+
+    // Tuiles via proxy (même logique que CarteForestGuard)
+    var src = TILE_SOURCES.osm;
+    var url = (PROXY_PORT && PROXY_PORT !== '__PORT__') ? src.proxy : src.direct[0];
+    layerCourant = L.tileLayer(url, {maxZoom:19, crossOrigin:true});
+    var directIdx = 0;
+    layerCourant.on('tileerror', function() {
+        directIdx++;
+        if (directIdx < src.direct.length) {
+            map.removeLayer(layerCourant);
+            layerCourant = L.tileLayer(src.direct[directIdx], {maxZoom:19, crossOrigin:true}).addTo(map);
+        }
+    });
+    layerCourant.addTo(map);
+
+    // ── Logique dessin périmètre ──────────────────────────────────────────────
+    var pts=[], mkrs=[], poly=null, placing=false, closed=false;
+
+    function hav(a,b){var R=6371000,dLat=(b.lat-a.lat)*Math.PI/180,dLon=(b.lng-a.lng)*Math.PI/180;var x=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
+    function peri(){if(pts.length<2)return 0;var p=0;for(var i=0;i<pts.length-1;i++)p+=hav(pts[i],pts[i+1]);if(closed&&pts.length>=3)p+=hav(pts[pts.length-1],pts[0]);return p;}
+    function area(){if(pts.length<3||!closed)return 0;var a=0;for(var i=0;i<pts.length;i++){var j=(i+1)%pts.length;var xi=pts[i].lng*111320*Math.cos(pts[i].lat*Math.PI/180),yi=pts[i].lat*110540;var xj=pts[j].lng*111320*Math.cos(pts[j].lat*Math.PI/180),yj=pts[j].lat*110540;a+=xi*yj-xj*yi;}return Math.abs(a)/2;}
+
+    function draw(){
+        mkrs.forEach(function(m){map.removeLayer(m);}); mkrs=[];
+        if(poly){map.removeLayer(poly);poly=null;}
+        pts.forEach(function(p,i){
+            var col=i===0?'#ff9500':'#e53935';
+            var pin='<div style="position:relative;width:32px;height:40px;"><div style="width:32px;height:32px;border-radius:50% 50% 50% 0;background:'+col+';transform:rotate(-45deg);box-shadow:0 3px 10px rgba(0,0,0,0.3);border:2px solid white;"></div><div style="position:absolute;top:6px;left:6px;width:20px;height:20px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;color:'+col+';font-weight:bold;font-size:11px;transform:rotate(45deg);">'+(i+1)+'</div></div>';
+            var ic=L.divIcon({html:pin,iconSize:[32,40],iconAnchor:[16,40],className:''});
+            mkrs.push(L.marker([p.lat,p.lng],{icon:ic}).addTo(map));
+        });
+        var ll=pts.map(function(p){return[p.lat,p.lng];});
+        if(closed&&pts.length>=3) poly=L.polygon(ll,{color:'#e53935',weight:2.5,fillColor:'#e53935',fillOpacity:0.18}).addTo(map);
+        else if(pts.length>=2) poly=L.polyline(ll,{color:'#ff9500',weight:2.5,dashArray:'8,5'}).addTo(map);
+    }
+
+    function stats(){
+        var nb=pts.length, pe=peri(), ar=area(), ha=ar/10000;
+        var ps=pe>=1000?(pe/1000).toFixed(2)+' km':Math.round(pe)+' m';
+        var as=closed&&nb>=3?(ha>=1?ha.toFixed(2):(ar).toFixed(0)+' m2'):'--';
+        var cit=closed&&nb>=3?Math.max(1,Math.ceil(ha/0.667)):0;
+        var cs=closed&&nb>=3?String(cit):'--';
+        if(window.javaBridge){
+            try{window.javaBridge.updateStats(String(nb),ps,as,cs);}
+            catch(e){setTimeout(function(){try{window.javaBridge.updateStats(String(nb),ps,as,cs);}catch(e2){}},200);}
+        }
+    }
+
+    function setStatus(m){
+        document.getElementById('sb').innerHTML=m;
+        if(window.javaBridge){
+            try{window.javaBridge.setStatus(m);}
+            catch(e){setTimeout(function(){try{window.javaBridge.setStatus(m);}catch(e2){}},200);}
+        }
+    }
+
+    map.on('click',function(e){
+        if(!placing||closed)return;
+        pts.push({lat:e.latlng.lat,lng:e.latlng.lng});
+        draw(); stats();
+        var m='Point '+pts.length+' place'+(pts.length>=3?' - vous pouvez fermer le perimetre':'');
+        setStatus(m);
+        var bf=document.getElementById('bFermer');
+        if(pts.length>=3){bf.style.opacity='1';bf.style.cursor='pointer';bf.style.pointerEvents='auto';}
+        else{bf.style.opacity='0.35';bf.style.cursor='not-allowed';bf.style.pointerEvents='none';}
+    });
+
+    document.getElementById('bPlacer').onclick=function(){
+        if(closed){setStatus('Perimetre ferme. Reinitialisez.');return;}
+        placing=!placing;
+        this.classList.toggle('on',placing);
+        setStatus(placing?'Mode placement ACTIF - cliquez sur la carte':'Mode placement inactif');
+    };
+
+    document.getElementById('bFermer').onclick=function(){
+        if(pts.length<3)return;
+        closed=true; placing=false;
+        document.getElementById('bPlacer').classList.remove('on');
+        this.style.opacity='0.35'; this.style.cursor='not-allowed'; this.style.pointerEvents='none';
+        draw(); stats();
+        setStatus('Perimetre ferme. Consultez les estimations ci-dessous.');
+    };
+
+    document.getElementById('bReset').onclick=function(){
+        pts=[]; closed=false; placing=false;
+        document.getElementById('bPlacer').classList.remove('on');
+        var bf=document.getElementById('bFermer');
+        bf.style.opacity='0.35'; bf.style.cursor='not-allowed'; bf.style.pointerEvents='none';
+        draw(); stats();
+        setStatus('Reinitialise. Placez de nouveaux points.');
+    };
+
+    // Signaler à Java que la carte est prête
+    if(window.java) window.java.cesiumPret();
+}
+
+chargerLeaflet();
+</script>
+</body>
+</html>

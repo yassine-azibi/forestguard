@@ -1,4 +1,4 @@
-package model;
+﻿package model;
 
 import java.time.LocalDateTime;
 
@@ -136,3 +136,4 @@ public class Affectation {
                 '}';
     }
 }
+

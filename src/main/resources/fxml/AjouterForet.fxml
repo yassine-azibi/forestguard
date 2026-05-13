@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.AjouterForet"
+      prefWidth="520" spacing="0"
+      style="-fx-background-color: #f1f5f1;">
+
+    <!-- ══ HEADER vert avec logo ══ -->
+    <HBox alignment="CENTER_LEFT" spacing="16"
+          style="-fx-background-color: #16a34a; -fx-padding: 20 24;">
+        <Label text="&#127794;"
+               style="-fx-font-size: 36; -fx-background-color: rgba(0,0,0,0.2);
+                      -fx-background-radius: 10; -fx-padding: 8 12;"/>
+        <VBox spacing="3">
+            <Label fx:id="titreLabel" text="Ajouter une Forêt"
+                   style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Remplissez tous les champs obligatoires *"
+                   style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.75);"/>
+        </VBox>
+    </HBox>
+
+    <!-- ══ FORMULAIRE ══ -->
+    <VBox spacing="0" style="-fx-background-color: white; -fx-padding: 24 28;">
+
+        <!-- Ligne 1 : Nom -->
+        <VBox spacing="4" style="-fx-padding: 0 0 14 0;">
+            <Label text="NOM DE LA FORÊT *"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-letter-spacing: 0.5;"/>
+            <TextField fx:id="nomField" promptText="Ex: Forêt de Ain Draham"
+                       style="-fx-background-color: white; -fx-border-color: #d1d5db;
+                              -fx-border-radius: 8; -fx-background-radius: 8;
+                              -fx-font-size: 13; -fx-padding: 10 14; -fx-text-fill: #1e293b;
+                              -fx-prompt-text-fill: #9ca3af;"/>
+        </VBox>
+
+        <!-- Ligne 1b : Gouvernorat -->
+        <VBox spacing="4" style="-fx-padding: 0 0 14 0;">
+            <Label text="GOUVERNORAT *"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-letter-spacing: 0.5;"/>
+            <ComboBox fx:id="gouvernoratCombo" maxWidth="Infinity"
+                      promptText="Sélectionnez un gouvernorat..."
+                      style="-fx-background-color: white; -fx-border-color: #d1d5db;
+                             -fx-border-radius: 8; -fx-background-radius: 8;
+                             -fx-font-size: 13; -fx-padding: 4 8;"/>
+        </VBox>
+
+        <!-- Ligne 2 : Localisation + bouton carte -->
+        <VBox spacing="4" style="-fx-padding: 0 0 14 0;">
+            <Label text="LOCALISATION *"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-letter-spacing: 0.5;"/>
+            <HBox spacing="8">
+                <TextField fx:id="localisationField" promptText="Ex: Jendouba, Bizerte..."
+                           HBox.hgrow="ALWAYS"
+                           style="-fx-background-color: white; -fx-border-color: #d1d5db;
+                                  -fx-border-radius: 8; -fx-background-radius: 8;
+                                  -fx-font-size: 13; -fx-padding: 10 14; -fx-text-fill: #1e293b;
+                                  -fx-prompt-text-fill: #9ca3af;"/>
+                <Button text="&#128205; Carte" onAction="#ouvrirCarteLocalisation"
+                        style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                               -fx-font-size: 12; -fx-font-weight: bold;
+                               -fx-background-radius: 8; -fx-cursor: hand; -fx-padding: 10 14;"/>
+            </HBox>
+            <!-- Coordonnées sélectionnées sur la carte -->
+            <Label fx:id="lblCoords" text=""
+                   style="-fx-font-size: 10; -fx-text-fill: #16a34a; -fx-padding: 2 0 0 2;"/>
+        </VBox>
+
+        <!-- Ligne 3 : Superficie -->
+        <VBox spacing="4" style="-fx-padding: 0 0 14 0;">
+            <Label text="SUPERFICIE (hectares) *"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-letter-spacing: 0.5;"/>
+            <TextField fx:id="superficieField" promptText="Ex: 18500"
+                       style="-fx-background-color: white; -fx-border-color: #d1d5db;
+                              -fx-border-radius: 8; -fx-background-radius: 8;
+                              -fx-font-size: 13; -fx-padding: 10 14; -fx-text-fill: #1e293b;
+                              -fx-prompt-text-fill: #9ca3af;"/>
+        </VBox>
+
+        <!-- Ligne 4 : Végétation + Risque -->
+        <HBox spacing="16" style="-fx-padding: 0 0 14 0;">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="VÉGÉTATION *"
+                       style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-letter-spacing: 0.5;"/>
+                <ComboBox fx:id="vegetationCombo" maxWidth="Infinity"
+                          style="-fx-background-color: white; -fx-border-color: #d1d5db;
+                                 -fx-border-radius: 8; -fx-background-radius: 8;
+                                 -fx-font-size: 13; -fx-padding: 4 8;"/>
+            </VBox>
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="NIVEAU DE RISQUE *"
+                       style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-letter-spacing: 0.5;"/>
+                <ComboBox fx:id="risqueCombo" maxWidth="Infinity"
+                          style="-fx-background-color: white; -fx-border-color: #d1d5db;
+                                 -fx-border-radius: 8; -fx-background-radius: 8;
+                                 -fx-font-size: 13; -fx-padding: 4 8;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Ligne 5 : Date -->
+        <VBox spacing="4" style="-fx-padding: 0 0 8 0;">
+            <Label text="DATE DE CRÉATION"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-letter-spacing: 0.5;"/>
+            <DatePicker fx:id="dateCreationPicker" maxWidth="Infinity"
+                        style="-fx-background-color: white; -fx-border-color: #d1d5db;
+                               -fx-border-radius: 8; -fx-background-radius: 8;
+                               -fx-font-size: 13; -fx-padding: 4 8;"/>
+        </VBox>
+    </VBox>
+
+    <!-- ══ SÉPARATEUR ══ -->
+    <Separator style="-fx-background-color: #e5e7eb;"/>
+
+    <!-- ══ BOUTONS ══ -->
+    <HBox spacing="12" alignment="CENTER_RIGHT"
+          style="-fx-padding: 16 28; -fx-background-color: white;">
+        <Button text="Annuler" onAction="#annuler"
+                prefHeight="42" prefWidth="120"
+                style="-fx-background-color: white; -fx-text-fill: #374151;
+                       -fx-font-size: 13; -fx-font-weight: bold; -fx-background-radius: 10;
+                       -fx-border-color: #d1d5db; -fx-border-radius: 10;
+                       -fx-border-width: 1; -fx-cursor: hand;"/>
+        <Button text="&#10003;  Enregistrer" onAction="#validerEtAjouter"
+                prefHeight="42" prefWidth="150"
+                style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                       -fx-font-size: 13; -fx-font-weight: bold; -fx-background-radius: 10;
+                       -fx-cursor: hand;
+                       -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.4),10,0,0,3);"/>
+    </HBox>
+
+</VBox>

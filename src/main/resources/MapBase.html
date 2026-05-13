@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Gestion Forestière - Ajouter une forêt</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #e9f5e9;
+            padding: 20px;
+            color: #1e3a2f;
+        }
+
+        /* Conteneur principal responsif */
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        /* En-tête */
+        .header {
+            background: #1e4a3b;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            font-weight: 600;
+            font-size: 1.8rem;
+            letter-spacing: -0.3px;
+        }
+
+        .header p {
+            opacity: 0.85;
+            margin-top: 6px;
+            font-size: 0.95rem;
+        }
+
+        /* Grille principale : formulaire + carte */
+        .main-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+
+        /* COLONNE GAUCHE : choisir localisation + liste */
+        .location-panel {
+            flex: 1.2;
+            min-width: 260px;
+            background: #fefdf7;
+            border-right: 1px solid #ddebe3;
+            padding: 24px 20px;
+        }
+
+        .location-panel h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e4a3b;
+            margin-bottom: 16px;
+            border-left: 5px solid #2b8c5e;
+            padding-left: 14px;
+        }
+
+        .region-selector {
+            margin-bottom: 28px;
+        }
+
+        .region-selector label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: #235b48;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 20px;
+            border: 1px solid #cbdcd3;
+            background: white;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus {
+            border-color: #2b8c5e;
+            box-shadow: 0 0 0 2px rgba(43, 140, 94, 0.2);
+        }
+
+        .city-list {
+            background: white;
+            border-radius: 28px;
+            border: 1px solid #ddebe3;
+            padding: 12px 0;
+            max-height: 340px;
+            overflow-y: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .city-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: 0.1s;
+            font-size: 0.9rem;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .city-item:hover {
+            background: #e6f4ef;
+        }
+
+        .city-item.active {
+            background: #d0efe5;
+            border-left-color: #1e6b4c;
+            font-weight: 500;
+            color: #0e3d2f;
+        }
+
+        .city-name {
+            flex: 1;
+        }
+
+        .badge-coord {
+            font-size: 0.7rem;
+            background: #e2e8e4;
+            padding: 3px 8px;
+            border-radius: 30px;
+            color: #2d5a48;
+            font-family: monospace;
+        }
+
+        .info-coords {
+            margin-top: 20px;
+            background: #eef3f0;
+            border-radius: 24px;
+            padding: 12px 18px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .info-coords span {
+            color: #196f4d;
+            font-weight: 700;
+        }
+
+        /* COLONNE DROITE : carte + formulaire ajout forêt */
+        .map-panel {
+            flex: 2;
+            min-width: 320px;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+        }
+
+        .map-container {
+            height: 380px;
+            width: 100%;
+            background: #cbdcd3;
+            position: relative;
+            z-index: 1;
+            border-bottom: 1px solid #e0ece6;
+        }
+
+        #foretMap {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .forest-form {
+            padding: 24px 28px;
+            background: #ffffff;
+        }
+
+        .forest-form h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1c4d3b;
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: #2d5a48;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 20px;
+            border: 1px solid #cfe3da;
+            background: #fefefc;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: #2b8c5e;
+            outline: none;
+            box-shadow: 0 0 0 2px #c0e0d3;
+        }
+
+        .btn-submit {
+            background: #1f6e4f;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-submit:hover {
+            background: #0d553e;
+            transform: scale(0.98);
+        }
+
+        .info-marker {
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            border-left: 4px solid #1f6e4f;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+        }
+
+        .leaflet-control-attribution {
+            font-size: 9px;
+        }
+
+        @media (max-width: 780px) {
+            .main-grid {
+                flex-direction: column;
+            }
+            .location-panel {
+                border-right: none;
+                border-bottom: 1px solid #ddebe3;
+            }
+            .map-container {
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <div class="header">
+        <h1>🌲 Gestion des forêts</h1>
+        <p>Ajouter une nouvelle forêt · Positionnez le marqueur sur la carte ou sélectionnez une localité</p>
+    </div>
+    <div class="main-grid">
+        <!-- PANEL GAUCHE : régions + villes (issue de la maquette Constantine/Palma etc) -->
+        <div class="location-panel">
+            <h2>📍 Choisir la localisation</h2>
+            <div class="region-selector">
+                <label>Région / Wilaya</label>
+                <select id="regionSelect">
+                    <option value="constantine">🌍 Constantine</option>
+                    <option value="palma" selected>🌴 Palma</option>
+                </select>
+            </div>
+            <div class="city-list" id="cityList">
+                <!-- les villes seront injectées dynamiquement -->
+                <div class="city-item">Chargement...</div>
+            </div>
+            <div class="info-coords">
+                📌 Position actuelle : <span id="latDisplay">—</span> , <span id="lngDisplay">—</span>
+            </div>
+            <p style="font-size: 12px; margin-top: 16px; text-align: center; color: #5c7c6e;">✨ Cliquez sur une ville ou directement sur la carte pour placer le marqueur</p>
+        </div>
+
+        <!-- PANEL DROIT : carte + formulaire forêt -->
+        <div class="map-panel">
+            <div class="map-container">
+                <div id="foretMap"></div>
+            </div>
+            <div class="forest-form">
+                <h3>🌳 Détails de la forêt</h3>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>🌿 Nom de la forêt</label>
+                        <input type="text" id="forestName" placeholder="ex: Forêt de Sidi Bouzid" autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label>📐 Superficie (ha)</label>
+                        <input type="number" id="forestArea" step="0.1" placeholder="hectares">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>📝 Description</label>
+                    <textarea rows="2" id="forestDesc" placeholder="Écosystème, espèces, particularités..."></textarea>
+                </div>
+                <div class="info-marker" style="margin: 12px 0; background:#f7faf8;">
+                    🗺️ Marqueur placé aux coordonnées : <strong id="markerCoordsPreview">non défini</strong>
+                </div>
+                <button class="btn-submit" id="addForestBtn">✅ Enregistrer la forêt</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // BASE DE DONNÉES LOCALISATIONS (issues du fichier + enrichies)
+    // --------------------------------------------------------------
+    const locationsDB = {
+        // Région Constantine (d'après énumération, coordonnées représentatives)
+        constantine: {
+            center: [36.365, 6.6147],
+            villes: {
+                "Constantine": [36.365, 6.6147],
+                "Constantia": [36.370, 6.6200],
+                "Ello": [36.352, 6.6080],
+                "Iona": [36.375, 6.6300],
+                "Ilion": [36.388, 6.6020],
+                "Palma": [36.345, 6.5900],
+                "Bejaia": [36.751, 5.0643],
+                "XosX": [36.310, 6.5600],
+                "Pug": [36.400, 6.6500],
+                "Compania": [36.420, 6.5800],
+                "Potenza": [36.440, 6.5400],
+                "Coriglian": [36.465, 6.5250],
+                "Rossan": [36.480, 6.5100],
+                "Calabr": [36.500, 6.4950]
+            }
+        },
+        // Région Palma / Sud Oasien (d’après capture : nombreux oueds / oasis)
+        palma: {
+            center: [33.315, 8.145],
+            villes: {
+                "Sidi Bouzid": [35.038, 9.485],
+                "Biskra": [34.850, 5.728],
+                "Tamanrasset": [22.785, 5.523],
+                "Oued Eddahab": [23.713, -15.935],
+                "Oued Djerid": [33.900, 8.150],
+                "Oued Ziz": [31.500, -4.500],
+                "Oued Aïn El Hani": [34.200, 6.300],
+                "Oued Khenifra": [32.930, -5.660],
+                "Oued Moulay Idriss": [34.050, -5.520],
+                "Oued Slim": [33.250, -7.600],
+                "Oued Youssef": [35.200, 2.300],
+                "Oued Taoudenni": [22.678, -3.978],
+                "Oued Tizi-Ouzou": [36.711, 4.050],
+                "Oued Taza": [34.210, -4.020],
+                "Oued Tizer": [31.850, -5.500],
+                "Oued Tizi-Kher": [36.500, 4.200],
+                "Oued Tizi-Yaouen": [36.540, 4.160],
+                "Oued Tizi-Zertou": [36.580, 4.100],
+                "Oued Tizi-Yaouene": [36.570, 4.180],
+                "Oued Tiziyoun": [36.550, 4.140]
+            }
+        }
+    };
+
+    // État actuel
+    let currentRegion = "palma";      // 'constantine' ou 'palma'
+    let currentMarker = null;
+    let currentCoords = { lat: null, lng: null };
+    let mapInstance = null;
+
+    // Éléments DOM
+    const regionSelect = document.getElementById('regionSelect');
+    const cityListDiv = document.getElementById('cityList');
+    const latDisplaySpan = document.getElementById('latDisplay');
+    const lngDisplaySpan = document.getElementById('lngDisplay');
+    const markerCoordsPreviewSpan = document.getElementById('markerCoordsPreview');
+    const forestNameInput = document.getElementById('forestName');
+    const forestAreaInput = document.getElementById('forestArea');
+    const forestDescInput = document.getElementById('forestDesc');
+    const addBtn = document.getElementById('addForestBtn');
+
+    // --------------------------------------------------------------
+    // 1. Initialisation de la carte (attachée correctement au div)
+    // --------------------------------------------------------------
+    function initMap() {
+        // Vérifier si la carte existe déjà et la détruire proprement pour éviter le "map detach"
+        if (mapInstance !== null) {
+            mapInstance.remove();
+            mapInstance = null;
+        }
+        // Créer une nouvelle carte dans le conteneur "foretMap"
+        const centerLatLng = locationsDB[currentRegion].center;
+        mapInstance = L.map('foretMap').setView(centerLatLng, 8);
+
+        // Tuile propre (OpenStreetMap classique)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> & CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 18,
+            minZoom: 3
+        }).addTo(mapInstance);
+
+        // Ajouter événement clic sur la carte -> placer marqueur
+        mapInstance.on('click', function(e) {
+            const { lat, lng } = e.latlng;
+            placeMarkerAndUpdate(lat, lng);
+        });
+
+        // Ajouter marqueur par défaut sur le centre région/palma ou constantine
+        placeMarkerAndUpdate(centerLatLng[0], centerLatLng[1]);
+    }
+
+    // Placer marqueur + mise à jour coordonnées et affichage
+    function placeMarkerAndUpdate(lat, lng) {
+        if (!mapInstance) return;
+        // Supprime l'ancien marqueur
+        if (currentMarker) {
+            mapInstance.removeLayer(currentMarker);
+        }
+        // Créer nouveau marqueur + popup info
+        currentMarker = L.marker([lat, lng], { draggable: false }).addTo(mapInstance);
+        currentMarker.bindPopup(`📍 Forêt potentielle<br>Lat: ${lat.toFixed(5)}<br>Lng: ${lng.toFixed(5)}`).openPopup();
+
+        // Enregistrer les coordonnées actuelles
+        currentCoords = { lat: lat, lng: lng };
+
+        // Mettre à jour l'affichage
+        latDisplaySpan.innerText = lat.toFixed(5);
+        lngDisplaySpan.innerText = lng.toFixed(5);
+        markerCoordsPreviewSpan.innerText = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+
+        // Optionnel: centrer la vue légèrement sur le marqueur si besoin
+        mapInstance.setView([lat, lng], mapInstance.getZoom());
+    }
+
+    // Mise à jour de la liste des villes selon la région
+    function renderCityList() {
+        const regionData = locationsDB[currentRegion];
+        if (!regionData) return;
+        const villes = regionData.villes;
+        const cityNames = Object.keys(villes);
+
+        if (cityNames.length === 0) {
+            cityListDiv.innerHTML = '<div class="city-item">Aucune ville disponible</div>';
+            return;
+        }
+
+        cityListDiv.innerHTML = '';
+        cityNames.forEach(city => {
+            const coords = villes[city];
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'city-item';
+            itemDiv.innerHTML = `
+                <span class="city-name">🏙️ ${city}</span>
+                <span class="badge-coord">${coords[0].toFixed(2)}°, ${coords[1].toFixed(2)}°</span>
+            `;
+            itemDiv.addEventListener('click', (e) => {
+                // Retire active de tous les éléments
+                document.querySelectorAll('.city-item').forEach(el => el.classList.remove('active'));
+                itemDiv.classList.add('active');
+                // Placer le marqueur aux coordonnées de la ville
+                if (mapInstance) {
+                    placeMarkerAndUpdate(coords[0], coords[1]);
+                    // zoom un peu plus pour voir le détail
+                    mapInstance.setView([coords[0], coords[1]], 10);
+                }
+            });
+            cityListDiv.appendChild(itemDiv);
+        });
+    }
+
+    // Changement de région : réinitialiser la carte + villes + marqueur centre région
+    function changeRegion(regionKey) {
+        currentRegion = regionKey;
+        const regionData = locationsDB[currentRegion];
+        if (!regionData) return;
+
+        // Mettre à jour liste des villes
+        renderCityList();
+
+        // Re-initialiser la carte en conservant le même conteneur mais en reset l'instance
+        // pour éviter l'erreur "map already initialized" ou "detached"
+        if (mapInstance) {
+            // On récupère le nouveau centre
+            const newCenter = regionData.center;
+            mapInstance.setView(newCenter, 8);
+            // Placer le marqueur sur le nouveau centre
+            placeMarkerAndUpdate(newCenter[0], newCenter[1]);
+        } else {
+            // Cas improbable car initMap est appelé au chargement, mais sécurité
+            initMap();
+        }
+        // Supprimer la classe active sur toutes les villes après changement région
+        const activeItems = document.querySelectorAll('.city-item.active');
+        activeItems.forEach(item => item.classList.remove('active'));
+    }
+
+    // Écouteur sur select region
+    regionSelect.addEventListener('change', (e) => {
+        const newRegion = e.target.value;
+        changeRegion(newRegion);
+    });
+
+    // Vérifier formulaire et enregistrement
+    function addForest() {
+        const forestName = forestNameInput.value.trim();
+        const area = forestAreaInput.value.trim();
+        const desc = forestDescInput.value.trim();
+
+        if (!forestName) {
+            alert("Veuillez indiquer le nom de la forêt 🌲");
+            return;
+        }
+        if (currentCoords.lat === null || currentCoords.lng === null) {
+            alert("Veuillez sélectionner un emplacement sur la carte (cliquez sur la carte ou choisissez une ville)");
+            return;
+        }
+
+        // Récupérer la région active pour contextualiser
+        const regionLabel = currentRegion === 'constantine' ? 'Constantine' : 'Palma & Sahara';
+
+        // Simuler l'enregistrement (message console et alert)
+        const forestData = {
+            id: Date.now(),
+            name: forestName,
+            area: area ? parseFloat(area) : null,
+            description: desc || "Aucune description",
+            coordinates: { lat: currentCoords.lat, lng: currentCoords.lng },
+            region: regionLabel,
+            timestamp: new Date().toLocaleString()
+        };
+
+        console.log("✅ Forêt ajoutée :", forestData);
+
+        // Affichage d'un message stylé
+        alert(`🌲 Forêt "${forestName}" ajoutée avec succès !\n📍 Position : ${currentCoords.lat.toFixed(5)}, ${currentCoords.lng.toFixed(5)}\n📐 Région: ${regionLabel}`);
+
+        // Optionnel : réinitialiser certains champs mais garder la carte
+        forestNameInput.value = "";
+        forestAreaInput.value = "";
+        forestDescInput.value = "";
+
+        // On peut laisser le marqueur actuel, on peut reset le focus
+        forestNameInput.focus();
+    }
+
+    // Gestionnaire d'événement pour le bouton
+    addBtn.addEventListener('click', addForest);
+
+    // Initialisation complète au chargement de la page
+    window.addEventListener('load', () => {
+        // S'assurer que le conteneur de la carte est bien dans le DOM
+        // Initialisation de la carte avec la région par défaut "palma"
+        initMap();
+        // Afficher la liste des villes de la région courante (palma)
+        renderCityList();
+        // Mettre en surbrillance l'option de sélection
+        regionSelect.value = currentRegion;
+
+        // Ajout d'un petit garde-fou redimensionnement leaflet
+        window.addEventListener('resize', () => {
+            if (mapInstance) {
+                setTimeout(() => {
+                    mapInstance.invalidateSize();
+                }, 100);
+            }
+        });
+    });
+</script>
+</body>
+</html>

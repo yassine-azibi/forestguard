@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Carte ForestGuard</title>
+
+    <!-- ══════════════════════════════════════════════════════
+         Leaflet 1.9.4 — CSS inline (pas de CDN externe)
+         JavaFX WebView ne charge pas les CDN non-CORS
+         ══════════════════════════════════════════════════════ -->
+    <style>
+        /* ── Reset ── */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html, body { width:100%; height:100%; overflow:hidden; background:#0a1a0e; font-family:Arial,sans-serif; }
+        #map { width:100%; height:100%; }
+
+        /* ── Leaflet CSS inline minimal ── */
+        .leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile-container,.leaflet-pane > svg,.leaflet-pane > canvas,.leaflet-zoom-box,.leaflet-image-layer,.leaflet-layer{position:absolute;left:0;top:0}
+        .leaflet-container{overflow:hidden}
+        .leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none}
+        .leaflet-tile::selection{background:transparent}
+        .leaflet-tile::-moz-selection{background:transparent}
+        .leaflet-tile{visibility:hidden}
+        .leaflet-tile-loaded{visibility:inherit}
+        .leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800}
+        .leaflet-overlay-pane svg{-moz-user-select:none}
+        .leaflet-pane{z-index:400}
+        .leaflet-tile-pane{z-index:200}
+        .leaflet-overlay-pane{z-index:400}
+        .leaflet-shadow-pane{z-index:500}
+        .leaflet-marker-pane{z-index:600}
+        .leaflet-tooltip-pane{z-index:650}
+        .leaflet-popup-pane{z-index:700}
+        .leaflet-map-pane canvas{z-index:100}
+        .leaflet-map-pane svg{z-index:200}
+        .leaflet-vml-shape{width:1px;height:1px}
+        .lvml{behavior:url(#default#VML);display:inline-block;position:absolute}
+        .leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto}
+        .leaflet-top,.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none}
+        .leaflet-top{top:0}
+        .leaflet-right{right:0}
+        .leaflet-bottom{bottom:0}
+        .leaflet-left{left:0}
+        .leaflet-control{float:left;clear:both}
+        .leaflet-right .leaflet-control{float:right}
+        .leaflet-top .leaflet-control{margin-top:10px}
+        .leaflet-bottom .leaflet-control{margin-bottom:10px}
+        .leaflet-left .leaflet-control{margin-left:10px}
+        .leaflet-right .leaflet-control{margin-right:10px}
+        .leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity .2s linear;-moz-transition:opacity .2s linear;transition:opacity .2s linear}
+        .leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1}
+        .leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}
+        svg.leaflet-zoom-animated{will-change:transform}
+        .leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform .25s cubic-bezier(0,0,.25,1);-moz-transition:-moz-transform .25s cubic-bezier(0,0,.25,1);transition:transform .25s cubic-bezier(0,0,.25,1)}
+        .leaflet-zoom-anim .leaflet-tile,.leaflet-pan-anim .leaflet-tile{-webkit-transition:none;-moz-transition:none;transition:none}
+        .leaflet-zoom-anim .leaflet-zoom-animated{will-change:transform}
+        .leaflet-interactive{cursor:pointer}
+        .leaflet-grab{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}
+        .leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair}
+        .leaflet-popup-pane,.leaflet-control{cursor:auto}
+        .leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}
+        .leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-image-layer,.leaflet-pane > svg path,.leaflet-tile-container{pointer-events:none}
+        .leaflet-marker-icon.leaflet-interactive,.leaflet-image-layer.leaflet-interactive,.leaflet-pane > svg path.leaflet-interactive,svg.leaflet-image-layer.leaflet-interactive path{pointer-events:visiblePainted;pointer-events:auto}
+        .leaflet-container{background:#0d1f12;outline-offset:1px;-webkit-tap-highlight-color:transparent}
+        .leaflet-container a{color:#0078A8}
+        .leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,.5)}
+        .leaflet-container{font-size:12px;font-size:.75rem}
+        .leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:4px}
+        .leaflet-bar a{background-color:rgba(8,22,13,0.95);border-bottom:1px solid rgba(74,222,128,0.15);width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:#4ade80}
+        .leaflet-bar a,.leaflet-control-layers-toggle{background-position:50% 50%;background-repeat:no-repeat;display:block}
+        .leaflet-bar a:hover,.leaflet-bar a:focus{background-color:rgba(74,222,128,0.15);color:#4ade80}
+        .leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px}
+        .leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none}
+        .leaflet-bar a.leaflet-disabled{cursor:default;background-color:rgba(8,22,13,0.5);color:#1e3a1e}
+        .leaflet-touch .leaflet-bar a{width:30px;height:30px;line-height:30px}
+        .leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px 'Lucida Console',Monaco,monospace;text-indent:1px}
+        .leaflet-touch .leaflet-control-zoom-in{font-size:22px}
+        .leaflet-touch .leaflet-control-zoom-out{font-size:20px}
+        .leaflet-control-attribution{background:rgba(8,22,13,0.7);color:rgba(255,255,255,0.3);margin:0;font-size:9px;padding:2px 6px}
+        .leaflet-control-attribution a{color:rgba(74,222,128,0.6);text-decoration:none}
+        .leaflet-control-scale-line{border:2px solid rgba(74,222,128,0.4);border-top:none;line-height:1.1;padding:2px 5px 1px;font-size:11px;white-space:nowrap;overflow:hidden;-moz-box-sizing:border-box;box-sizing:border-box;background:rgba(8,22,13,0.7);color:rgba(255,255,255,0.5)}
+        .leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}
+        .leaflet-popup-content-wrapper{padding:1px;text-align:left;border-radius:12px}
+        .leaflet-popup-content{margin:13px 24px 13px 20px;line-height:1.3;font-size:13px;font-size:1.08333em;min-height:1px}
+        .leaflet-popup-content p{margin:17.6px 0;margin:1.1em 0}
+        .leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-left:-20px;overflow:hidden;pointer-events:none}
+        .leaflet-popup-tip{width:17px;height:17px;padding:1px;margin:-10px auto 0;pointer-events:auto;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}
+        .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:rgba(8,22,13,0.97);color:#e2e8f0;box-shadow:0 3px 14px rgba(0,0,0,0.8)}
+        .leaflet-container a.leaflet-popup-close-button{position:absolute;top:0;right:0;border:none;text-align:center;width:24px;height:24px;font:16px/24px Tahoma,Verdana,sans-serif;color:#64748b;text-decoration:none;background:transparent}
+        .leaflet-container a.leaflet-popup-close-button:hover,.leaflet-container a.leaflet-popup-close-button:focus{color:#cbd5e1}
+        .leaflet-popup-scrolled{overflow:auto}
+        .leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom:1}
+        .leaflet-oldie .leaflet-popup-tip{width:24px;-ms-filter:"progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";filter:progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)}
+        .leaflet-oldie .leaflet-control-zoom,.leaflet-oldie .leaflet-control-layers,.leaflet-oldie .leaflet-popup-content-wrapper,.leaflet-oldie .leaflet-popup-tip{border:1px solid #999}
+        .leaflet-div-icon{background:#fff;border:1px solid #666}
+        .leaflet-tooltip{position:absolute;padding:6px;background-color:rgba(8,22,13,0.92);border:1px solid rgba(74,222,128,0.3);border-radius:8px;color:#e2e8f0;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.6)}
+        .leaflet-tooltip.leaflet-interactive{cursor:pointer;pointer-events:auto}
+
+        /* ── UI custom ── */
+        #panel {
+            position:absolute; top:16px; right:16px;
+            background:rgba(8,22,13,0.97);
+            border:1px solid rgba(74,222,128,0.25);
+            border-radius:14px; padding:18px;
+            color:white; min-width:260px; max-width:300px;
+            display:none; z-index:1000;
+            box-shadow:0 8px 32px rgba(0,0,0,0.6);
+        }
+        #panel h3 { margin:0 0 10px; color:#4ade80; font-size:15px; padding-right:24px; }
+        #panel p  { margin:5px 0; font-size:12px; color:#94a3b8; line-height:1.6; }
+        #panel p b { color:#e2e8f0; }
+        .badge { display:inline-block; padding:3px 12px; border-radius:20px; font-size:11px; font-weight:700; margin-top:8px; }
+        .CRITIQUE { background:#fee2e2; color:#dc2626; }
+        .ELEVE    { background:#fed7aa; color:#ea580c; }
+        .MOYEN    { background:#fef9c3; color:#ca8a04; }
+        .FAIBLE   { background:#dcfce7; color:#16a34a; }
+        #btnVisite { margin-top:12px; width:100%; padding:9px; background:#16a34a; color:white; border:none; border-radius:8px; cursor:pointer; font-size:13px; font-weight:600; }
+        #btnVisite:hover { background:#15803d; }
+        #btnFermer { position:absolute; top:10px; right:12px; background:transparent; border:none; color:#64748b; font-size:20px; cursor:pointer; }
+
+        #controls {
+            position:absolute; top:16px; left:16px;
+            z-index:1000; display:flex; flex-direction:column; gap:6px;
+        }
+        .ctrl-group {
+            display:flex; flex-direction:column; gap:4px;
+            background:rgba(8,22,13,0.93);
+            border:1px solid rgba(74,222,128,0.15);
+            border-radius:10px; padding:10px; min-width:150px;
+        }
+        .ctrl-label { font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(74,222,128,0.45); padding:0 2px 5px; border-bottom:1px solid rgba(74,222,128,0.08); margin-bottom:2px; }
+        .ctrl-group button {
+            display:flex; align-items:center; gap:8px; padding:7px 11px;
+            background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+            border-radius:7px; cursor:pointer; font-size:12px; font-weight:500;
+            color:rgba(255,255,255,0.72); white-space:nowrap; text-align:left;
+        }
+        .ctrl-group button:hover { background:rgba(74,222,128,0.09); color:#4ade80; border-color:rgba(74,222,128,0.28); }
+        .ctrl-group button.active { background:rgba(74,222,128,0.14); border-color:rgba(74,222,128,0.4); color:#4ade80; }
+
+        #coords-bar {
+            position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
+            z-index:1000; background:rgba(8,22,13,0.9); border:1px solid rgba(74,222,128,0.12);
+            border-radius:8px; padding:6px 16px; font-size:11px; font-family:monospace;
+            color:rgba(255,255,255,0.35); pointer-events:none; white-space:nowrap;
+        }
+        #coords-bar span { color:rgba(74,222,128,0.85); }
+
+        #status {
+            position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+            z-index:2000; background:rgba(8,22,13,0.97); border:1px solid rgba(74,222,128,0.3);
+            border-radius:12px; padding:20px 32px; color:#4ade80; font-size:14px; text-align:center;
+        }
+
+        .foret-marker-div { cursor:pointer; }
+        .foret-marker-div:hover svg { transform:scale(1.3); }
+        .foret-marker-div svg { transition:transform .2s; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.8)); }
+
+        /* ── LÉGENDE ── */
+        #legende {
+            position: absolute;
+            bottom: 52px;
+            right: 16px;
+            z-index: 1000;
+            background: rgba(8,22,13,0.95);
+            border: 1px solid rgba(74,222,128,0.2);
+            border-radius: 12px;
+            padding: 14px 16px;
+            min-width: 200px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .legende-titre {
+            font-size: 11px;
+            font-weight: 700;
+            color: #4ade80;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(74,222,128,0.15);
+        }
+        .legende-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 6px 0;
+        }
+        .legende-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 6px currentColor;
+        }
+        .legende-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #e2e8f0;
+            min-width: 60px;
+        }
+        .legende-desc {
+            font-size: 10px;
+            color: rgba(255,255,255,0.35);
+        }
+        .legende-sep {
+            height: 1px;
+            background: rgba(74,222,128,0.1);
+            margin: 8px 0;
+        }
+        .legende-cercle {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            flex-shrink: 0;
+        }
+        .legende-arbre {
+            font-size: 14px;
+            width: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div id="status">Chargement de la carte...</div>
+
+<div id="panel">
+    <button id="btnFermer" onclick="fermerPanel()">&#x2715;</button>
+    <h3 id="pNom"></h3>
+    <p>Localisation : <b id="pLoc"></b></p>
+    <p>Superficie : <b id="pSup"></b> ha</p>
+    <p>Vegetation : <b id="pVeg"></b></p>
+    <span id="pBadge" class="badge"></span><br/>
+    <button id="btnVisite" onclick="ouvrirVisite()">&#9654; Visite Virtuelle</button>
+</div>
+
+<div id="controls">
+    <div class="ctrl-group">
+        <div class="ctrl-label">Couches</div>
+        <button id="btn-satellite" onclick="switchLayer('satellite')">&#9733; Satellite</button>
+        <button id="btn-osm" class="active" onclick="switchLayer('osm')">&#9788; Standard</button>
+        <button id="btn-topo" onclick="switchLayer('topo')">&#9650; Topographie</button>
+    </div>
+    <div class="ctrl-group">
+        <div class="ctrl-label">Navigation</div>
+        <button onclick="flyTo(36.8065,10.1815,13)">&#9670; Tunis</button>
+        <button onclick="flyTo(37.2744,9.8739,12)">&#9670; Bizerte</button>
+        <button onclick="flyTo(36.7444,8.7480,12)">&#9670; Jendouba</button>
+        <button onclick="flyTo(36.9547,8.7564,12)">&#9650; Tabarka</button>
+        <button onclick="flyTo(36.7333,9.1833,12)">&#9670; Beja</button>
+        <button onclick="flyTo(36.1822,8.7149,12)">&#9670; Le Kef</button>
+        <button onclick="flyTo(36.0897,9.3694,12)">&#9670; Siliana</button>
+        <button onclick="flyTo(35.6781,10.1006,13)">&#9670; Kairouan</button>
+        <button onclick="flyTo(35.1740,8.8310,12)">&#9670; Kasserine</button>
+        <button onclick="flyTo(35.8245,10.6347,13)">&#9670; Sousse</button>
+        <button onclick="flyTo(34.7398,10.7603,13)">&#9670; Sfax</button>
+        <button onclick="flyTo(36.4513,10.7347,12)">&#9670; Nabeul</button>
+        <button onclick="flyTo(36.4028,10.1419,12)">&#9670; Zaghouan</button>
+        <button onclick="flyTo(33.8869,9.5375,7)">&#8635; Vue globale</button>
+    </div>
+</div>
+
+<div id="coords-bar">
+    Lat <span id="lat">33.8869</span> &nbsp;|&nbsp;
+    Lng <span id="lng">9.5375</span> &nbsp;|&nbsp;
+    Zoom <span id="zoom">7</span>
+</div>
+
+<!-- ── LÉGENDE ── -->
+<div id="legende">
+    <div class="legende-titre">&#9650; Niveau de risque</div>
+    <div class="legende-item"><span class="legende-dot" style="background:#dc2626;"></span><span class="legende-label">Critique</span><span class="legende-desc">Danger immédiat</span></div>
+    <div class="legende-item"><span class="legende-dot" style="background:#ea580c;"></span><span class="legende-label">Élevé</span><span class="legende-desc">Surveillance renforcée</span></div>
+    <div class="legende-item"><span class="legende-dot" style="background:#ca8a04;"></span><span class="legende-label">Moyen</span><span class="legende-desc">Vigilance requise</span></div>
+    <div class="legende-item"><span class="legende-dot" style="background:#16a34a;"></span><span class="legende-label">Faible</span><span class="legende-desc">Situation normale</span></div>
+    <div class="legende-sep"></div>
+    <div class="legende-item"><span class="legende-cercle"></span><span class="legende-label" style="color:rgba(255,255,255,0.5);font-size:10px;">Zone de couverture</span></div>
+    <div class="legende-item"><span class="legende-arbre">&#9651;</span><span class="legende-label" style="color:rgba(255,255,255,0.5);font-size:10px;">Foret enregistree</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     Leaflet 1.9.4 — chargé via le proxy local Java
+     Le port __PORT__ est remplacé par Java avant injection
+     ══════════════════════════════════════════════════════ -->
+<script>
+    // ── PORT injecté par Java ──────────────────────────────
+    var PROXY_PORT = '__PORT__';  // Java remplace cette valeur
+
+    // ── Sources de tuiles (ordre de priorité) ─────────────
+    var TILE_SOURCES = {
+        osm: {
+            proxy:  'http://127.0.0.1:' + PROXY_PORT + '/tiles/{z}/{x}/{y}.png',
+            direct: [
+                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            ],
+            attribution: '&copy; OpenStreetMap'
+        },
+        satellite: {
+            direct: [
+                'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+            ],
+            attribution: '&copy; Esri'
+        },
+        topo: {
+            proxy:  'http://127.0.0.1:' + PROXY_PORT + '/topo/{z}/{x}/{y}.png',
+            direct: [
+                'https://tile.opentopomap.org/{z}/{x}/{y}.png'
+            ],
+            attribution: '&copy; OpenTopoMap'
+        }
+    };
+
+    // ════════════════════════════════════════════════════════
+    //  CHARGEMENT LEAFLET — via proxy local si disponible
+    //  sinon depuis CDN jsDelivr (plus fiable que unpkg)
+    // ════════════════════════════════════════════════════════
+    var LEAFLET_URLS = [];
+
+    // Si proxy disponible, essayer de servir Leaflet localement
+    if (PROXY_PORT && PROXY_PORT !== '__PORT__') {
+        LEAFLET_URLS.push('http://127.0.0.1:' + PROXY_PORT + '/leaflet/leaflet.js');
+    }
+    // Fallback CDN (jsDelivr, cdnjs, unpkg — dans l'ordre)
+    LEAFLET_URLS.push(
+        'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js',
+        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+    );
+
+    var leafletTentative = 0;
+
+    function chargerLeaflet() {
+        if (leafletTentative >= LEAFLET_URLS.length) {
+            // Dernier recours : charger le JS inline minimal
+            chargerLeafletInline();
+            return;
+        }
+        var url = LEAFLET_URLS[leafletTentative++];
+        document.getElementById('status').textContent = 'Chargement bibliotheque carte... (tentative ' + leafletTentative + ')';
+
+        var script = document.createElement('script');
+        script.src = url;
+        script.onload = function() {
+            document.getElementById('status').textContent = 'Initialisation de la carte...';
+            initCarte();
+        };
+        script.onerror = function() {
+            console.warn('Echec chargement Leaflet depuis:', url);
+            chargerLeaflet(); // Essayer URL suivante
+        };
+        document.head.appendChild(script);
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  INIT CARTE LEAFLET
+    // ════════════════════════════════════════════════════════
+    var map;
+    var layerCourant = null;
+    var foretsDonnees = [];
+
+    function initCarte() {
+        try {
+            map = L.map('map', {
+                center: [33.8869, 9.5375],
+                zoom: 7,
+                zoomControl: true,
+                attributionControl: true
+            });
+
+            // Charger la couche OSM (avec proxy ou direct)
+            switchLayer('osm');
+
+            map.on('move', function() {
+                var c = map.getCenter();
+                document.getElementById('lat').textContent  = c.lat.toFixed(4);
+                document.getElementById('lng').textContent  = c.lng.toFixed(4);
+                document.getElementById('zoom').textContent = map.getZoom();
+            });
+
+            document.getElementById('status').style.display = 'none';
+
+            // Si des forêts étaient en attente
+            if (foretsDonnees.length > 0) {
+                afficherMarqueurs(foretsDonnees);
+            }
+
+            // Signaler à Java que la carte est prête
+            attendreJava();
+
+        } catch(e) {
+            document.getElementById('status').textContent = 'Erreur: ' + e.message;
+            console.error('Erreur initCarte:', e);
+        }
+    }
+
+    // ── Switcher de couche ────────────────────────────────
+    function switchLayer(type) {
+        if (layerCourant) { map.removeLayer(layerCourant); }
+
+        var src = TILE_SOURCES[type] || TILE_SOURCES.osm;
+        var url;
+
+        // Utiliser le proxy pour OSM et Topo si disponible
+        if ((type === 'osm' || type === 'topo') && PROXY_PORT && PROXY_PORT !== '__PORT__') {
+            url = src.proxy;
+        } else {
+            url = src.direct[0];
+        }
+
+        layerCourant = L.tileLayer(url, {
+            attribution: src.attribution,
+            maxZoom: 19,
+            crossOrigin: true,
+            // Filtre CSS vert sombre pour OSM
+            className: type === 'osm' ? 'leaflet-tile-osm' : ''
+        });
+
+        // Si la tuile échoue, essayer l'URL suivante
+        var directUrls = src.direct || [];
+        var directIdx  = 0;
+
+        layerCourant.on('tileerror', function(e) {
+            directIdx++;
+            if (directIdx < directUrls.length) {
+                // Remplacer la source
+                map.removeLayer(layerCourant);
+                layerCourant = L.tileLayer(directUrls[directIdx], {
+                    attribution: src.attribution,
+                    maxZoom: 19,
+                    crossOrigin: true
+                });
+                layerCourant.addTo(map);
+            }
+        });
+
+        layerCourant.addTo(map);
+
+        // Mettre à jour boutons
+        document.querySelectorAll('#controls button').forEach(function(b) { b.classList.remove('active'); });
+        var btn = document.getElementById('btn-' + type);
+        if (btn) btn.classList.add('active');
+    }
+
+    // Filtre CSS pour teinte verte sur OSM
+    var styleOsm = document.createElement('style');
+    styleOsm.textContent = '.leaflet-tile-osm { filter: hue-rotate(130deg) saturate(0.6) brightness(0.55); }';
+    document.head.appendChild(styleOsm);
+
+    // ════════════════════════════════════════════════════════
+    //  chargerForets — appelee par Java
+    // ════════════════════════════════════════════════════════
+    function chargerForets(forets) {
+        foretsDonnees = forets;
+        if (map) {
+            afficherMarqueurs(forets);
+        }
+    }
+
+    function afficherMarqueurs(forets) {
+        var couleurs = { 'CRITIQUE':'#dc2626', 'ELEVE':'#ea580c', 'MOYEN':'#ca8a04', 'FAIBLE':'#16a34a' };
+
+        forets.forEach(function(f) {
+            if (!f.lat || !f.lng || isNaN(f.lat) || isNaN(f.lng)) return;
+
+            var risque  = (f.risque || 'FAIBLE').toUpperCase();
+            var couleur = couleurs[risque] || '#16a34a';
+            var rayon   = Math.sqrt(Math.max(f.superficie || 100, 100)) * 80;
+
+            // Cercle de zone
+            var cercle = L.circle([f.lat, f.lng], {
+                radius: rayon,
+                color: couleur, weight: 2, opacity: 0.7,
+                fillColor: couleur, fillOpacity: 0.18
+            }).addTo(map);
+
+            cercle.on('click', function() { afficherPanel(f); });
+
+            // Marker SVG arbre
+            var svgIcon = L.divIcon({
+                className: 'foret-marker-div',
+                html: '<svg width="30" height="36" viewBox="0 0 30 36" xmlns="http://www.w3.org/2000/svg">' +
+                    '<polygon points="15,1 29,21 1,21" fill="' + couleur + '" opacity="0.95"/>' +
+                    '<polygon points="15,8 27,25 3,25" fill="' + couleur + '" opacity="0.75"/>' +
+                    '<rect x="12" y="23" width="6" height="10" rx="1" fill="' + couleur + '" opacity="0.85"/>' +
+                    '</svg>',
+                iconSize: [30, 36],
+                iconAnchor: [15, 36],
+                popupAnchor: [0, -36]
+            });
+
+            var marker = L.marker([f.lat, f.lng], { icon: svgIcon })
+                .addTo(map)
+                .bindTooltip(f.nom || '', { direction: 'top', offset: [0, -36] });
+
+            marker.on('click', function() { afficherPanel(f); });
+        });
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  PANEL INFO
+    // ════════════════════════════════════════════════════════
+    var foretSelectionnee = null;
+
+    function afficherPanel(f) {
+        foretSelectionnee = f;
+        document.getElementById('pNom').textContent = f.nom          || '';
+        document.getElementById('pLoc').textContent = f.localisation || '';
+        document.getElementById('pSup').textContent = f.superficie   || '';
+        document.getElementById('pVeg').textContent = f.vegetation   || '';
+        var badge = document.getElementById('pBadge');
+        var r = (f.risque || 'FAIBLE').toUpperCase();
+        badge.textContent = r;
+        badge.className   = 'badge ' + r;
+        document.getElementById('panel').style.display = 'block';
+        map.flyTo([f.lat, f.lng], 11);
+    }
+
+    function fermerPanel() { document.getElementById('panel').style.display = 'none'; }
+
+    function ouvrirVisite() {
+        if (!foretSelectionnee) return;
+
+        var nom    = foretSelectionnee.nom || 'Foret';
+        var veg    = (foretSelectionnee.vegetation || '').toLowerCase();
+        var risque = (foretSelectionnee.risque || 'FAIBLE').toUpperCase();
+        var risqueColors = {'CRITIQUE':'#dc2626','ELEVE':'#ea580c','MOYEN':'#ca8a04','FAIBLE':'#16a34a'};
+        var risqueColor  = risqueColors[risque] || '#16a34a';
+
+        var videosMeta = [
+            { file: 'foret1.mp4', titre: 'Foret 1 - Vue panoramique',    desc: 'Exploration de la foret' },
+            { file: 'foret2.mp4', titre: 'Foret 2 - Canopee',            desc: 'Vue depuis les arbres' },
+            { file: 'foret3.mp4', titre: 'Foret 3 - Sous-bois',          desc: 'Promenade en foret' },
+            { file: 'foret4.mp4', titre: 'Foret 4 - Riviere forestiere', desc: "Cours d'eau en foret" },
+            { file: 'foret5.mp4', titre: 'Foret 5 - Faune sauvage',      desc: 'Animaux de la foret' },
+            { file: 'foret6.mp4', titre: 'Foret 6 - Coucher de soleil',  desc: 'Foret au crepuscule' }
+        ];
+
+        var baseUrl = 'http://127.0.0.1:' + PROXY_PORT + '/videos/';
+
+        var videoCards = '';
+        for (var i = 0; i < videosMeta.length; i++) {
+            var v = videosMeta[i];
+            var sel = (i === 0) ? 'border:2px solid #4ade80;' : 'border:2px solid rgba(74,222,128,0.15);';
+            videoCards += '<div class="vcard" onclick="jouerVideo(\'' + baseUrl + v.file + '\',this)" style="' + sel + '">' +
+                '<div class="vthumb"><span style="font-size:28px;">&#9651;</span><div class="play-icon">&#9654;</div></div>' +
+                '<div style="padding:6px 0 2px;font-size:12px;font-weight:bold;color:#e2e8f0;">' + v.titre + '</div>' +
+                '<div style="font-size:10px;color:rgba(255,255,255,0.4);">' + v.desc + '</div></div>';
+        }
+
+        var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Visite - ' + nom + '</title>' +
+            '<style>* { margin:0; padding:0; box-sizing:border-box; }' +
+            'body { background:#0a1a0e; font-family:Arial,sans-serif; height:100vh; display:flex; flex-direction:column; color:white; overflow:hidden; }' +
+            '.topbar { background:rgba(8,22,13,0.97); border-bottom:1px solid rgba(74,222,128,0.2); padding:12px 20px; display:flex; align-items:center; gap:14px; flex-shrink:0; }' +
+            '.topbar h2 { color:#4ade80; font-size:16px; flex:1; }' +
+            '.badge { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; background:' + risqueColor + '22; color:' + risqueColor + '; border:1px solid ' + risqueColor + '44; }' +
+            '.main { display:flex; flex:1; overflow:hidden; }' +
+            '.player { flex:1; background:#000; display:flex; flex-direction:column; align-items:center; justify-content:center; }' +
+            '.player video { width:100%; height:100%; object-fit:contain; }' +
+            '.no-video { text-align:center; color:rgba(255,255,255,0.3); }' +
+            '.no-video p { margin-top:12px; font-size:13px; }' +
+            '.sidebar { width:260px; background:rgba(8,22,13,0.95); border-left:1px solid rgba(74,222,128,0.15); overflow-y:auto; padding:14px; flex-shrink:0; }' +
+            '.sidebar h3 { font-size:10px; color:rgba(74,222,128,0.6); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }' +
+            '.vcard { background:rgba(255,255,255,0.04); border-radius:10px; padding:8px; margin-bottom:10px; cursor:pointer; transition:all 0.2s; }' +
+            '.vcard:hover { background:rgba(74,222,128,0.1); border-color:rgba(74,222,128,0.5) !important; }' +
+            '.vthumb { background:rgba(74,222,128,0.08); border-radius:6px; height:70px; display:flex; align-items:center; justify-content:center; position:relative; margin-bottom:4px; }' +
+            '.play-icon { position:absolute; font-size:20px; color:rgba(255,255,255,0.8); }' +
+            '.hint { text-align:center; padding:6px; font-size:10px; color:rgba(255,255,255,0.25); flex-shrink:0; }' +
+            '</style></head><body>' +
+            '<div class="topbar"><span style="font-size:20px;">&#9651;</span>' +
+            '<h2>Visite Virtuelle - ' + nom + '</h2>' +
+            '<span class="badge">Risque ' + risque + '</span></div>' +
+            '<div class="main">' +
+            '<div class="player" id="playerBox">' +
+            '<div class="no-video" id="noVideo"><div style="font-size:48px;">&#9651;</div>' +
+            '<p>Selectionnez une video dans la liste</p></div>' +
+            '<video id="mainVideo" controls style="display:none;" autoplay>Votre navigateur ne supporte pas la lecture video.</video>' +
+            '</div>' +
+            '<div class="sidebar"><h3>Videos disponibles</h3>' + videoCards + '</div>' +
+            '</div>' +
+            '<div class="hint">Cliquez sur une video pour la lire</div>' +
+            '<script>function jouerVideo(url,el){' +
+            'var vid=document.getElementById("mainVideo");' +
+            'var noVid=document.getElementById("noVideo");' +
+            'vid.src=url; vid.style.display="block"; noVid.style.display="none";' +
+            'vid.load(); vid.play().catch(function(e){});' +
+            'document.querySelectorAll(".vcard").forEach(function(c){c.style.border="2px solid rgba(74,222,128,0.15)";});' +
+            'el.style.border="2px solid #4ade80";}' +
+            'window.onload=function(){var f=document.querySelector(".vcard");if(f)f.click();}' +
+            '<\/script></body></html>';
+
+        if (window.java && typeof window.java.ouvrirVisite360 === 'function') {
+            window.java.ouvrirVisite360(nom, html);
+        } else {
+            setTimeout(function() {
+                if (window.java && typeof window.java.ouvrirVisite360 === 'function') {
+                    window.java.ouvrirVisite360(nom, html);
+                }
+            }, 300);
+        }
+    }
+    // ════════════════════════════════════════════════════════
+    //  NAVIGATION
+    // ════════════════════════════════════════════════════════
+    function flyTo(lat, lng, zoom) {
+        if (map) map.flyTo([lat, lng], zoom, { duration: 1.5 });
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  BRIDGE JS -> JAVA
+    // ════════════════════════════════════════════════════════
+    function attendreJava() {
+        if (window.java && typeof window.java.cesiumPret === 'function') {
+            window.java.cesiumPret();
+        } else {
+            setTimeout(attendreJava, 300);
+        }
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  DÉMARRAGE
+    // ════════════════════════════════════════════════════════
+    chargerLeaflet();
+</script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Carte ForestGuard 3D</title>
+
+    <link href="https://unpkg.com/maplibre-gl@4.3.2/dist/maplibre-gl.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/maplibre-gl@4.3.2/dist/maplibre-gl.js"></script>
+
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html, body, #map { width:100%; height:100%; overflow:hidden; background:#0a1a0e; }
+
+        /* ── Panel foret ───────────────────────────── */
+        #panel {
+            position:absolute; top:16px; right:16px;
+            background:rgba(8,22,13,0.97);
+            border:1px solid rgba(74,222,128,0.25);
+            border-radius:14px; padding:18px;
+            color:white; min-width:260px; max-width:300px;
+            display:none; z-index:1000;
+            box-shadow:0 8px 32px rgba(0,0,0,0.6);
+        }
+        #panel h3 { margin:0 0 10px; color:#4ade80; font-size:15px; padding-right:24px; }
+        #panel p  { margin:5px 0; font-size:12px; color:#94a3b8; line-height:1.6; }
+        #panel p b { color:#e2e8f0; font-weight:500; }
+
+        .badge {
+            display:inline-block; padding:3px 12px;
+            border-radius:20px; font-size:11px; font-weight:700;
+            margin-top:8px; letter-spacing:.05em;
+        }
+        .CRITIQUE { background:#fee2e2; color:#dc2626; }
+        .ELEVE    { background:#fed7aa; color:#ea580c; }
+        .MOYEN    { background:#fef9c3; color:#ca8a04; }
+        .FAIBLE   { background:#dcfce7; color:#16a34a; }
+
+        #btnVisite {
+            margin-top:12px; width:100%; padding:9px;
+            background:#16a34a; color:white; border:none;
+            border-radius:8px; cursor:pointer; font-size:13px; font-weight:600;
+        }
+        #btnVisite:hover { background:#15803d; }
+
+        #btnFermer {
+            position:absolute; top:10px; right:12px;
+            background:transparent; border:none;
+            color:#64748b; font-size:20px; cursor:pointer;
+        }
+        #btnFermer:hover { color:#cbd5e1; }
+
+        /* ── Panel visite ──────────────────────────── */
+        #visitPanel {
+            position:absolute; bottom:0; left:0; right:0;
+            background:rgba(8,22,13,0.98);
+            border-top:2px solid #16a34a;
+            padding:16px 20px; display:none; z-index:1001;
+        }
+        #visitPanel h4 { color:#4ade80; margin:0 0 12px; font-size:14px; }
+        #photos { display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; }
+        #photos img {
+            height:150px; border-radius:10px; flex-shrink:0;
+            border:2px solid rgba(74,222,128,0.15); cursor:pointer;
+        }
+        #photos img:hover { border-color:#4ade80; }
+        #btnFermerVisite {
+            position:absolute; top:10px; right:16px;
+            background:transparent; border:none; color:#64748b; font-size:22px; cursor:pointer;
+        }
+
+        /* ── Controles gauche ──────────────────────── */
+        #controls {
+            position:absolute; top:16px; left:16px;
+            z-index:10; display:flex; flex-direction:column; gap:6px;
+        }
+        .ctrl-group {
+            display:flex; flex-direction:column; gap:4px;
+            background:rgba(8,22,13,0.93);
+            border:1px solid rgba(74,222,128,0.15);
+            border-radius:10px; padding:10px;
+        }
+        .ctrl-label {
+            font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+            color:rgba(74,222,128,0.45);
+            padding:0 2px 5px;
+            border-bottom:1px solid rgba(74,222,128,0.08);
+            margin-bottom:2px;
+        }
+        .ctrl-group button {
+            display:flex; align-items:center; gap:8px;
+            padding:7px 11px;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:7px; cursor:pointer;
+            font-size:12px; font-weight:500;
+            color:rgba(255,255,255,0.72);
+            transition:all .15s; white-space:nowrap; text-align:left;
+        }
+        .ctrl-group button:hover {
+            background:rgba(74,222,128,0.09); color:#4ade80;
+            border-color:rgba(74,222,128,0.28);
+        }
+        .ctrl-group button.active {
+            background:rgba(74,222,128,0.14);
+            border-color:rgba(74,222,128,0.4); color:#4ade80;
+        }
+        .ctrl-group button svg { width:14px; height:14px; flex-shrink:0; }
+
+        /* ── Barre coords ──────────────────────────── */
+        #coords-bar {
+            position:absolute; bottom:16px; left:50%;
+            transform:translateX(-50%);
+            z-index:10;
+            background:rgba(8,22,13,0.9);
+            border:1px solid rgba(74,222,128,0.12);
+            border-radius:8px; padding:6px 16px;
+            font-size:11px; font-family:monospace;
+            color:rgba(255,255,255,0.35);
+            pointer-events:none; white-space:nowrap;
+        }
+        #coords-bar span { color:rgba(74,222,128,0.85); }
+
+        /* ── Marker foret SVG ──────────────────────── */
+        .foret-marker {
+            width:30px; height:36px; cursor:pointer;
+            filter:drop-shadow(0 2px 5px rgba(0,0,0,0.8));
+            transition:transform .2s;
+        }
+        .foret-marker:hover { transform:scale(1.3); }
+
+        .maplibregl-ctrl-attrib { font-size:10px !important; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Panel info foret -->
+<div id="panel">
+    <button id="btnFermer" onclick="fermerPanel()">&#x2715;</button>
+    <h3 id="pNom"></h3>
+    <p>Localisation : <b id="pLoc"></b></p>
+    <p>Superficie : <b id="pSup"></b> ha</p>
+    <p>Vegetation : <b id="pVeg"></b></p>
+    <span id="pBadge" class="badge"></span><br/>
+    <button id="btnVisite" onclick="ouvrirVisite()">Visite Virtuelle</button>
+</div>
+
+<!-- Panel visite virtuelle -->
+<div id="visitPanel">
+    <button id="btnFermerVisite" onclick="fermerVisite()">&#x2715;</button>
+    <h4>Visite Virtuelle &mdash; <span id="visitNom"></span></h4>
+    <div id="photos"></div>
+</div>
+
+<!-- Controles -->
+<div id="controls">
+    <div class="ctrl-group">
+        <div class="ctrl-label">Couches</div>
+        <button id="btn-buildings" class="active" onclick="toggleBuildings()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <rect x="4" y="8" width="16" height="13" rx="1"/>
+                <path d="M8 8V6a4 4 0 0 1 8 0v2"/>
+            </svg>
+            Batiments 3D
+        </button>
+        <button id="btn-terrain" onclick="toggleTerrain()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 20 9 9 13 14 17 7 21 20"/>
+            </svg>
+            Terrain 3D
+        </button>
+    </div>
+
+    <div class="ctrl-group">
+        <div class="ctrl-label">Navigation</div>
+        <button onclick="flyToCity('tunis')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="12" cy="9" r="3"/><path d="M12 2C8.5 2 5 5.2 5 9.5c0 5.5 7 12.5 7 12.5s7-7 7-12.5C19 5.2 15.5 2 12 2z"/>
+            </svg>
+            Tunis
+        </button>
+        <button onclick="flyToCity('sfax')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="12" cy="9" r="3"/><path d="M12 2C8.5 2 5 5.2 5 9.5c0 5.5 7 12.5 7 12.5s7-7 7-12.5C19 5.2 15.5 2 12 2z"/>
+            </svg>
+            Sfax
+        </button>
+        <button onclick="flyToCity('sousse')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="12" cy="9" r="3"/><path d="M12 2C8.5 2 5 5.2 5 9.5c0 5.5 7 12.5 7 12.5s7-7 7-12.5C19 5.2 15.5 2 12 2z"/>
+            </svg>
+            Sousse
+        </button>
+        <button onclick="flyToCity('kairouan')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="12" cy="9" r="3"/><path d="M12 2C8.5 2 5 5.2 5 9.5c0 5.5 7 12.5 7 12.5s7-7 7-12.5C19 5.2 15.5 2 12 2z"/>
+            </svg>
+            Kairouan
+        </button>
+        <button onclick="flyToCity('tabarka')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 20 9 9 13 14 17 7 21 20"/>
+            </svg>
+            Tabarka
+        </button>
+        <button onclick="resetView()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+            </svg>
+            Vue globale
+        </button>
+    </div>
+</div>
+
+<!-- Barre coords -->
+<div id="coords-bar">
+    Lat <span id="lat">33.8869</span> &nbsp;|&nbsp;
+    Lng <span id="lng">9.5375</span> &nbsp;|&nbsp;
+    Zoom <span id="zoom">6.5</span>
+</div>
+
+<script>
+    // ════════════════════════════════════════════════════
+    //  STYLE INLINE — tuiles OSM via proxy local (__PORT__)
+    //  Resoud le probleme de carte noire dans JavaFX WebView
+    // ════════════════════════════════════════════════════
+    var PORT = '__PORT__';
+
+    var styleInline = {
+        version: 8,
+        glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
+        sources: {
+            osm: {
+                type: 'raster',
+                tiles: ['http://localhost:' + PORT + '/tiles/{z}/{x}/{y}.png'],
+                tileSize: 256,
+                attribution: '&copy; OpenStreetMap'
+            }
+        },
+        layers: [
+            {
+                id: 'background',
+                type: 'background',
+                paint: { 'background-color': '#0d1f12' }
+            },
+            {
+                id: 'osm-raster',
+                type: 'raster',
+                source: 'osm',
+                paint: {
+                    'raster-opacity': 1,
+                    'raster-saturation': -0.5,
+                    'raster-brightness-max': 0.5,
+                    'raster-hue-rotate': 130
+                }
+            }
+        ]
+    };
+
+    // ════════════════════════════════════════════════════
+    //  INIT CARTE
+    // ════════════════════════════════════════════════════
+    var map = new maplibregl.Map({
+        container: 'map',
+        style: styleInline,
+        center: [9.5375, 33.8869],
+        zoom: 6.5,
+        pitch: 40,
+        bearing: 0,
+        antialias: true,
+        maxBounds: [[6.0, 29.0], [13.0, 38.8]],
+        minZoom: 5.5,
+        maxZoom: 18
+    });
+
+    map.addControl(new maplibregl.NavigationControl(), 'top-right');
+    map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right');
+
+    var buildingsVisible  = true;
+    var terrainEnabled    = false;
+    var foretSelectionnee = null;
+
+    map.on('load', function() {
+        // Source terrain (AWS open elevation — gratuit, pas de token)
+        map.addSource('terrain-dem', {
+            type: 'raster-dem',
+            tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
+            encoding: 'terrarium',
+            tileSize: 256,
+            maxzoom: 14
+        });
+
+        console.log('ForestGuard — carte chargee avec succes');
+        attendreJava();
+    });
+
+    // ════════════════════════════════════════════════════
+    //  chargerForets — appelee par Java
+    // ════════════════════════════════════════════════════
+    function chargerForets(forets) {
+        var couleurs = {
+            'CRITIQUE': '#dc2626',
+            'ELEVE':    '#ea580c',
+            'MOYEN':    '#ca8a04',
+            'FAIBLE':   '#16a34a'
+        };
+
+        forets.forEach(function(f) {
+            var couleur = couleurs[(f.risque || '').toUpperCase()] || '#16a34a';
+            var rayon   = Math.sqrt(f.superficie || 100) * 100;
+            var id      = 'foret-' + f.nom.replace(/[^a-zA-Z0-9]/g, '_');
+
+            // Cercle de zone
+            map.addSource(id, {
+                type: 'geojson',
+                data: cercleGeoJSON(f.lng, f.lat, rayon)
+            });
+            map.addLayer({
+                id: id + '-fill', type: 'fill', source: id,
+                paint: { 'fill-color': couleur, 'fill-opacity': 0.18 }
+            });
+            map.addLayer({
+                id: id + '-line', type: 'line', source: id,
+                paint: { 'line-color': couleur, 'line-width': 2, 'line-opacity': 0.7 }
+            });
+            map.on('click',      id + '-fill', function() { afficherPanel(f); });
+            map.on('mouseenter', id + '-fill', function() { map.getCanvas().style.cursor = 'pointer'; });
+            map.on('mouseleave', id + '-fill', function() { map.getCanvas().style.cursor = ''; });
+
+            // Marker SVG arbre (sans emoji pour JavaFX)
+            var el = document.createElement('div');
+            el.className = 'foret-marker';
+            el.innerHTML =
+                '<svg viewBox="0 0 30 36" xmlns="http://www.w3.org/2000/svg">' +
+                '<polygon points="15,1 29,21 1,21" fill="' + couleur + '" opacity="0.95"/>' +
+                '<polygon points="15,8 27,25 3,25" fill="' + couleur + '" opacity="0.75"/>' +
+                '<rect x="12" y="23" width="6" height="10" rx="1" fill="' + couleur + '" opacity="0.85"/>' +
+                '</svg>';
+            el.title = f.nom;
+            el.addEventListener('click', (function(foret){ return function(){ afficherPanel(foret); }; })(f));
+
+            new maplibregl.Marker({ element: el, anchor: 'bottom' })
+                .setLngLat([f.lng, f.lat])
+                .addTo(map);
+        });
+    }
+
+    function cercleGeoJSON(lng, lat, r) {
+        var pts = 64, coords = [];
+        var d = r / 111320;
+        for (var i = 0; i <= pts; i++) {
+            var a = (i / pts) * 2 * Math.PI;
+            coords.push([
+                lng + d * Math.cos(a) / Math.cos(lat * Math.PI / 180),
+                lat + d * Math.sin(a)
+            ]);
+        }
+        return { type:'Feature', geometry:{ type:'Polygon', coordinates:[coords] } };
+    }
+
+    // ════════════════════════════════════════════════════
+    //  PANELS
+    // ════════════════════════════════════════════════════
+    function afficherPanel(f) {
+        foretSelectionnee = f;
+        document.getElementById('pNom').textContent = f.nom          || '';
+        document.getElementById('pLoc').textContent = f.localisation || '';
+        document.getElementById('pSup').textContent = f.superficie   || '';
+        document.getElementById('pVeg').textContent = f.vegetation   || '';
+        var badge = document.getElementById('pBadge');
+        var r = (f.risque || 'FAIBLE').toUpperCase();
+        badge.textContent = r;
+        badge.className   = 'badge ' + r;
+        document.getElementById('panel').style.display = 'block';
+        map.flyTo({ center:[f.lng, f.lat], zoom:11, pitch:50, duration:1800 });
+    }
+
+    function fermerPanel() { document.getElementById('panel').style.display = 'none'; }
+
+    function ouvrirVisite() {
+        if (!foretSelectionnee) return;
+        document.getElementById('visitNom').textContent = foretSelectionnee.nom;
+        var container = document.getElementById('photos');
+        container.innerHTML = '';
+        var photos = foretSelectionnee.photos || [];
+        if (photos.length === 0) {
+            container.innerHTML = '<p style="color:#64748b;font-size:13px">Aucune photo disponible</p>';
+        } else {
+            photos.forEach(function(src) {
+                var img = document.createElement('img');
+                img.src = src;
+                img.onerror = function() { img.style.display = 'none'; };
+                container.appendChild(img);
+            });
+        }
+        document.getElementById('visitPanel').style.display = 'block';
+    }
+
+    function fermerVisite() { document.getElementById('visitPanel').style.display = 'none'; }
+
+    // ════════════════════════════════════════════════════
+    //  CONTROLES
+    // ════════════════════════════════════════════════════
+    function toggleBuildings() {
+        buildingsVisible = !buildingsVisible;
+        document.getElementById('btn-buildings').classList.toggle('active', buildingsVisible);
+    }
+
+    function toggleTerrain() {
+        terrainEnabled = !terrainEnabled;
+        map.setTerrain(terrainEnabled ? { source:'terrain-dem', exaggeration:1.6 } : null);
+        document.getElementById('btn-terrain').classList.toggle('active', terrainEnabled);
+    }
+
+    var cities = {
+        tunis:    { center:[10.1815, 36.8065], zoom:13, pitch:50, bearing:-15 },
+        sfax:     { center:[10.7603, 34.7398], zoom:13, pitch:45, bearing:20  },
+        sousse:   { center:[10.6347, 35.8245], zoom:13, pitch:45, bearing:-10 },
+        kairouan: { center:[10.1006, 35.6781], zoom:13, pitch:45, bearing:10  },
+        tabarka:  { center:[8.7564,  36.9547], zoom:11, pitch:60, bearing:30  }
+    };
+
+    function flyToCity(name) {
+        var c = cities[name];
+        if (!c) return;
+        if (name === 'tabarka' && !terrainEnabled) toggleTerrain();
+        map.flyTo({ center:c.center, zoom:c.zoom, pitch:c.pitch, bearing:c.bearing, duration:2500 });
+    }
+
+    function resetView() {
+        if (terrainEnabled) toggleTerrain();
+        map.flyTo({ center:[9.5375, 33.8869], zoom:6.5, pitch:40, bearing:0, duration:2000 });
+    }
+
+    map.on('move', function() {
+        var c = map.getCenter();
+        document.getElementById('lat').textContent  = c.lat.toFixed(4);
+        document.getElementById('lng').textContent  = c.lng.toFixed(4);
+        document.getElementById('zoom').textContent = map.getZoom().toFixed(1);
+    });
+
+    // ════════════════════════════════════════════════════
+    //  BRIDGE JS -> JAVA (identique a l'original)
+    // ════════════════════════════════════════════════════
+    function attendreJava() {
+        if (window.java && typeof window.java.cesiumPret === 'function') {
+            window.java.cesiumPret();
+        } else {
+            setTimeout(attendreJava, 200);
+        }
+    }
+</script>
+</body>
+</html>

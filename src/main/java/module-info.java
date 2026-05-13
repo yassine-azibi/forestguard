@@ -10,6 +10,7 @@ module gestion.des.interventions {
     requires java.net.http;
     requires jdk.jsobject;
     requires itextpdf;
+    requires jdk.httpserver;
 
     // ── Module gestion-utilisateur ──
     requires org.mindrot.jbcrypt;
@@ -32,6 +33,9 @@ module gestion.des.interventions {
     // Packages du module gestion-données
     opens ForestGuard.controllers to javafx.fxml;
     opens ForestGuard.entities to javafx.base;
+
+    // Packages du module gestionforet
+    opens controllers to javafx.fxml;
 
     exports tests;
     exports controller;

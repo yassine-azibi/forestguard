@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.ForetPrincipal"
+      prefWidth="1280" prefHeight="800"
+      style="-fx-background-color: #0d1f14;">
+
+    <!-- ══════════ SIDEBAR ══════════ -->
+    <VBox fx:id="sidebar" prefWidth="240"
+          style="-fx-background-color: #111c14;
+                 -fx-border-color: #1e3322;
+                 -fx-border-width: 0 1 0 0;
+                 -fx-min-width: 72;">
+
+        <HBox spacing="12" alignment="CENTER_LEFT"
+              style="-fx-padding: 24 16 20 16;">
+            <ImageView fitWidth="44" fitHeight="44" preserveRatio="true">
+                <image><Image url="@/logo.png"/></image>
+            </ImageView>
+            <VBox fx:id="logoNom" spacing="2">
+                <Label text="ForestGuard"
+                       style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Label text="Surveillance Intelli..."
+                       style="-fx-font-size: 10; -fx-text-fill: #4ade80;"/>
+            </VBox>
+        </HBox>
+
+        <Separator style="-fx-background-color: #1e3322; -fx-opacity: 0.6;"/>
+
+        <VBox fx:id="navBox" spacing="3"
+              style="-fx-padding: 16 10 0 10;" VBox.vgrow="ALWAYS">
+            <Button fx:id="btnDB" prefWidth="220" prefHeight="46" text="  Tableau de Bord"
+                    onAction="#allerVersDashboard"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnFR" prefWidth="220" prefHeight="46" text="  Forets"
+                    style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                           -fx-font-size: 13; -fx-font-weight: bold; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;
+                           -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.4),10,0,0,3);"/>
+            <Button fx:id="btnCP" prefWidth="220" prefHeight="46" text="  Capteurs"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnDN" prefWidth="220" prefHeight="46" text="  Donnees"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnAL" prefWidth="220" prefHeight="46" text="  Alertes"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnIN" prefWidth="220" prefHeight="46" text="  Interventions"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+            <Button fx:id="btnUS" prefWidth="220" prefHeight="46" text="  Utilisateurs"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;"/>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"
+                style="-fx-background-color: linear-gradient(to top,rgba(22,163,74,0.12),transparent);
+                       -fx-min-height: 60;"/>
+
+        <HBox alignment="CENTER_LEFT" spacing="10"
+              style="-fx-padding: 14 16; -fx-border-color: #1e3322; -fx-border-width: 1 0 0 0;">
+            <Button fx:id="btnToggle" prefWidth="44" prefHeight="34"
+                    text="&lt;" onAction="#toggleSidebar"
+                    style="-fx-background-color: #1a2e1e; -fx-background-radius: 10;
+                           -fx-border-color: #2d5a37; -fx-border-radius: 10;
+                           -fx-font-size: 13; -fx-font-weight: bold;
+                           -fx-text-fill: #4ade80; -fx-cursor: hand;"/>
+            <Label fx:id="lblReducer" text="Reduire"
+                   style="-fx-font-size: 12; -fx-text-fill: #64748b; -fx-font-weight: bold;"/>
+        </HBox>
+    </VBox>
+
+    <!-- ══════════ CONTENU PRINCIPAL ══════════ -->
+    <StackPane HBox.hgrow="ALWAYS">
+
+        <!-- Fond forêt -->
+        <ImageView fitWidth="1100" fitHeight="800" preserveRatio="false" opacity="0.25">
+            <image><Image url="@/foret_bg.jpg"/></image>
+        </ImageView>
+        <VBox style="-fx-background-color: rgba(5,20,8,0.68);"/>
+
+        <!-- Contenu -->
+        <VBox spacing="0" style="-fx-background-color: transparent;">
+
+            <!-- ══ HEADER ══ -->
+            <VBox style="-fx-padding: 24 36 16 36;" spacing="4">
+                <Label text="ForestGuard - Gestion des Forets"
+                       style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: white;
+                              -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.5),8,0,0,2);"/>
+                <Label text="Tableau de bord des forets et incendies"
+                       style="-fx-font-size: 12; -fx-text-fill: rgba(255,255,255,0.5);"/>
+            </VBox>
+
+            <!-- ══ STATS 3 CARTES ══ -->
+            <HBox spacing="14" style="-fx-padding: 0 36 16 36;">
+                <VBox fx:id="cardForets" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: rgba(255,255,255,0.10); -fx-background-radius: 16;
+                             -fx-border-color: rgba(255,255,255,0.13); -fx-border-radius: 16;
+                             -fx-border-width: 1; -fx-padding: 16 20; -fx-cursor: hand;">
+                    <Label text="Disponibles"
+                           style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.55);"/>
+                    <Label fx:id="statForets" text="--"
+                           style="-fx-font-size: 32; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                </VBox>
+                <VBox fx:id="cardIncendies" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: rgba(255,255,255,0.10); -fx-background-radius: 16;
+                             -fx-border-color: rgba(255,255,255,0.13); -fx-border-radius: 16;
+                             -fx-border-width: 1; -fx-padding: 16 20; -fx-cursor: hand;">
+                    <Label text="Incendies actifs"
+                           style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.55);"/>
+                    <Label fx:id="statIncendies" text="--"
+                           style="-fx-font-size: 32; -fx-font-weight: bold; -fx-text-fill: #fca5a5;"/>
+                </VBox>
+                <VBox fx:id="cardSuperficie" alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: rgba(255,255,255,0.10); -fx-background-radius: 16;
+                             -fx-border-color: rgba(255,255,255,0.13); -fx-border-radius: 16;
+                             -fx-border-width: 1; -fx-padding: 16 20; -fx-cursor: hand;">
+                    <Label text="Superficie totale (ha)"
+                           style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.55);"/>
+                    <Label fx:id="statSuperficie" text="--"
+                           style="-fx-font-size: 32; -fx-font-weight: bold; -fx-text-fill: #fcd34d;"/>
+                </VBox>
+            </HBox>
+
+            <!-- ══ BARRE RECHERCHE + ONGLETS ══ -->
+            <HBox spacing="10" alignment="CENTER_LEFT"
+                  style="-fx-padding: 0 36 14 36;">
+                <TextField fx:id="searchField"
+                           promptText="Rechercher une foret, incendie, animal..."
+                           prefWidth="300" prefHeight="38"
+                           style="-fx-background-color: rgba(255,255,255,0.12);
+                                  -fx-background-radius: 20;
+                                  -fx-border-color: rgba(255,255,255,0.2);
+                                  -fx-border-radius: 20; -fx-border-width: 1;
+                                  -fx-text-fill: white;
+                                  -fx-prompt-text-fill: rgba(255,255,255,0.4);
+                                  -fx-font-size: 12; -fx-padding: 0 16;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <ToggleButton fx:id="tabForets" text="🌲  Forets"
+                              selected="true" onAction="#afficherForets"
+                              style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                                     -fx-font-size: 12; -fx-font-weight: bold;
+                                     -fx-background-radius: 20; -fx-padding: 8 18; -fx-cursor: hand;"/>
+                <ToggleButton fx:id="tabIncendies" text="🔥  Incendies"
+                              onAction="#afficherIncendies"
+                              style="-fx-background-color: rgba(255,255,255,0.12); -fx-text-fill: white;
+                                     -fx-font-size: 12; -fx-background-radius: 20;
+                                     -fx-padding: 8 18; -fx-cursor: hand;"/>
+                <Button fx:id="btnMeteo" onAction="#ouvrirMeteo"
+                        style="-fx-background-color: #1a4a8a; -fx-border-color: #2a6acc;
+                               -fx-border-radius: 8; -fx-background-radius: 8;
+                               -fx-text-fill: white; -fx-font-size: 13;
+                               -fx-cursor: hand; -fx-padding: 8 16; -fx-font-weight: bold;">
+                    ☁ Météo
+                </Button>
+                <Button fx:id="btnEvenements" onAction="#ouvrirGestionEvenements"
+                        style="-fx-background-color: #1a3a5c; -fx-border-color: #2563eb;
+                               -fx-border-radius: 8; -fx-background-radius: 8;
+                               -fx-text-fill: white; -fx-font-size: 13;
+                               -fx-cursor: hand; -fx-padding: 8 16; -fx-font-weight: bold;">
+                    🗓 Événements
+                </Button>
+                <Button onAction="#ouvrirStats" text="📊 Statistiques"
+                        style="-fx-background-color: #7c2d12; -fx-border-color: #c2410c;
+                               -fx-border-radius: 8; -fx-background-radius: 8;
+                               -fx-text-fill: white; -fx-font-size: 13; -fx-cursor: hand;
+                               -fx-padding: 8 16; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <!-- ══ TITRE SECTION ══ -->
+            <HBox style="-fx-padding: 0 36 10 36;">
+                <Label fx:id="titreListe" text="Toutes les forets"
+                       style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            </HBox>
+
+            <!-- ══ LISTES ══ -->
+            <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true"
+                        style="-fx-background-color: transparent; -fx-background: transparent;
+                               -fx-border-color: transparent; -fx-padding: 0 36;">
+                <VBox spacing="10" style="-fx-padding: 0 0 10 0; -fx-background-color: transparent;">
+                    <ListView fx:id="listeForets"
+                              style="-fx-background-color: transparent; -fx-border-color: transparent;
+                                     -fx-background-insets: 0; -fx-padding: 0;"/>
+                    <ListView fx:id="listeIncendies" visible="false" managed="false"
+                              style="-fx-background-color: transparent; -fx-border-color: transparent;
+                                     -fx-background-insets: 0; -fx-padding: 0;"/>
+                </VBox>
+            </ScrollPane>
+
+            <!-- ══ BOUTONS BAS ══ -->
+            <HBox spacing="12" style="-fx-padding: 16 36;" alignment="CENTER_LEFT">
+                <Button fx:id="btnAjouter" text="+ Ajouter une foret"
+                        onAction="#ouvrirModalAjouterForet"
+                        prefHeight="44"
+                        style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                               -fx-font-size: 13; -fx-font-weight: bold;
+                               -fx-background-radius: 12; -fx-padding: 10 28; -fx-cursor: hand;
+                               -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.6),14,0,0,4);"/>
+                <Button fx:id="btnCA" text="  Carte Interactive"
+                        onAction="#ouvrirCarte"
+                        prefHeight="44"
+                        style="-fx-background-color: rgba(8,145,178,0.15);
+                               -fx-text-fill: #38bdf8; -fx-font-size: 13; -fx-font-weight: bold;
+                               -fx-background-radius: 12; -fx-padding: 10 24; -fx-cursor: hand;
+                               -fx-border-color: rgba(56,189,248,0.3);
+                               -fx-border-radius: 12; -fx-border-width: 1;"/>
+            </HBox>
+
+        </VBox>
+
+        <!-- ══════════════════════════════════════════════════ -->
+        <!-- ══ OVERLAY CONFIRMATION SUPPRESSION (caché)    ══ -->
+        <!-- Appelé via : overlayConfirmation.setVisible(true) -->
+        <!-- ══════════════════════════════════════════════════ -->
+        <StackPane fx:id="overlayConfirmation"
+                   visible="false" managed="false"
+                   style="-fx-background-color: rgba(0,0,0,0.65);">
+
+            <!-- Carte du dialog -->
+            <VBox alignment="TOP_LEFT" spacing="0"
+                  maxWidth="400"
+                  style="-fx-background-color: #111c14;
+                         -fx-background-radius: 16;
+                         -fx-border-color: #1e3322;
+                         -fx-border-width: 1;
+                         -fx-border-radius: 16;
+                         -fx-padding: 28 28 24 28;
+                         -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.8),28,0,0,8);">
+
+                <!-- Ligne haute : icône + bouton fermer -->
+                <StackPane>
+                    <!-- Icône danger (cercle rouge + poubelle) -->
+                    <HBox alignment="CENTER_LEFT">
+                        <StackPane prefWidth="52" prefHeight="52">
+                            <Circle radius="26"
+                                    fill="rgba(239,68,68,0.18)"
+                                    stroke="rgba(239,68,68,0.35)"
+                                    strokeWidth="1.5"/>
+                            <Label text="🗑"
+                                   style="-fx-font-size: 20;"/>
+                        </StackPane>
+                    </HBox>
+                    <!-- Bouton X (vert arrondi) -->
+                    <HBox alignment="CENTER_RIGHT">
+                        <Button fx:id="btnFermerOverlay" text="✕"
+                                onAction="#fermerOverlayConfirmation"
+                                style="-fx-background-color: #1a3a22;
+                                       -fx-background-radius: 10;
+                                       -fx-border-color: #2d6a3a;
+                                       -fx-border-radius: 10;
+                                       -fx-border-width: 1;
+                                       -fx-text-fill: #4ade80;
+                                       -fx-font-size: 13;
+                                       -fx-font-weight: bold;
+                                       -fx-cursor: hand;
+                                       -fx-pref-width: 36;
+                                       -fx-pref-height: 36;
+                                       -fx-padding: 0;"/>
+                    </HBox>
+                </StackPane>
+
+                <!-- Titre + sous-titre (marge top via padding du VBox parent) -->
+                <Label text="Confirmer la suppression"
+                       style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 16 0 0 0;"/>
+                <Label text="Cette action est irréversible"
+                       style="-fx-font-size: 12; -fx-text-fill: rgba(255,255,255,0.4); -fx-padding: 3 0 14 0;"/>
+
+                <!-- Encadré élément à supprimer -->
+                <HBox spacing="10" alignment="CENTER_LEFT"
+                      style="-fx-background-color: rgba(255,255,255,0.06);
+                             -fx-background-radius: 12;
+                             -fx-border-color: #1e3322;
+                             -fx-border-radius: 12;
+                             -fx-border-width: 1;
+                             -fx-padding: 10 14;">
+                    <Label text="🗂" style="-fx-font-size: 18;"/>
+                    <VBox spacing="2">
+                        <Label text="Élément sélectionné"
+                               style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.45);"/>
+                        <Label fx:id="lblNomForetOverlay" text="—"
+                               style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Message -->
+                <Label text="Toutes les données associées seront définitivement supprimées. Voulez-vous continuer ?"
+                       wrapText="true"
+                       style="-fx-font-size: 12; -fx-text-fill: rgba(255,255,255,0.5); -fx-line-spacing: 3; -fx-padding: 14 0 22 0;"/>
+
+                <!-- Boutons -->
+                <HBox spacing="10">
+                    <Button text="Annuler"
+                            onAction="#fermerOverlayConfirmation"
+                            HBox.hgrow="ALWAYS" maxWidth="Infinity"
+                            prefHeight="42"
+                            style="-fx-background-color: #1a2e1e;
+                                   -fx-background-radius: 12;
+                                   -fx-border-color: #2d5a37;
+                                   -fx-border-radius: 12;
+                                   -fx-border-width: 1;
+                                   -fx-text-fill: #94a3b8;
+                                   -fx-font-size: 13;
+                                   -fx-cursor: hand;"/>
+                    <Button fx:id="btnConfirmerSuppression"
+                            text="🗑  Supprimer"
+                            onAction="#confirmerSuppressionForet"
+                            HBox.hgrow="ALWAYS" maxWidth="Infinity"
+                            prefHeight="42"
+                            style="-fx-background-color: rgba(180,30,30,0.55);
+                                   -fx-background-radius: 12;
+                                   -fx-border-color: rgba(239,68,68,0.5);
+                                   -fx-border-radius: 12;
+                                   -fx-border-width: 1;
+                                   -fx-text-fill: white;
+                                   -fx-font-size: 13;
+                                   -fx-font-weight: bold;
+                                   -fx-cursor: hand;"/>
+                </HBox>
+
+            </VBox>
+        </StackPane>
+        
+            <!-- TTS BUTTON -->
+        <Button onAction="#ouvrirTTS" text="&#128266;" StackPane.alignment="BOTTOM_RIGHT" style="-fx-background-color:#16a34a;-fx-text-fill:white;-fx-font-size:18;-fx-background-radius:50%;-fx-min-width:52;-fx-min-height:52;-fx-max-width:52;-fx-max-height:52;-fx-cursor:hand;-fx-translate-x:-24;-fx-translate-y:-24;-fx-effect:dropshadow(gaussian,rgba(22,163,74,0.6),14,0,0,4);"/>
+</StackPane>
+</HBox>

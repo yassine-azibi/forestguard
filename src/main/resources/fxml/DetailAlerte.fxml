@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.DetailAlerteController"
+            prefHeight="580.0" prefWidth="520.0">
+
+    <ImageView fitWidth="520" fitHeight="580" preserveRatio="false"
+               AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0">
+        <image><Image url="@../forest.jpg"/></image>
+    </ImageView>
+    <Pane AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+          style="-fx-background-color: rgba(0,0,0,0.52);"/>
+
+    <VBox AnchorPane.topAnchor="30" AnchorPane.leftAnchor="40"
+          AnchorPane.rightAnchor="40" spacing="14">
+
+        <Label text="Détail de l'alerte"
+               style="-fx-text-fill:white;-fx-font-size:22;-fx-font-weight:bold;"/>
+        <Label text="Consultez et modifiez le statut"
+               style="-fx-text-fill:#A5D6A7;-fx-font-size:12;"/>
+
+        <VBox style="-fx-background-color:rgba(255,255,255,0.10);-fx-background-radius:12;-fx-padding:16;" spacing="12">
+            <HBox spacing="20">
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label text="ID" style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                    <Label fx:id="lblId" text="—" style="-fx-text-fill:white;-fx-font-size:14;-fx-font-weight:bold;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label text="Source" style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                    <Label fx:id="lblSource" text="—" style="-fx-text-fill:white;-fx-font-size:14;"/>
+                </VBox>
+            </HBox>
+            <HBox spacing="20">
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label text="Type" style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                    <Label fx:id="lblType" text="—" style="-fx-text-fill:white;-fx-font-size:14;-fx-font-weight:bold;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label text="Niveau" style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                    <Label fx:id="lblNiveau" text="—" style="-fx-text-fill:white;-fx-font-size:14;-fx-font-weight:bold;"/>
+                </VBox>
+            </HBox>
+            <VBox>
+                <Label text="Localisation" style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                <Label fx:id="lblLocalisation" text="—" style="-fx-text-fill:white;-fx-font-size:14;"/>
+            </VBox>
+            <HBox spacing="20">
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label text="Date" style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                    <Label fx:id="lblDate" text="—" style="-fx-text-fill:white;-fx-font-size:13;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label text="Statut actuel" style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                    <Label fx:id="lblStatutActuel" text="—" style="-fx-font-size:14;-fx-font-weight:bold;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <Label text="Modifier le statut"
+               style="-fx-text-fill:white;-fx-font-size:14;-fx-font-weight:bold;"/>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <ComboBox fx:id="cbNouveauStatut" prefWidth="190"
+                      style="-fx-background-color:rgba(255,255,255,0.12);-fx-background-radius:8;
+                             -fx-text-fill:white;-fx-border-color:rgba(255,255,255,0.20);
+                             -fx-border-radius:8;-fx-border-width:1;"/>
+            <Button text="✔ Appliquer" onAction="#handleModifierStatut"
+                    style="-fx-background-color:#2E7D32;-fx-text-fill:white;
+                           -fx-background-radius:8;-fx-padding:8 18;-fx-cursor:hand;-fx-font-weight:bold;"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Button text="✔  Valider" onAction="#handleValider"
+                    HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="38"
+                    style="-fx-background-color:#1B5E20;-fx-text-fill:white;
+                           -fx-background-radius:9;-fx-cursor:hand;-fx-font-weight:bold;-fx-font-size:13;"/>
+            <Button text="✕  Rejeter" onAction="#handleRejeter"
+                    HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="38"
+                    style="-fx-background-color:#B71C1C;-fx-text-fill:white;
+                           -fx-background-radius:9;-fx-cursor:hand;-fx-font-weight:bold;-fx-font-size:13;"/>
+        </HBox>
+
+        <Label fx:id="lblMessage" text="" wrapText="true"
+               style="-fx-font-weight:bold;-fx-font-size:12;"/>
+
+        <Button text="← Retour Dashboard" onAction="#goDashboard" prefWidth="440"
+                style="-fx-background-color:rgba(255,255,255,0.12);-fx-text-fill:white;
+                       -fx-background-radius:9;-fx-padding:9;-fx-cursor:hand;-fx-font-size:12;"/>
+    </VBox>
+</AnchorPane>

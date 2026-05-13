@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.web.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.AjoutAlerteController"
+      prefHeight="720.0" prefWidth="1200.0"
+      style="-fx-background-color: #0d1f14;">
+
+    <!-- SIDEBAR -->
+    <VBox prefWidth="210" minWidth="210"
+          style="-fx-background-color: #0d1f14;
+                 -fx-border-color: #1a3a20; -fx-border-width: 0 1 0 0;">
+        <VBox alignment="CENTER_LEFT" spacing="4"
+              style="-fx-padding: 20 16 18 16;
+                     -fx-border-color: #1a3a20; -fx-border-width: 0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                    <image><Image url="@../brinis.png"/></image>
+                </ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard"
+                           style="-fx-text-fill: white; -fx-font-size: 15; -fx-font-weight: bold;"/>
+                    <Label text="Surveillance Intelligente"
+                           style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        <VBox spacing="2" style="-fx-padding: 14 10;">
+            <Button text="🚒  Pompiers" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="🌲  Forets" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="📡  Capteurs" maxWidth="Infinity" onAction="#goCapteurs"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="📊  Donnees" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+                        <Button text="🔔  Alertes" maxWidth="Infinity" onAction="#goDashboard"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="➕  Ajouter alerte" maxWidth="Infinity"
+                    style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-font-weight: bold; -fx-alignment: CENTER_LEFT;
+                           -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="👤  Utilisateurs" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox alignment="CENTER_LEFT" spacing="8"
+              style="-fx-padding: 14 16; -fx-border-color: #1a3a20;
+                     -fx-border-width: 1 0 0 0; -fx-cursor: hand;">
+            <Label text="&lt;"
+                   style="-fx-background-color: #1a2e1e; -fx-text-fill: #4ade80;
+                          -fx-background-radius: 6; -fx-padding: 4 10;
+                          -fx-font-weight: bold; -fx-font-size: 13;
+                          -fx-border-color: #2d5a37; -fx-border-radius: 6; -fx-border-width: 1;"/>
+            <Label text="Reduire" style="-fx-text-fill: #94a3b8; -fx-font-size: 13;"/>
+        </HBox>
+    </VBox>
+
+    <!-- CONTENU PRINCIPAL -->
+    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color: #0f2117;">
+
+        <!-- Bannière -->
+        <StackPane prefHeight="90" minHeight="90" maxHeight="90">
+            <ImageView fitWidth="990" fitHeight="90" preserveRatio="false">
+                <image><Image url="@../brinis2.jpg"/></image>
+            </ImageView>
+            <Pane style="-fx-background-color: rgba(13,31,20,0.60);"/>
+            <VBox alignment="CENTER_LEFT" style="-fx-padding: 0 0 0 24;">
+                <Label text="Ajouter une alerte"
+                       style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;"/>
+                <Label text="Cliquez sur la carte pour sélectionner la localisation"
+                       style="-fx-text-fill: #A5D6A7; -fx-font-size: 12;"/>
+            </VBox>
+        </StackPane>
+
+        <!-- Corps : formulaire gauche + carte droite -->
+        <HBox VBox.vgrow="ALWAYS" spacing="16" style="-fx-padding: 16 20;">
+
+            <!-- Formulaire -->
+            <VBox spacing="0" prefWidth="360" minWidth="340"
+                  style="-fx-background-color: #0d1f14;
+                         -fx-background-radius: 14;
+                         -fx-border-color: #2d5a37;
+                         -fx-border-radius: 14; -fx-border-width: 1;">
+
+                <!-- Header vert -->
+                <HBox spacing="12" alignment="CENTER_LEFT"
+                      style="-fx-background-color: #16a34a; -fx-padding: 14 20;
+                             -fx-background-radius: 13 13 0 0;">
+                    <ImageView fitWidth="26" fitHeight="26" preserveRatio="true">
+                        <image><Image url="@../brinis.png"/></image>
+                    </ImageView>
+                    <VBox spacing="2">
+                        <Label text="Nouvelle Alerte"
+                               style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                        <Label text="Remplissez tous les champs *"
+                               style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.75);"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Champs -->
+                <VBox spacing="12" style="-fx-padding: 18 20;">
+
+                    <VBox spacing="5">
+                        <Label text="TYPE D'ALERTE *"
+                               style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                        <ComboBox fx:id="cbType" maxWidth="Infinity"
+                                  style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                         -fx-border-color: #2d5a37; -fx-border-radius: 8;
+                                         -fx-border-width: 1; -fx-font-size: 13;"/>
+                        <Label fx:id="lblErrType" text="" style="-fx-text-fill:#EF9A9A;-fx-font-size:10;"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="NIVEAU DE GRAVITE *"
+                               style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                        <ComboBox fx:id="cbNiveau" maxWidth="Infinity"
+                                  style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                         -fx-border-color: #2d5a37; -fx-border-radius: 8;
+                                         -fx-border-width: 1; -fx-font-size: 13;"/>
+                        <Label fx:id="lblErrNiveau" text="" style="-fx-text-fill:#EF9A9A;-fx-font-size:10;"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="LOCALISATION * (cliquez sur la carte →)"
+                               style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                        <TextField fx:id="tfLocalisation"
+                                   promptText="Cliquez sur la carte ou saisissez une zone..."
+                                   style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                          -fx-border-color: #2d5a37; -fx-border-radius: 8;
+                                          -fx-border-width: 1; -fx-font-size: 13;
+                                          -fx-text-fill: white; -fx-prompt-text-fill: #64748b;
+                                          -fx-padding: 9 12;"/>
+                        <Label fx:id="lblErrLocalisation" text="" style="-fx-text-fill:#EF9A9A;-fx-font-size:10;" wrapText="true"/>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="COORDONNEES GPS"
+                               style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                        <HBox spacing="8">
+                            <TextField fx:id="tfLat" promptText="Latitude"
+                                       HBox.hgrow="ALWAYS"
+                                       style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                              -fx-border-color: #2d5a37; -fx-border-radius: 8;
+                                              -fx-border-width: 1; -fx-font-size: 12;
+                                              -fx-text-fill: #4ade80; -fx-prompt-text-fill: #64748b;
+                                              -fx-padding: 8 10;" editable="false"/>
+                            <TextField fx:id="tfLng" promptText="Longitude"
+                                       HBox.hgrow="ALWAYS"
+                                       style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                              -fx-border-color: #2d5a37; -fx-border-radius: 8;
+                                              -fx-border-width: 1; -fx-font-size: 12;
+                                              -fx-text-fill: #4ade80; -fx-prompt-text-fill: #64748b;
+                                              -fx-padding: 8 10;" editable="false"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox spacing="5">
+                        <Label text="SOURCE"
+                               style="-fx-font-size: 9; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                        <TextField promptText="Manuelle (automatique)" editable="false"
+                                   style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                          -fx-border-color: #1a2e1e; -fx-border-radius: 8;
+                                          -fx-border-width: 1; -fx-font-size: 12;
+                                          -fx-text-fill: #64748b; -fx-prompt-text-fill: #64748b;
+                                          -fx-padding: 8 10;"/>
+                    </VBox>
+
+                    <Label fx:id="lblMessage" text="" wrapText="true"
+                           style="-fx-font-size: 12; -fx-font-weight: bold;"/>
+
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <!-- Boutons -->
+                <HBox spacing="10" alignment="CENTER_RIGHT"
+                      style="-fx-padding: 0 20 18 20;">
+                    <Button text="Annuler" onAction="#handleEffacer"
+                            style="-fx-background-color: #1a2e1e; -fx-text-fill: #94a3b8;
+                                   -fx-font-size: 13; -fx-padding: 10 20;
+                                   -fx-background-radius: 10; -fx-border-color: #2d5a37;
+                                   -fx-border-radius: 10; -fx-cursor: hand;"/>
+                    <Button text="Enregistrer" onAction="#handleAjouter"
+                            style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                                   -fx-font-size: 13; -fx-font-weight: bold;
+                                   -fx-padding: 10 24; -fx-background-radius: 10;
+                                   -fx-cursor: hand; -fx-border-width: 0;"/>
+                </HBox>
+            </VBox>
+
+            <!-- CARTE TUNISIE -->
+            <VBox HBox.hgrow="ALWAYS" spacing="0"
+                  style="-fx-background-color: #0d1f14;
+                         -fx-background-radius: 14;
+                         -fx-border-color: #2d5a37;
+                         -fx-border-radius: 14; -fx-border-width: 1;">
+
+                <HBox style="-fx-background-color: #16a34a;
+                             -fx-background-radius: 13 13 0 0; -fx-padding: 12 18;"
+                      alignment="CENTER_LEFT">
+                    <Label text="🗺  Carte de la Tunisie — Cliquez pour sélectionner une zone"
+                           style="-fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;"
+                           HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="lblCoordonnees" text="Aucune zone sélectionnée"
+                           style="-fx-text-fill: rgba(255,255,255,0.75); -fx-font-size: 11;"/>
+                </HBox>
+
+                <!-- WebView = carte Leaflet + OpenStreetMap -->
+                <WebView fx:id="carteView" VBox.vgrow="ALWAYS"
+                         style="-fx-background-color: #0d1f14;"/>
+            </VBox>
+
+        </HBox>
+    </VBox>
+</HBox>

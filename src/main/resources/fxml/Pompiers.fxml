@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.PompiersController"
+      prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color:#0a1612;">
+    <VBox prefWidth="220" minWidth="220" style="-fx-background-color:#0d1f14;-fx-border-color:#1a3a20;-fx-border-width:0 1 0 0;">
+        <VBox alignment="CENTER_LEFT" style="-fx-padding:22 16 20 16;-fx-border-color:#1a3a20;-fx-border-width:0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="44" fitHeight="44" preserveRatio="true"><image><Image url="@../brinis.png"/></image></ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard" style="-fx-text-fill:white;-fx-font-size:16;-fx-font-weight:bold;"/>
+                    <Label text="Surveillance Intelligente" style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        <VBox spacing="3" style="-fx-padding:16 10;">
+            <Button text="🔔  Alertes" maxWidth="Infinity" onAction="#goDashboard"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="👤  Utilisateurs" maxWidth="Infinity" onAction="#goUtilisateurs"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="🚒  Pompiers" maxWidth="Infinity"
+                    style="-fx-background-color:linear-gradient(to right,#16a34a,#15803d);-fx-text-fill:white;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-font-weight:bold;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="🌲  Forets" maxWidth="Infinity" onAction="#goForets"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS"/>
+    </VBox>
+    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color:#0a1612;">
+        <StackPane prefHeight="110" minHeight="110" maxHeight="110">
+            <ImageView fitWidth="980" fitHeight="110" preserveRatio="false"><image><Image url="@../brinis2.jpg"/></image></ImageView>
+            <Pane style="-fx-background-color:linear-gradient(to right,rgba(10,22,18,0.85),rgba(10,22,18,0.4));"/>
+            <HBox alignment="CENTER_LEFT" style="-fx-padding:0 24 0 28;" spacing="14">
+                <VBox HBox.hgrow="ALWAYS" spacing="4">
+                    <Label text="🚒  Pompiers" style="-fx-text-fill:white;-fx-font-size:24;-fx-font-weight:bold;"/>
+                    <Label text="Equipes d'intervention disponibles dans la base forestguard" style="-fx-text-fill:#A5D6A7;-fx-font-size:11;"/>
+                </VBox>
+                <Button text="↺  Actualiser" onAction="#actualiser"
+                        style="-fx-background-color:rgba(255,255,255,0.1);-fx-text-fill:white;-fx-background-radius:20;-fx-border-color:rgba(255,255,255,0.25);-fx-border-radius:20;-fx-border-width:1;-fx-padding:8 16;-fx-cursor:hand;-fx-font-size:12;"/>
+            </HBox>
+        </StackPane>
+        <HBox spacing="10" style="-fx-padding:14 20 10 20;">
+            <VBox HBox.hgrow="ALWAYS" spacing="2" alignment="CENTER_LEFT"
+                  style="-fx-background-color:linear-gradient(to bottom right,#0d2418,#112d1e);-fx-background-radius:14;-fx-padding:14 18;-fx-border-color:#1e4a2a;-fx-border-radius:14;-fx-border-width:1;">
+                <HBox alignment="CENTER_LEFT" spacing="8"><Label text="🚒" style="-fx-font-size:18;"/><Label text="TOTAL" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/></HBox>
+                <Label fx:id="lblTotal" text="0" style="-fx-text-fill:white;-fx-font-size:32;-fx-font-weight:bold;"/>
+                <Label text="pompiers" style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS" spacing="2" alignment="CENTER_LEFT"
+                  style="-fx-background-color:linear-gradient(to bottom right,#0d2418,#122e1c);-fx-background-radius:14;-fx-padding:14 18;-fx-border-color:#1e5c2a;-fx-border-radius:14;-fx-border-width:1;">
+                <HBox alignment="CENTER_LEFT" spacing="8"><Label text="✅" style="-fx-font-size:18;"/><Label text="DISPONIBLES" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/></HBox>
+                <Label fx:id="lblDisponibles" text="0" style="-fx-text-fill:#4ade80;-fx-font-size:32;-fx-font-weight:bold;"/>
+                <Label text="prets" style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS" spacing="2" alignment="CENTER_LEFT"
+                  style="-fx-background-color:linear-gradient(to bottom right,#2d1500,#3a1a00);-fx-background-radius:14;-fx-padding:14 18;-fx-border-color:#7c2d12;-fx-border-radius:14;-fx-border-width:1;">
+                <HBox alignment="CENTER_LEFT" spacing="8"><Label text="🔴" style="-fx-font-size:18;"/><Label text="EN MISSION" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/></HBox>
+                <Label fx:id="lblEnMission" text="0" style="-fx-text-fill:#fdba74;-fx-font-size:32;-fx-font-weight:bold;"/>
+                <Label text="actifs" style="-fx-text-fill:#fdba74;-fx-font-size:10;"/>
+            </VBox>
+        </HBox>
+        <ScrollPane fx:id="scrollPane" VBox.vgrow="ALWAYS" fitToWidth="true"
+                    style="-fx-background-color:transparent;-fx-background:transparent;-fx-border-color:transparent;-fx-padding:0 20 16 20;">
+            <VBox fx:id="conteneurCartes" spacing="8" style="-fx-padding:4 4 8 4;-fx-background-color:transparent;"/>
+        </ScrollPane>
+    </VBox>
+</HBox>

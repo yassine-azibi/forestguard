@@ -7,12 +7,14 @@ module gestion.des.interventions {
     requires org.json;
     requires java.desktop;
     requires com.github.librepdf.openpdf;
+    requires java.net.http;
+    requires jdk.jsobject;
+    requires itextpdf;
 
     // ── Module gestion-utilisateur ──
     requires org.mindrot.jbcrypt;
     requires jakarta.mail;
     requires jakarta.activation;
-    requires java.net.http;
     requires twilio;
 
     opens controller to javafx.fxml;
@@ -36,6 +38,7 @@ module gestion.des.interventions {
     exports model;
     exports dao;
     exports utils;
+    exports service;
     exports com.forestguard.controllers;
     exports com.forestguard.entities;
     exports com.forestguard.services;

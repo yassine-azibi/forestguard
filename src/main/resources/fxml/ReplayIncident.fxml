@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ReplayIncidentController"
+      prefHeight="720.0" prefWidth="1280.0"
+      style="-fx-background-color:#0a1612;">
+
+    <!-- SIDEBAR -->
+    <VBox prefWidth="220" minWidth="220"
+          style="-fx-background-color:#0d1f14;-fx-border-color:#1a3a20;-fx-border-width:0 1 0 0;">
+        <VBox alignment="CENTER_LEFT" style="-fx-padding:22 16 20 16;-fx-border-color:#1a3a20;-fx-border-width:0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="44" fitHeight="44" preserveRatio="true">
+                    <image><Image url="@../brinis.png"/></image>
+                </ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard" style="-fx-text-fill:white;-fx-font-size:16;-fx-font-weight:bold;"/>
+                    <Label text="Replay Incident" style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Sélection alerte -->
+        <VBox spacing="8" style="-fx-padding:16 12;">
+            <Label text="SELECTIONNER UNE ALERTE"
+                   style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+            <ComboBox fx:id="cbAlertes" maxWidth="Infinity"
+                      onAction="#selectionnerAlerte"
+                      style="-fx-background-color:#0d2418;-fx-background-radius:8;
+                             -fx-border-color:#2d5a37;-fx-border-radius:8;
+                             -fx-border-width:1;-fx-font-size:11;"/>
+        </VBox>
+
+        <!-- Info alerte -->
+        <VBox spacing="6" style="-fx-padding:0 12 12 12;">
+            <Label fx:id="lblTitre" text="Aucune alerte selectionnee"
+                   style="-fx-text-fill:white;-fx-font-size:12;-fx-font-weight:bold;"
+                   wrapText="true"/>
+            <Label fx:id="lblStatut" text=""
+                   style="-fx-text-fill:#4ade80;-fx-font-size:11;"/>
+            <Label fx:id="lblDuree" text=""
+                   style="-fx-text-fill:#64748b;-fx-font-size:10;"/>
+        </VBox>
+
+        <Separator style="-fx-background-color:#1a3a20;"/>
+
+        <!-- Timeline -->
+        <Label text="CHRONOLOGIE" style="-fx-text-fill:#64748b;-fx-font-size:10;
+               -fx-font-weight:bold;-fx-padding:12 12 4 12;"/>
+        <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true"
+                    style="-fx-background-color:transparent;-fx-background:transparent;
+                           -fx-border-color:transparent;-fx-padding:0 8;">
+            <VBox fx:id="panelTimeline" spacing="0"
+                  style="-fx-padding:4;-fx-background-color:transparent;"/>
+        </ScrollPane>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <!-- Bouton retour -->
+        <Button text="Retour Dashboard" maxWidth="Infinity"
+                onAction="#goDashboard"
+                style="-fx-background-color:#0d2418;-fx-text-fill:#4ade80;
+                       -fx-background-radius:0;-fx-border-color:#1a3a20;
+                       -fx-border-width:1 0 0 0;-fx-padding:14;
+                       -fx-cursor:hand;-fx-font-size:12;"/>
+    </VBox>
+
+    <!-- CONTENU PRINCIPAL -->
+    <VBox HBox.hgrow="ALWAYS" spacing="0" style="-fx-background-color:#0a1612;">
+
+        <!-- HEADER -->
+        <StackPane prefHeight="80" minHeight="80" maxHeight="80">
+            <ImageView fitWidth="1060" fitHeight="80" preserveRatio="false">
+                <image><Image url="@../brinis2.jpg"/></image>
+            </ImageView>
+            <Pane style="-fx-background-color:linear-gradient(to right,rgba(10,22,18,0.92),rgba(10,22,18,0.5));"/>
+            <HBox alignment="CENTER_LEFT" style="-fx-padding:0 24 0 24;" spacing="16">
+                <Label text="Replay d'Incident"
+                       style="-fx-text-fill:white;-fx-font-size:22;-fx-font-weight:bold;"
+                       HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblEtape" text="0 / 0 etapes"
+                       style="-fx-text-fill:#4ade80;-fx-font-size:12;-fx-font-weight:bold;
+                              -fx-background-color:rgba(0,0,0,0.4);-fx-background-radius:20;
+                              -fx-padding:4 12;"/>
+            </HBox>
+        </StackPane>
+
+        <!-- CARTE -->
+        <WebView fx:id="carteReplay" VBox.vgrow="ALWAYS"/>
+
+        <!-- CONTROLES -->
+        <VBox style="-fx-background-color:#0d1f14;-fx-padding:12 16;
+                     -fx-border-color:#1a3a20;-fx-border-width:1 0 0 0;" spacing="10">
+
+            <!-- Narration -->
+            <Label fx:id="lblNarration"
+                   text="Selectionnez une alerte puis appuyez sur Play"
+                   style="-fx-text-fill:#94a3b8;-fx-font-size:12;-fx-font-style:italic;"
+                   wrapText="true"/>
+
+            <!-- Progress -->
+            <ProgressBar fx:id="progressReplay" maxWidth="Infinity" prefHeight="6"
+                         style="-fx-accent:#4ade80;-fx-background-color:#1a3a20;
+                                -fx-background-radius:3;"/>
+
+            <!-- Boutons + Vitesse -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="btnPlay" text="Play" onAction="#play"
+                        disable="true"
+                        style="-fx-background-color:#16a34a;-fx-text-fill:white;
+                               -fx-background-radius:20;-fx-border-width:0;
+                               -fx-padding:8 24;-fx-cursor:hand;
+                               -fx-font-size:13;-fx-font-weight:bold;"/>
+                <Button fx:id="btnPause" text="Pause" onAction="#pause"
+                        disable="true"
+                        style="-fx-background-color:#1a2e1e;-fx-text-fill:#4ade80;
+                               -fx-background-radius:20;-fx-border-color:#2d5a37;
+                               -fx-border-radius:20;-fx-border-width:1;
+                               -fx-padding:8 20;-fx-cursor:hand;-fx-font-size:13;"/>
+                <Button fx:id="btnReset" text="Reset" onAction="#reset"
+                        disable="true"
+                        style="-fx-background-color:#1a2e1e;-fx-text-fill:#94a3b8;
+                               -fx-background-radius:20;-fx-border-color:#334155;
+                               -fx-border-radius:20;-fx-border-width:1;
+                               -fx-padding:8 20;-fx-cursor:hand;-fx-font-size:13;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Vitesse :"
+                       style="-fx-text-fill:#64748b;-fx-font-size:11;"/>
+                <Slider fx:id="sliderVitesse" prefWidth="120"
+                        style="-fx-show-tick-labels:true;"/>
+                <Label text="x"
+                       style="-fx-text-fill:#4ade80;-fx-font-size:11;"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</HBox>

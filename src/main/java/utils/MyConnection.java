@@ -6,23 +6,20 @@ import java.sql.SQLException;
 
 public class MyConnection {
 
-    private String url   = "jdbc:mysql://localhost:3306/forestguard";
-    private String login = "root";
-    private String pwd   = "";
+    private final String url   = "jdbc:mysql://localhost:3306/forestguard";
+    private final String login = "root";
+    private final String pwd   = "";
 
     private Connection cnx;
     private static MyConnection instance;
 
-    public Connection getCnx() {
-        return cnx;
-    }
-
     private MyConnection() {
         try {
             cnx = DriverManager.getConnection(url, login, pwd);
-            System.out.println("Connexion etablie!");
+            System.out.println("Connexion établie avec forestguard !");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Erreur connexion BDD : " + e.getMessage());
+            cnx = null;
         }
     }
 
@@ -31,5 +28,13 @@ public class MyConnection {
             instance = new MyConnection();
         }
         return instance;
+    }
+
+    public Connection getCnx() {
+        return cnx;
+    }
+
+    public boolean isConnected() {
+        return cnx != null;
     }
 }

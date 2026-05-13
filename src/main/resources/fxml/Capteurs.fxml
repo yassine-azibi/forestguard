@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.CapteursController"
+      prefHeight="720.0" prefWidth="1200.0"
+      style="-fx-background-color: #0d1f14;">
+
+    <!-- SIDEBAR -->
+    <VBox prefWidth="210" minWidth="210"
+          style="-fx-background-color: #0d1f14;
+                 -fx-border-color: #1a3a20; -fx-border-width: 0 1 0 0;">
+        <VBox alignment="CENTER_LEFT" spacing="4"
+              style="-fx-padding: 20 16 18 16;
+                     -fx-border-color: #1a3a20; -fx-border-width: 0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                    <image><Image url="@../brinis.png"/></image>
+                </ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard"
+                           style="-fx-text-fill: white; -fx-font-size: 15; -fx-font-weight: bold;"/>
+                    <Label text="Surveillance Intelligente"
+                           style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        <VBox spacing="2" style="-fx-padding: 14 10;">
+            <Button text="🚒  Pompiers" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="🌲  Forets" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="📡  Capteurs" maxWidth="Infinity"
+                    style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-font-weight: bold; -fx-alignment: CENTER_LEFT;
+                           -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="📊  Donnees" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="🔔  Alertes" maxWidth="Infinity" onAction="#goDashboard"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="➕  Ajouter alerte" maxWidth="Infinity" onAction="#goAjout"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+            <Button text="👤  Utilisateurs" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #94a3b8;
+                           -fx-background-radius: 8; -fx-padding: 11 14; -fx-font-size: 13;
+                           -fx-alignment: CENTER_LEFT; -fx-cursor: hand; -fx-border-width: 0;"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox alignment="CENTER_LEFT" spacing="8"
+              style="-fx-padding: 14 16; -fx-border-color: #1a3a20; -fx-border-width: 1 0 0 0; -fx-cursor: hand;">
+            <Label text="&lt;"
+                   style="-fx-background-color: #1a2e1e; -fx-text-fill: #4ade80;
+                          -fx-background-radius: 6; -fx-padding: 4 10;
+                          -fx-font-weight: bold; -fx-font-size: 13;
+                          -fx-border-color: #2d5a37; -fx-border-radius: 6; -fx-border-width: 1;"/>
+            <Label text="Reduire" style="-fx-text-fill: #94a3b8; -fx-font-size: 13;"/>
+        </HBox>
+    </VBox>
+
+    <!-- CONTENU -->
+    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color: #0f2117;">
+
+        <!-- Bannière -->
+        <StackPane prefHeight="110" minHeight="110" maxHeight="110">
+            <ImageView fitWidth="990" fitHeight="110" preserveRatio="false">
+                <image><Image url="@../brinis2.jpg"/></image>
+            </ImageView>
+            <Pane style="-fx-background-color: rgba(13,31,20,0.55);"/>
+            <HBox alignment="CENTER_LEFT" style="-fx-padding: 0 20 0 28;">
+                <VBox HBox.hgrow="ALWAYS" spacing="4">
+                    <Label text="Capteurs IoT"
+                           style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;"/>
+                    <Label text="Surveillance en temps réel des capteurs de la forêt"
+                           style="-fx-text-fill: #A5D6A7; -fx-font-size: 12;"/>
+                </VBox>
+                <!-- ══ BANDE MÉTÉO TEMPS RÉEL ══ -->
+                <HBox spacing="6" alignment="CENTER_RIGHT">
+                    <VBox alignment="CENTER" spacing="1"
+                          style="-fx-background-color: rgba(0,0,0,0.45);
+                                 -fx-background-radius: 8; -fx-padding: 6 10;">
+                        <Label text="☁ Tunis"
+                               style="-fx-text-fill: #90CAF9; -fx-font-size: 10; -fx-font-weight: bold;"/>
+                        <Label fx:id="lblMeteoTunis" text="⟳ Chargement..."
+                               style="-fx-text-fill: white; -fx-font-size: 11;"/>
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="1"
+                          style="-fx-background-color: rgba(0,0,0,0.45);
+                                 -fx-background-radius: 8; -fx-padding: 6 10;">
+                        <Label text="☁ Bizerte"
+                               style="-fx-text-fill: #90CAF9; -fx-font-size: 10; -fx-font-weight: bold;"/>
+                        <Label fx:id="lblMeteoBizerte" text="⟳ Chargement..."
+                               style="-fx-text-fill: white; -fx-font-size: 11;"/>
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="1"
+                          style="-fx-background-color: rgba(0,0,0,0.45);
+                                 -fx-background-radius: 8; -fx-padding: 6 10;">
+                        <Label text="☁ Jendouba"
+                               style="-fx-text-fill: #90CAF9; -fx-font-size: 10; -fx-font-weight: bold;"/>
+                        <Label fx:id="lblMeteoJendouba" text="⟳ Chargement..."
+                               style="-fx-text-fill: white; -fx-font-size: 11;"/>
+                    </VBox>
+                </HBox>
+            </HBox>
+        </StackPane>
+
+        <!-- Seuils -->
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 20 6 20;">
+            <Label text="SEUILS :" style="-fx-text-fill: #4ade80; -fx-font-size: 10; -fx-font-weight: bold;"/>
+            <Label text="🌡 Temp > 60°C"
+                   style="-fx-background-color: rgba(183,28,28,0.55); -fx-text-fill: white;
+                          -fx-background-radius: 20; -fx-padding: 3 10; -fx-font-size: 11;"/>
+            <Label text="💨 Fumée > 50 ppm"
+                   style="-fx-background-color: rgba(180,100,0,0.55); -fx-text-fill: white;
+                          -fx-background-radius: 20; -fx-padding: 3 10; -fx-font-size: 11;"/>
+            <Label text="💧 Humidité &lt; 20%"
+                   style="-fx-background-color: rgba(21,101,192,0.55); -fx-text-fill: white;
+                          -fx-background-radius: 20; -fx-padding: 3 10; -fx-font-size: 11;"/>
+        </HBox>
+
+        <!-- 3 capteurs -->
+        <HBox VBox.vgrow="ALWAYS" spacing="12" style="-fx-padding: 0 20 14 20;">
+            <!-- C-001 -->
+            <VBox HBox.hgrow="ALWAYS" spacing="0"
+                  style="-fx-background-color: #0d1f14; -fx-background-radius: 12;
+                         -fx-border-color: #2d5a37; -fx-border-radius: 12; -fx-border-width: 1;">
+                <HBox style="-fx-background-color: #16a34a; -fx-background-radius: 11 11 0 0;
+                             -fx-padding: 12 14;" alignment="CENTER_LEFT" spacing="8">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Capteur C-001"
+                               style="-fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;"/>
+                        <Label text="Zone Nord-A · Cap Bon"
+                               style="-fx-text-fill: rgba(255,255,255,0.75); -fx-font-size: 10;"/>
+                    </VBox>
+                    <Label fx:id="lblEtat1" text="● Normal"
+                           style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 10;"/>
+                </HBox>
+                <VBox spacing="10" VBox.vgrow="ALWAYS" style="-fx-padding: 12;">
+                    <HBox spacing="8">
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblTemp1" text="28°C" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Température" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblHum1" text="55%" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Humidité" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblFumee1" text="5 ppm" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Fumée" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                    </HBox>
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Button fx:id="btnSim1" text="⚡ Simuler dépassement" onAction="#simulerC001"
+                            maxWidth="Infinity" prefHeight="34"
+                            style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                                   -fx-background-radius: 8; -fx-font-size: 12;
+                                   -fx-cursor: hand; -fx-font-weight: bold; -fx-border-width: 0;"/>
+                    <Button text="↺ Réinitialiser" onAction="#reinitC001" maxWidth="Infinity"
+                            style="-fx-background-color: #1a2e1e; -fx-text-fill: #4ade80;
+                                   -fx-background-radius: 8; -fx-border-color: #2d5a37;
+                                   -fx-border-radius: 8; -fx-border-width: 1;
+                                   -fx-padding: 7; -fx-cursor: hand; -fx-font-size: 11;"/>
+                </VBox>
+            </VBox>
+
+            <!-- C-002 -->
+            <VBox HBox.hgrow="ALWAYS" spacing="0"
+                  style="-fx-background-color: #0d1f14; -fx-background-radius: 12;
+                         -fx-border-color: #2d5a37; -fx-border-radius: 12; -fx-border-width: 1;">
+                <HBox style="-fx-background-color: #16a34a; -fx-background-radius: 11 11 0 0;
+                             -fx-padding: 12 14;" alignment="CENTER_LEFT" spacing="8">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Capteur C-002"
+                               style="-fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;"/>
+                        <Label text="Zone Est-B · Kroumirie"
+                               style="-fx-text-fill: rgba(255,255,255,0.75); -fx-font-size: 10;"/>
+                    </VBox>
+                    <Label fx:id="lblEtat2" text="● Normal"
+                           style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 10;"/>
+                </HBox>
+                <VBox spacing="10" VBox.vgrow="ALWAYS" style="-fx-padding: 12;">
+                    <HBox spacing="8">
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblTemp2" text="31°C" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Température" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblHum2" text="48%" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Humidité" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblFumee2" text="8 ppm" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Fumée" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                    </HBox>
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Button fx:id="btnSim2" text="⚡ Simuler dépassement" onAction="#simulerC002"
+                            maxWidth="Infinity" prefHeight="34"
+                            style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                                   -fx-background-radius: 8; -fx-font-size: 12;
+                                   -fx-cursor: hand; -fx-font-weight: bold; -fx-border-width: 0;"/>
+                    <Button text="↺ Réinitialiser" onAction="#reinitC002" maxWidth="Infinity"
+                            style="-fx-background-color: #1a2e1e; -fx-text-fill: #4ade80;
+                                   -fx-background-radius: 8; -fx-border-color: #2d5a37;
+                                   -fx-border-radius: 8; -fx-border-width: 1;
+                                   -fx-padding: 7; -fx-cursor: hand; -fx-font-size: 11;"/>
+                </VBox>
+            </VBox>
+
+            <!-- C-003 -->
+            <VBox HBox.hgrow="ALWAYS" spacing="0"
+                  style="-fx-background-color: #0d1f14; -fx-background-radius: 12;
+                         -fx-border-color: #2d5a37; -fx-border-radius: 12; -fx-border-width: 1;">
+                <HBox style="-fx-background-color: #16a34a; -fx-background-radius: 11 11 0 0;
+                             -fx-padding: 12 14;" alignment="CENTER_LEFT" spacing="8">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Capteur C-003"
+                               style="-fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;"/>
+                        <Label text="Zone Sud-C · Jendouba"
+                               style="-fx-text-fill: rgba(255,255,255,0.75); -fx-font-size: 10;"/>
+                    </VBox>
+                    <Label fx:id="lblEtat3" text="● Normal"
+                           style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 10;"/>
+                </HBox>
+                <VBox spacing="10" VBox.vgrow="ALWAYS" style="-fx-padding: 12;">
+                    <HBox spacing="8">
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblTemp3" text="25°C" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Température" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblHum3" text="62%" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Humidité" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                              style="-fx-background-color: #1a2e1e; -fx-background-radius: 8;
+                                     -fx-border-color: #2d5a37; -fx-border-radius: 8; -fx-border-width: 1; -fx-padding: 10 4;">
+                            <Label fx:id="lblFumee3" text="3 ppm" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                            <Label text="Fumée" style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                        </VBox>
+                    </HBox>
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Button fx:id="btnSim3" text="⚡ Simuler dépassement" onAction="#simulerC003"
+                            maxWidth="Infinity" prefHeight="34"
+                            style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                                   -fx-background-radius: 8; -fx-font-size: 12;
+                                   -fx-cursor: hand; -fx-font-weight: bold; -fx-border-width: 0;"/>
+                    <Button text="↺ Réinitialiser" onAction="#reinitC003" maxWidth="Infinity"
+                            style="-fx-background-color: #1a2e1e; -fx-text-fill: #4ade80;
+                                   -fx-background-radius: 8; -fx-border-color: #2d5a37;
+                                   -fx-border-radius: 8; -fx-border-width: 1;
+                                   -fx-padding: 7; -fx-cursor: hand; -fx-font-size: 11;"/>
+                </VBox>
+            </VBox>
+        </HBox>
+
+        <Label fx:id="lblResultat" text=""
+               style="-fx-text-fill: #4ade80; -fx-font-weight: bold;
+                      -fx-font-size: 12; -fx-padding: 0 20 10 20;" wrapText="true"/>
+    </VBox>
+</HBox>

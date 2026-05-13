@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.AnalyseIAController"
+      prefHeight="720.0" prefWidth="1280.0"
+      style="-fx-background-color:#0a1612;">
+
+    <!-- SIDEBAR -->
+    <VBox prefWidth="220" minWidth="220"
+          style="-fx-background-color:#0d1f14;-fx-border-color:#1a3a20;-fx-border-width:0 1 0 0;">
+        <VBox alignment="CENTER_LEFT" style="-fx-padding:22 16 20 16;-fx-border-color:#1a3a20;-fx-border-width:0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="44" fitHeight="44" preserveRatio="true">
+                    <image><Image url="@../brinis.png"/></image>
+                </ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard" style="-fx-text-fill:white;-fx-font-size:16;-fx-font-weight:bold;"/>
+                    <Label text="Surveillance Intelligente" style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        <VBox spacing="3" style="-fx-padding:16 10;">
+            <Button text="🔔  Alertes" maxWidth="Infinity" onAction="#goDashboard"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="📡  Capteurs" maxWidth="Infinity" onAction="#goCapteurs"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="➕  Ajouter alerte" maxWidth="Infinity" onAction="#goAjout"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="🤖  Analyse IA" maxWidth="Infinity"
+                    style="-fx-background-color:linear-gradient(to right,#7c3aed,#6d28d9);-fx-text-fill:white;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-font-weight:bold;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS"/>
+    </VBox>
+
+    <!-- CONTENU -->
+    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color:#0a1612;">
+
+        <!-- BANNIÈRE -->
+        <StackPane prefHeight="90" minHeight="90" maxHeight="90">
+            <ImageView fitWidth="1060" fitHeight="90" preserveRatio="false">
+                <image><Image url="@../brinis2.jpg"/></image>
+            </ImageView>
+            <Pane style="-fx-background-color:linear-gradient(to right,rgba(10,22,18,0.9),rgba(74,0,200,0.3));"/>
+            <HBox alignment="CENTER_LEFT" style="-fx-padding:0 24 0 28;" spacing="12">
+                <Label text="🤖" style="-fx-font-size:28;"/>
+                <VBox HBox.hgrow="ALWAYS" spacing="2">
+                    <Label text="Analyse IA — Detection d'Incendie"
+                           style="-fx-text-fill:white;-fx-font-size:20;-fx-font-weight:bold;"/>
+                    <Label text="Recevez les alertes de vos collegues et analysez-les avec l'IA"
+                           style="-fx-text-fill:#c4b5fd;-fx-font-size:11;"/>
+                </VBox>
+            </HBox>
+        </StackPane>
+
+        <!-- 3 COLONNES -->
+        <HBox VBox.vgrow="ALWAYS" spacing="10" style="-fx-padding:12 14;">
+
+            <!-- COLONNE 1 — Alertes collègues -->
+            <VBox prefWidth="320" minWidth="320" spacing="8">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="🔴  Signalements Citoyens"
+                           style="-fx-text-fill:#ef4444;-fx-font-size:13;-fx-font-weight:bold;"
+                           HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="lblNbFireAlerts" text="0 alerte(s)"
+                           style="-fx-text-fill:#64748b;-fx-font-size:10;"/>
+                    <Button text="↺" onAction="#actualiserAlerts"
+                            style="-fx-background-color:#1a0a0a;-fx-text-fill:#ef4444;
+                                   -fx-background-radius:20;-fx-border-color:#ef4444;
+                                   -fx-border-radius:20;-fx-border-width:1;
+                                   -fx-padding:4 10;-fx-cursor:hand;-fx-font-size:11;"/>
+                </HBox>
+                <Label text="Mise a jour automatique toutes les 30 sec"
+                       style="-fx-text-fill:#334155;-fx-font-size:9;"/>
+
+                <ScrollPane fx:id="scrollFireAlerts" VBox.vgrow="ALWAYS"
+                            fitToWidth="true"
+                            style="-fx-background-color:transparent;-fx-background:transparent;
+                                   -fx-border-color:transparent;">
+                    <VBox fx:id="conteneurFireAlerts" spacing="6"
+                          style="-fx-background-color:transparent;-fx-padding:2;"/>
+                </ScrollPane>
+            </VBox>
+
+            <!-- COLONNE 2 — Upload + Preview -->
+            <VBox prefWidth="300" minWidth="300" spacing="10">
+                <Label text="📷  Photo"
+                       style="-fx-text-fill:#4ade80;-fx-font-size:13;-fx-font-weight:bold;"/>
+
+                <!-- Zone upload -->
+                <VBox spacing="8" alignment="CENTER" fx:id="zoneUpload"
+                      style="-fx-background-color:#0d1e35;-fx-background-radius:12;
+                             -fx-border-color:#3b82f6;-fx-border-radius:12;-fx-border-width:2;
+                             -fx-border-style:dashed;-fx-padding:24;-fx-cursor:hand;"
+                      onMouseClicked="#choisirPhoto">
+                    <Label text="📷" style="-fx-font-size:36;"/>
+                    <Label text="Cliquer pour choisir" style="-fx-text-fill:white;-fx-font-size:13;-fx-font-weight:bold;"/>
+                    <Label text="PNG, JPG — Max 10 Mo" style="-fx-text-fill:#64748b;-fx-font-size:10;"/>
+                    <Button text="Parcourir..." onAction="#choisirPhoto"
+                            style="-fx-background-color:#1e3a5f;-fx-text-fill:#90CAF9;
+                                   -fx-background-radius:20;-fx-border-color:#3b82f6;
+                                   -fx-border-radius:20;-fx-border-width:1;
+                                   -fx-padding:6 16;-fx-cursor:hand;-fx-font-size:11;"/>
+                </VBox>
+
+                <!-- Preview -->
+                <VBox fx:id="panelPreview" spacing="8" visible="false" managed="false"
+                      style="-fx-background-color:#0d1e35;-fx-background-radius:12;
+                             -fx-border-color:#2d5a37;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:10;">
+                    <ImageView fx:id="imgPreview" fitWidth="280" fitHeight="180" preserveRatio="true"/>
+                    <Label fx:id="lblNomFichier" text="" style="-fx-text-fill:#64748b;-fx-font-size:10;"/>
+                    <HBox spacing="8">
+                        <Button text="🤖 Analyser" onAction="#analyserPhoto"
+                                HBox.hgrow="ALWAYS" prefHeight="36"
+                                style="-fx-background-color:linear-gradient(to right,#7c3aed,#6d28d9);
+                                       -fx-text-fill:white;-fx-background-radius:8;
+                                       -fx-border-width:0;-fx-font-size:12;
+                                       -fx-font-weight:bold;-fx-cursor:hand;"/>
+                        <Button text="✕" onAction="#supprimerPhoto"
+                                style="-fx-background-color:#450a0a;-fx-text-fill:#f87171;
+                                       -fx-background-radius:8;-fx-border-color:#dc2626;
+                                       -fx-border-radius:8;-fx-border-width:1;
+                                       -fx-padding:8 12;-fx-cursor:hand;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Analyse en cours -->
+                <VBox fx:id="panelAnalyse" spacing="8" visible="false" managed="false"
+                      alignment="CENTER"
+                      style="-fx-background-color:#1a1035;-fx-background-radius:12;
+                             -fx-border-color:#7c3aed;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:20;">
+                    <Label text="🤖" style="-fx-font-size:28;"/>
+                    <Label fx:id="lblEtatAnalyse" text="Analyse en cours..."
+                           style="-fx-text-fill:#c4b5fd;-fx-font-size:13;-fx-font-weight:bold;"/>
+                    <ProgressIndicator fx:id="progressAnalyse" prefWidth="36" prefHeight="36"
+                                       style="-fx-progress-color:#7c3aed;"/>
+                </VBox>
+
+                <!-- Résultat IA -->
+                <VBox fx:id="panelResultat" spacing="8" visible="false" managed="false"
+                      style="-fx-background-color:#1a1035;-fx-background-radius:12;
+                             -fx-border-color:#7c3aed;-fx-border-radius:12;-fx-border-width:1;
+                             -fx-padding:14;">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="🤖 Resultat IA"
+                               style="-fx-text-fill:#c4b5fd;-fx-font-size:13;-fx-font-weight:bold;"
+                               HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblNiveauIA" text=""
+                               style="-fx-text-fill:white;-fx-background-radius:20;-fx-padding:3 10;-fx-font-size:10;-fx-font-weight:bold;"/>
+                    </HBox>
+                    <HBox spacing="6">
+                        <VBox HBox.hgrow="ALWAYS" spacing="2"
+                              style="-fx-background-color:rgba(124,58,237,0.15);-fx-background-radius:8;-fx-padding:8;">
+                            <Label text="TYPE" style="-fx-text-fill:#94a3b8;-fx-font-size:9;-fx-font-weight:bold;"/>
+                            <Label fx:id="lblTypeIA" text="---" style="-fx-text-fill:white;-fx-font-size:13;-fx-font-weight:bold;"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS" spacing="2"
+                              style="-fx-background-color:rgba(124,58,237,0.15);-fx-background-radius:8;-fx-padding:8;">
+                            <Label text="POMPIERS" style="-fx-text-fill:#94a3b8;-fx-font-size:9;-fx-font-weight:bold;"/>
+                            <Label fx:id="lblPompiersIA" text="---" style="-fx-text-fill:#fbbf24;-fx-font-size:13;-fx-font-weight:bold;"/>
+                        </VBox>
+                    </HBox>
+                    <Label fx:id="lblDescIA" text="" wrapText="true"
+                           style="-fx-text-fill:#e2e8f0;-fx-font-size:11;"/>
+                    <Label fx:id="lblConseilsIA" text="" wrapText="true"
+                           style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+                </VBox>
+            </VBox>
+
+            <!-- COLONNE 3 — Formulaire -->
+            <VBox HBox.hgrow="ALWAYS" spacing="10">
+                <Label text="📋  Formulaire d'Alerte"
+                       style="-fx-text-fill:#4ade80;-fx-font-size:13;-fx-font-weight:bold;"/>
+
+                <VBox spacing="10" VBox.vgrow="ALWAYS"
+                      style="-fx-background-color:#0d1f14;-fx-background-radius:14;
+                             -fx-border-color:#2d5a37;-fx-border-radius:14;-fx-border-width:1;
+                             -fx-padding:16;">
+                    <VBox spacing="4">
+                        <Label text="TYPE D'ALERTE *" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+                        <ComboBox fx:id="cbType" maxWidth="Infinity"
+                                  style="-fx-background-color:#1a2e1e;-fx-background-radius:8;-fx-border-color:#2d5a37;-fx-border-radius:8;-fx-border-width:1;-fx-font-size:13;"/>
+                        <Label fx:id="lblErrType" text="" style="-fx-text-fill:#EF9A9A;-fx-font-size:10;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="NIVEAU DE GRAVITE *" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+                        <ComboBox fx:id="cbNiveau" maxWidth="Infinity"
+                                  style="-fx-background-color:#1a2e1e;-fx-background-radius:8;-fx-border-color:#2d5a37;-fx-border-radius:8;-fx-border-width:1;-fx-font-size:13;"/>
+                        <Label fx:id="lblErrNiveau" text="" style="-fx-text-fill:#EF9A9A;-fx-font-size:10;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="LOCALISATION *" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+                        <TextField fx:id="tfLocalisation" promptText="Zone detectee..."
+                                   style="-fx-background-color:#1a2e1e;-fx-background-radius:8;-fx-border-color:#2d5a37;-fx-border-radius:8;-fx-border-width:1;-fx-font-size:13;-fx-text-fill:white;-fx-padding:9 12;"/>
+                        <Label fx:id="lblErrLocalisation" text="" style="-fx-text-fill:#EF9A9A;-fx-font-size:10;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="POMPIERS REQUIS" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+                        <TextField fx:id="tfPompiers" promptText="0"
+                                   style="-fx-background-color:#1a2e1e;-fx-background-radius:8;-fx-border-color:#2d5a37;-fx-border-radius:8;-fx-border-width:1;-fx-font-size:13;-fx-text-fill:#fbbf24;-fx-padding:9 12;"/>
+                    </VBox>
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <HBox spacing="8">
+                        <Button text="✔  Enregistrer l'alerte" onAction="#enregistrerAlerte"
+                                HBox.hgrow="ALWAYS" prefHeight="42"
+                                style="-fx-background-color:#16a34a;-fx-text-fill:white;
+                                       -fx-background-radius:10;-fx-border-width:0;
+                                       -fx-font-size:13;-fx-font-weight:bold;-fx-cursor:hand;"/>
+                        <Button text="Effacer" onAction="#effacer"
+                                style="-fx-background-color:#1a2e1e;-fx-text-fill:#94a3b8;
+                                       -fx-background-radius:10;-fx-border-color:#2d5a37;
+                                       -fx-border-radius:10;-fx-border-width:1;
+                                       -fx-padding:10 14;-fx-cursor:hand;"/>
+                    </HBox>
+                    <Label fx:id="lblMessage" text="" wrapText="true"
+                           style="-fx-text-fill:#4ade80;-fx-font-size:12;-fx-font-weight:bold;"/>
+                </VBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</HBox>

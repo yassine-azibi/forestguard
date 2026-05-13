@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.DashboardController"
+      prefHeight="720.0" prefWidth="1200.0"
+      style="-fx-background-color: #0a1612;">
+
+    <!-- ══ SIDEBAR ══ -->
+    <VBox prefWidth="220" minWidth="220"
+          style="-fx-background-color: #0d1f14;
+                 -fx-border-color: #1a3a20; -fx-border-width: 0 1 0 0;
+                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 12, 0, 4, 0);">
+        <VBox alignment="CENTER_LEFT" spacing="4"
+              style="-fx-padding: 22 16 20 16; -fx-border-color: #1a3a20; -fx-border-width: 0 0 1 0;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitWidth="44" fitHeight="44" preserveRatio="true">
+                    <image><Image url="@../brinis.png"/></image>
+                </ImageView>
+                <VBox spacing="2">
+                    <Label text="ForestGuard"
+                           style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+                    <Label text="Surveillance Intelligente"
+                           style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        <VBox spacing="3" style="-fx-padding: 16 10;">
+            <Button text="🚒  Pompiers" maxWidth="Infinity" onAction="#goPompiers"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="🌲  Forets" maxWidth="Infinity"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="📡  Capteurs" maxWidth="Infinity" onAction="#goCapteurs"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="📊  Donnees" maxWidth="Infinity"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="🔔  Alertes" maxWidth="Infinity" onAction="#actualiser"
+                    style="-fx-background-color:linear-gradient(to right,#16a34a,#15803d);-fx-text-fill:white;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-font-weight:bold;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;-fx-effect:dropshadow(gaussian,rgba(22,163,74,0.4),8,0,0,2);"/>
+            
+            
+                                    <Button text="📋  Reclamations" maxWidth="Infinity" onAction="#goReclamations"
+                    style="-fx-background-color:transparent;-fx-text-fill:#fbbf24;
+                           -fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;
+                           -fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+            <Button text="👤  Utilisateurs" maxWidth="Infinity" onAction="#goUtilisateurs"
+                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox alignment="CENTER_LEFT" spacing="8"
+              style="-fx-padding:14 16;-fx-border-color:#1a3a20;-fx-border-width:1 0 0 0;-fx-cursor:hand;">
+            <Label text="&lt;"
+                   style="-fx-background-color:#1a2e1e;-fx-text-fill:#4ade80;-fx-background-radius:6;-fx-padding:4 10;-fx-font-weight:bold;-fx-font-size:13;-fx-border-color:#2d5a37;-fx-border-radius:6;-fx-border-width:1;"/>
+            <Label text="Reduire" style="-fx-text-fill:#94a3b8;-fx-font-size:13;"/>
+        </HBox>
+    </VBox>
+
+    <!-- ══ CONTENU PRINCIPAL ══ -->
+    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color:#0a1612;">
+
+        <!-- BANNIÈRE -->
+        <StackPane prefHeight="120" minHeight="120" maxHeight="120">
+            <ImageView fitWidth="980" fitHeight="120" preserveRatio="false">
+                <image><Image url="@../brinis2.jpg"/></image>
+            </ImageView>
+            <Pane style="-fx-background-color:linear-gradient(to right,rgba(10,22,18,0.85),rgba(10,22,18,0.4));"/>
+            <HBox alignment="CENTER_LEFT" style="-fx-padding:0 24 0 28;" spacing="14">
+                <VBox HBox.hgrow="ALWAYS" spacing="5">
+                    <Label text="Tableau de Bord — Alertes"
+                           style="-fx-text-fill:white;-fx-font-size:24;-fx-font-weight:bold;"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label fx:id="lblMeteoTunis" text="⟳ Meteo..."
+                               style="-fx-text-fill:#90CAF9;-fx-font-size:11;-fx-background-color:rgba(0,0,0,0.4);-fx-background-radius:20;-fx-padding:3 10;"/>
+                        <Label fx:id="lblMeteoGouberlatine" text=""
+                               style="-fx-text-fill:#90CAF9;-fx-font-size:11;-fx-background-color:rgba(0,0,0,0.4);-fx-background-radius:20;-fx-padding:3 10;"/>
+                        <Label fx:id="lblMeteoHeure" text=""
+                               style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+                    </HBox>
+                </VBox>
+                <Button text="📄 Exporter" onAction="#exporterRapport"
+                        style="-fx-background-color:rgba(255,255,255,0.1);-fx-text-fill:white;-fx-background-radius:20;-fx-border-color:rgba(255,255,255,0.25);-fx-border-radius:20;-fx-border-width:1;-fx-padding:8 16;-fx-cursor:hand;-fx-font-size:12;"/>
+                
+                <Button text="＋ Nouvelle alerte" onAction="#goAjout"
+                        style="-fx-background-color:#16a34a;-fx-text-fill:white;-fx-background-radius:20;-fx-border-width:0;-fx-padding:9 20;-fx-cursor:hand;-fx-font-size:12;-fx-font-weight:bold;-fx-effect:dropshadow(gaussian,rgba(22,163,74,0.5),10,0,0,3);"/>
+            </HBox>
+        </StackPane>
+
+        <!-- STATS CARDS -->
+        <HBox spacing="10" style="-fx-padding:14 20 10 20;">
+            <VBox HBox.hgrow="ALWAYS" spacing="2" alignment="CENTER_LEFT"
+                  style="-fx-background-color:linear-gradient(to bottom right,#0d2418,#112d1e);-fx-background-radius:14;-fx-padding:14 18;-fx-border-color:#1e4a2a;-fx-border-radius:14;-fx-border-width:1;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.3),8,0,0,2);">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="📋" style="-fx-font-size:18;"/>
+                    <Label text="TOTAL" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+                </HBox>
+                <Label fx:id="lblTotal" text="0" style="-fx-text-fill:white;-fx-font-size:32;-fx-font-weight:bold;"/>
+                <Label text="alertes" style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS" spacing="2" alignment="CENTER_LEFT"
+                  style="-fx-background-color:linear-gradient(to bottom right,#0d1e35,#0f2545);-fx-background-radius:14;-fx-padding:14 18;-fx-border-color:#1a3a6e;-fx-border-radius:14;-fx-border-width:1;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.3),8,0,0,2);">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="🔵" style="-fx-font-size:18;"/>
+                    <Label text="NOUVELLES" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+                </HBox>
+                <Label fx:id="lblNouvelles" text="0" style="-fx-text-fill:#90CAF9;-fx-font-size:32;-fx-font-weight:bold;"/>
+                <Label text="en attente" style="-fx-text-fill:#90CAF9;-fx-font-size:10;"/>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS" spacing="2" alignment="CENTER_LEFT"
+                  style="-fx-background-color:linear-gradient(to bottom right,#0d2418,#122e1c);-fx-background-radius:14;-fx-padding:14 18;-fx-border-color:#1e5c2a;-fx-border-radius:14;-fx-border-width:1;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.3),8,0,0,2);">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="✅" style="-fx-font-size:18;"/>
+                    <Label text="VALIDEES" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+                </HBox>
+                <Label fx:id="lblValidees" text="0" style="-fx-text-fill:#4ade80;-fx-font-size:32;-fx-font-weight:bold;"/>
+                <Label text="traitees" style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS" spacing="2" alignment="CENTER_LEFT"
+                  style="-fx-background-color:linear-gradient(to bottom right,#2d0d0d,#3a1010);-fx-background-radius:14;-fx-padding:14 18;-fx-border-color:#5c1e1e;-fx-border-radius:14;-fx-border-width:1;-fx-effect:dropshadow(gaussian,rgba(0,0,0,0.3),8,0,0,2);">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="❌" style="-fx-font-size:18;"/>
+                    <Label text="REJETEES" style="-fx-text-fill:#64748b;-fx-font-size:10;-fx-font-weight:bold;"/>
+                </HBox>
+                <Label fx:id="lblRejetees" text="0" style="-fx-text-fill:#EF9A9A;-fx-font-size:32;-fx-font-weight:bold;"/>
+                <Label text="refusees" style="-fx-text-fill:#EF9A9A;-fx-font-size:10;"/>
+            </VBox>
+        </HBox>
+
+        <!-- FILTRE -->
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding:4 20 8 20;">
+            <Label text="Filtrer :" style="-fx-text-fill:#64748b;-fx-font-size:11;-fx-font-weight:bold;"/>
+            <ComboBox fx:id="cbFiltre" prefWidth="160"
+                      style="-fx-background-color:#0d2418;-fx-background-radius:20;-fx-border-color:#2d5a37;-fx-border-radius:20;-fx-border-width:1;-fx-font-size:12;"/>
+            <Button text="↺  Actualiser" onAction="#actualiser"
+                    style="-fx-background-color:#0d2418;-fx-text-fill:#4ade80;-fx-background-radius:20;-fx-border-color:#2d5a37;-fx-border-radius:20;-fx-border-width:1;-fx-padding:6 14;-fx-cursor:hand;-fx-font-size:11;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblCompteurVisible" text=""
+                   style="-fx-text-fill:#64748b;-fx-font-size:11;"/>
+        </HBox>
+
+        <!-- ZONE CARTES SCROLLABLE -->
+        <ScrollPane fx:id="scrollAlertes" VBox.vgrow="ALWAYS"
+                    fitToWidth="true"
+                    style="-fx-background-color:transparent;-fx-background:transparent;-fx-border-color:transparent;-fx-padding:0 20 16 20;">
+            <VBox fx:id="conteneurCartes" spacing="8"
+                  style="-fx-padding:4 4 8 4;-fx-background-color:transparent;">
+                <!-- Les cartes sont injectées dynamiquement par DashboardController -->
+            </VBox>
+        </ScrollPane>
+
+        <!-- TableView caché — gardé pour compatibilité CRUD interne -->
+        <TableView fx:id="tableAlertes" visible="false" managed="false" prefHeight="0">
+            <columns>
+                <TableColumn fx:id="colType"         text="Type"         prefWidth="120"/>
+                <TableColumn fx:id="colNiveau"       text="Niveau"       prefWidth="95"/>
+                <TableColumn fx:id="colLocalisation" text="Localisation" prefWidth="180"/>
+                <TableColumn fx:id="colDate"         text="Date"         prefWidth="115"/>
+                <TableColumn fx:id="colStatut"       text="Statut"       prefWidth="95"/>
+                <TableColumn fx:id="colSource"       text="Source"       prefWidth="100"/>
+                <TableColumn fx:id="colActions"      text="Actions"      prefWidth="255"/>
+            </columns>
+        </TableView>
+
+    </VBox>
+</HBox>

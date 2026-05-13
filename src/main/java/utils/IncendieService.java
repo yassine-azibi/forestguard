@@ -1,4 +1,4 @@
-﻿package utils;
+package utils;
 
 import model.Incendie;
 import utils.IService;

@@ -1,4 +1,4 @@
-﻿package controller;
+package controller;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;

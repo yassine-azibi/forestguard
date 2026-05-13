@@ -1,4 +1,4 @@
-﻿package controller;
+package controller;
 
 import javafx.animation.*;
 import javafx.application.Platform;

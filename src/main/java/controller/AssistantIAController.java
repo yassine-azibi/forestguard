@@ -1,4 +1,4 @@
-﻿package controller;
+package controller;
 
 import utils.GeminiService;
 import javafx.application.Platform;

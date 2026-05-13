@@ -1,4 +1,4 @@
-﻿package controller;
+package controller;
 
 import com.sun.net.httpserver.HttpServer;
 import java.io.*;

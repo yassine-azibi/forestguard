@@ -1,4 +1,4 @@
-﻿package controller;
+package controller;
 
 import model.Foret;
 import utils.ForetService;

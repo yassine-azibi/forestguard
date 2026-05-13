@@ -1,4 +1,4 @@
-﻿package controller;
+package controller;
 
 import javafx.application.Platform;
 import java.io.BufferedWriter;

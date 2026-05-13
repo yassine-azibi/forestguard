@@ -13,7 +13,7 @@ module gestion.des.interventions {
     requires jdk.httpserver;
 
     // ── Module gestion-utilisateur ──
-    requires org.mindrot.jbcrypt;
+    requires jbcrypt;
     requires jakarta.mail;
     requires jakarta.activation;
     requires twilio;

@@ -23,6 +23,10 @@ module gestion.des.interventions {
     opens com.forestguard.controllers to javafx.fxml;
     opens com.forestguard.entities to javafx.base;
 
+    // Packages du module gestion-capteurs
+    opens edu.capteur.controllers to javafx.fxml;
+    opens edu.capteur.entities to javafx.base;
+
     exports tests;
     exports controller;
     exports model;

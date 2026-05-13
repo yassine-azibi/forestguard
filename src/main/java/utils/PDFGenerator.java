@@ -184,8 +184,8 @@ public class PDFGenerator {
         
         AlerteDAO alerteDAO = new AlerteDAO();
         String[] niveauEtType = alerteDAO.getNiveauEtType(intervention.getAlerteId());
-        String niveau = niveauEtType[0] != null ? niveauEtType[0] : "Non spécifié";
-        String type = niveauEtType[1] != null ? niveauEtType[1] : "Non spécifié";
+        String niveau = (niveauEtType != null && niveauEtType[0] != null) ? niveauEtType[0] : "Non spécifié";
+        String type = (niveauEtType != null && niveauEtType[1] != null) ? niveauEtType[1] : "Non spécifié";
         String localisation = intervention.getAlerteLocalisation() != null ? 
                              intervention.getAlerteLocalisation() : "Non spécifiée";
         
@@ -344,8 +344,8 @@ public class PDFGenerator {
         // Score de risque
         AlerteDAO alerteDAO = new AlerteDAO();
         String[] niveauEtType = alerteDAO.getNiveauEtType(intervention.getAlerteId());
-        String niveau = niveauEtType[0];
-        String type = niveauEtType[1];
+        String niveau = (niveauEtType != null && niveauEtType.length > 0) ? niveauEtType[0] : null;
+        String type = (niveauEtType != null && niveauEtType.length > 1) ? niveauEtType[1] : null;
         
         if (niveau != null && type != null) {
             try {

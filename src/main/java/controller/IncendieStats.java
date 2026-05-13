@@ -789,7 +789,7 @@ public class IncendieStats {
         if (dateDebut != null) sql.append(" AND date_calcul >= '").append(dateDebut).append("'");
         if (dateFin   != null) sql.append(" AND date_calcul <= '").append(dateFin).append("'");
         sql.append(" ORDER BY annee DESC, mois DESC");
-        java.sql.Connection cnxAlertes = edu.gestionincendies.tools.MyConnection.getInstance().getCnx();
+        java.sql.Connection cnxAlertes = utils.MyConnection.getInstance().getCnx();
         if (cnxAlertes == null) { System.err.println("chargerAlertes: pas de connexion MySQL."); return list; }
         try (java.sql.Statement st = cnxAlertes.createStatement();
              java.sql.ResultSet rs = st.executeQuery(sql.toString())) {
@@ -823,7 +823,7 @@ public class IncendieStats {
 
         // Années disponibles
         List<Integer> annees = new ArrayList<>();
-        java.sql.Connection cnxAnnees = edu.gestionincendies.tools.MyConnection.getInstance().getCnx();
+        java.sql.Connection cnxAnnees = utils.MyConnection.getInstance().getCnx();
         if (cnxAnnees != null) {
         try (java.sql.Statement st = cnxAnnees.createStatement();
              java.sql.ResultSet rs = st.executeQuery("SELECT DISTINCT annee FROM fire_alerts ORDER BY annee DESC")) {

@@ -161,24 +161,25 @@ public class AlerteDAO {
     // ══════════════════════════════════════════════════════════════════════════
 
     /**
-     * Récupère toutes les alertes pour un ComboBox (format: "ID - Type - Niveau")
+     * Récupère toutes les alertes pour un ComboBox (format: Map<ID, "ID - Type - Niveau">)
      */
-    public List<String> getAllForComboBox() {
-        List<String> list = new ArrayList<>();
-        if (cnx == null) return list;
+    public java.util.Map<Integer, String> getAllForComboBox() {
+        java.util.Map<Integer, String> map = new java.util.HashMap<>();
+        if (cnx == null) return map;
         String sql = "SELECT id, type_alerte, niveau FROM alerte ORDER BY date_alerte DESC";
         try (Statement st = cnx.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
-                String item = rs.getInt("id") + " - " + 
-                             rs.getString("type_alerte") + " - " + 
-                             rs.getString("niveau");
-                list.add(item);
+                int id = rs.getInt("id");
+                String label = id + " - " + 
+                              rs.getString("type_alerte") + " - " + 
+                              rs.getString("niveau");
+                map.put(id, label);
             }
         } catch (SQLException e) {
             System.out.println("Erreur getAllForComboBox : " + e.getMessage());
         }
-        return list;
+        return map;
     }
 
     /**
@@ -198,16 +199,16 @@ public class AlerteDAO {
     }
 
     /**
-     * Récupère le niveau et le type d'une alerte par son ID
+     * Récupère le niveau et le type d'une alerte par son ID (retourne String[2])
      */
-    public String getNiveauEtType(int id) {
+    public String[] getNiveauEtType(int id) {
         if (cnx == null) return null;
         String sql = "SELECT niveau, type_alerte FROM alerte WHERE id=?";
         try (PreparedStatement ps = cnx.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getString("niveau") + " - " + rs.getString("type_alerte");
+                return new String[]{rs.getString("niveau"), rs.getString("type_alerte")};
             }
         } catch (SQLException e) {
             System.out.println("Erreur getNiveauEtType : " + e.getMessage());
@@ -216,10 +217,29 @@ public class AlerteDAO {
     }
 
     /**
-     * Récupère les nouvelles alertes (statut = "Nouvelle")
+     * Récupère les nouvelles alertes (statut = "Nouvelle") au format Map
      */
-    public List<Alerte> getNouvellesAlertes() {
-        return getByStatut("Nouvelle");
+    public List<java.util.Map<String, Object>> getNouvellesAlertes() {
+        List<java.util.Map<String, Object>> list = new ArrayList<>();
+        if (cnx == null) return list;
+        String sql = "SELECT * FROM alerte WHERE statut='Nouvelle' ORDER BY date_alerte DESC";
+        try (Statement st = cnx.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                java.util.Map<String, Object> map = new java.util.HashMap<>();
+                map.put("id", rs.getInt("id"));
+                map.put("type_alerte", rs.getString("type_alerte"));
+                map.put("niveau", rs.getString("niveau"));
+                map.put("localisation", rs.getString("localisation"));
+                map.put("statut", rs.getString("statut"));
+                map.put("source", rs.getString("source"));
+                map.put("date_alerte", rs.getTimestamp("date_alerte"));
+                list.add(map);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur getNouvellesAlertes : " + e.getMessage());
+        }
+        return list;
     }
 
     // ══════════════════════════════════════════════════════════════════════════

@@ -4,87 +4,102 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Service de chat pour la communication entre utilisateurs
+ * Service de chat bot pour l'assistance ForestGuard
  */
 public class ChatService {
 
-    private static ChatService instance;
-    private List<ChatMessage> messages;
+    private List<String> conversationHistory;
+    private String userLocation;
+    private String alertLevel;
 
-    private ChatService() {
-        this.messages = new ArrayList<>();
-    }
-
-    public static ChatService getInstance() {
-        if (instance == null) {
-            instance = new ChatService();
-        }
-        return instance;
+    public ChatService() {
+        this.conversationHistory = new ArrayList<>();
+        this.userLocation = "";
+        this.alertLevel = "Faible";
     }
 
     /**
-     * Envoie un message
+     * Envoie un message au bot et retourne la réponse
      */
-    public void sendMessage(String sender, String receiver, String content) throws ChatException {
-        if (sender == null || sender.trim().isEmpty()) {
-            throw new ChatException("L'expéditeur ne peut pas être vide");
-        }
-        if (receiver == null || receiver.trim().isEmpty()) {
-            throw new ChatException("Le destinataire ne peut pas être vide");
-        }
-        if (content == null || content.trim().isEmpty()) {
+    public String sendMessage(String message) throws ChatException {
+        if (message == null || message.trim().isEmpty()) {
             throw new ChatException("Le message ne peut pas être vide");
         }
 
-        ChatMessage message = new ChatMessage(sender, receiver, content);
-        messages.add(message);
-        System.out.println("Message envoyé de " + sender + " à " + receiver);
+        conversationHistory.add("User: " + message);
+        
+        // Réponse simple basée sur des mots-clés
+        String response = generateResponse(message.toLowerCase());
+        conversationHistory.add("Bot: " + response);
+        
+        return response;
     }
 
     /**
-     * Récupère tous les messages pour un utilisateur
+     * Efface l'historique de conversation
      */
-    public List<ChatMessage> getMessagesFor(String username) {
-        List<ChatMessage> userMessages = new ArrayList<>();
-        for (ChatMessage msg : messages) {
-            if (msg.getReceiver().equals(username) || msg.getSender().equals(username)) {
-                userMessages.add(msg);
-            }
-        }
-        return userMessages;
+    public void clearHistory() {
+        conversationHistory.clear();
     }
 
     /**
-     * Classe interne pour représenter un message
+     * Définit le contexte utilisateur (localisation et niveau d'alerte)
      */
-    public static class ChatMessage {
-        private String sender;
-        private String receiver;
-        private String content;
-        private long timestamp;
+    public void setUserContext(String location, String alertLevel) {
+        this.userLocation = location != null ? location : "";
+        this.alertLevel = alertLevel != null ? alertLevel : "Faible";
+    }
 
-        public ChatMessage(String sender, String receiver, String content) {
-            this.sender = sender;
-            this.receiver = receiver;
-            this.content = content;
-            this.timestamp = System.currentTimeMillis();
+    /**
+     * Génère une réponse basée sur le message de l'utilisateur
+     */
+    private String generateResponse(String message) {
+        // Réponses basées sur des mots-clés
+        if (message.contains("feu") || message.contains("incendie")) {
+            return "🔥 En cas d'incendie:\n" +
+                   "1. Appelez immédiatement les pompiers (193)\n" +
+                   "2. Évacuez la zone en toute sécurité\n" +
+                   "3. Ne tentez pas d'éteindre un grand feu\n" +
+                   "4. Éloignez-vous dans la direction opposée au vent";
         }
-
-        public String getSender() {
-            return sender;
+        
+        if (message.contains("évacuation") || message.contains("evacuer")) {
+            return "🚨 Consignes d'évacuation:\n" +
+                   "1. Restez calme et suivez les instructions\n" +
+                   "2. Prenez vos documents importants\n" +
+                   "3. Fermez portes et fenêtres\n" +
+                   "4. Dirigez-vous vers le point de rassemblement";
         }
-
-        public String getReceiver() {
-            return receiver;
+        
+        if (message.contains("prévention") || message.contains("prevention")) {
+            return "🌲 Prévention des incendies:\n" +
+                   "1. Ne jetez jamais de mégots dans la nature\n" +
+                   "2. Évitez les barbecues en période sèche\n" +
+                   "3. Débroussaillez autour de votre propriété\n" +
+                   "4. Signalez tout départ de feu immédiatement";
         }
-
-        public String getContent() {
-            return content;
+        
+        if (message.contains("alerte") || message.contains("signaler")) {
+            return "📢 Pour signaler une alerte:\n" +
+                   "1. Utilisez le module 'Gestion des Alertes'\n" +
+                   "2. Indiquez la localisation précise\n" +
+                   "3. Décrivez la situation\n" +
+                   "4. Les pompiers seront notifiés automatiquement";
         }
-
-        public long getTimestamp() {
-            return timestamp;
+        
+        if (message.contains("aide") || message.contains("help")) {
+            return "💡 Je peux vous aider avec:\n" +
+                   "• Consignes de sécurité incendie\n" +
+                   "• Procédures d'évacuation\n" +
+                   "• Prévention des incendies\n" +
+                   "• Signalement d'alertes\n" +
+                   "Posez-moi une question!";
         }
+        
+        // Réponse par défaut
+        return "Je suis là pour vous aider avec la sécurité incendie. " +
+               "Vous pouvez me poser des questions sur les incendies, l'évacuation, " +
+               "la prévention ou le signalement d'alertes.";
     }
 
     /**

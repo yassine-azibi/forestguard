@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.capteur.controllers.CapteurController"
+      prefWidth="1280" prefHeight="800"
+      style="-fx-background-color: #0d1f14;">
+
+    <!-- ══════════ SIDEBAR ══════════ -->
+    <VBox fx:id="sidebar" prefWidth="240"
+          style="-fx-background-color: #0b1710;
+                 -fx-border-color: #1a2e1e;
+                 -fx-border-width: 0 1 0 0;
+                 -fx-min-width: 72;">
+
+        <!-- Logo -->
+        <HBox spacing="12" alignment="CENTER_LEFT"
+              style="-fx-padding: 22 16 18 16;
+                     -fx-border-color: #1a2e1e; -fx-border-width: 0 0 1 0;">
+            <ImageView fx:id="logoImg" fitWidth="40" fitHeight="40" preserveRatio="true">
+                <image><Image url="@/logo.png"/></image>
+            </ImageView>
+            <VBox fx:id="logoNom" spacing="2">
+                <Label text="ForestGuard"
+                       style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Label text="Surveillance Intelligente"
+                       style="-fx-font-size: 10; -fx-text-fill: #4ade80;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Navigation -->
+        <VBox fx:id="navBox" spacing="2"
+              style="-fx-padding: 14 8 0 8;" VBox.vgrow="ALWAYS">
+
+            <Button fx:id="btnPM" prefWidth="220" prefHeight="44" text="🚒  Pompiers"
+                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
+            <Button fx:id="btnFR" prefWidth="220" prefHeight="44" text="🌲  Forêts"
+                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
+
+            <!-- Bouton actif -->
+            <VBox style="-fx-background-color: rgba(22,163,74,0.12);
+                         -fx-background-radius: 10;
+                         -fx-border-color: rgba(74,222,128,0.25);
+                         -fx-border-radius: 10; -fx-border-width: 1;">
+                <Button fx:id="btnCP" prefWidth="220" prefHeight="44"
+                        text="📡  Capteurs"
+                        style="-fx-background-color: transparent; -fx-text-fill: #4ade80;
+                               -fx-font-size: 13; -fx-font-weight: bold;
+                               -fx-alignment: CENTER_LEFT;
+                               -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
+            </VBox>
+
+            <Button fx:id="btnDN" prefWidth="220" prefHeight="44" text="📊  Données"
+                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
+            <Button fx:id="btnAL" prefWidth="220" prefHeight="44" text="🔔  Alertes"
+                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
+            <Button fx:id="btnUS" prefWidth="220" prefHeight="44" text="👤  Utilisateurs"
+                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
+                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
+        </VBox>
+
+        <!-- Spacer avec dégradé -->
+        <Region VBox.vgrow="ALWAYS"
+                style="-fx-background-color: linear-gradient(to top,rgba(22,163,74,0.08),transparent);
+                       -fx-min-height: 40;"/>
+
+        <!-- Toggle sidebar -->
+        <HBox alignment="CENTER_LEFT" spacing="10"
+              style="-fx-padding: 12 14; -fx-border-color: #1a2e1e; -fx-border-width: 1 0 0 0;">
+            <Button fx:id="btnToggle" prefWidth="40" prefHeight="32"
+                    text="&lt;" onAction="#toggleSidebar"
+                    style="-fx-background-color: #162a1c; -fx-background-radius: 8;
+                           -fx-border-color: #2a4d32; -fx-border-radius: 8;
+                           -fx-font-size: 12; -fx-font-weight: bold;
+                           -fx-text-fill: #4ade80; -fx-cursor: hand;"/>
+            <Label fx:id="lblReducer" text="Réduire"
+                   style="-fx-font-size: 11; -fx-text-fill: #475569;"/>
+        </HBox>
+    </VBox>
+
+    <!-- ══════════ CONTENU PRINCIPAL ══════════ -->
+    <StackPane HBox.hgrow="ALWAYS">
+
+        <!-- Fond image forêt -->
+        <ImageView fitWidth="1100" fitHeight="800" preserveRatio="false" opacity="0.7">
+            <image><Image url="@/foret.jpg"/></image>
+        </ImageView>
+        <!-- Overlay sombre -->
+        <VBox style="-fx-background-color: rgba(5,18,8,0.45);"/>
+
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background-color: transparent; -fx-background: transparent;
+                           -fx-border-color: transparent;">
+            <VBox spacing="0" style="-fx-background-color: transparent;">
+
+                <!-- ══ HEADER ══ -->
+                <VBox style="-fx-padding: 28 32 18 32;" spacing="16">
+
+                    <!-- Titre + bouton carte -->
+                    <HBox alignment="CENTER_LEFT" spacing="14">
+                        <VBox spacing="6" HBox.hgrow="ALWAYS">
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="📡"
+                                       style="-fx-font-size: 20;
+                                              -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.8),6,0,0,2);"/>
+                                <Label text="Gestion des Capteurs"
+                                       style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;
+                                              -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.9),10,0,0,2);"/>
+                            </HBox>
+                            <Label text="Surveillance et gestion des capteurs forestiers en temps réel"
+                                   style="-fx-font-size: 12; -fx-text-fill: rgba(255,255,255,0.75);
+                                          -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.8),6,0,0,1);"/>
+                        </VBox>
+
+                        <!-- Bouton Carte -->
+                        <Button text="🗺️  Carte Interactive" onAction="#ouvrirCarte"
+                                prefHeight="40"
+                                style="-fx-background-color: rgba(22,163,74,0.22);
+                                       -fx-text-fill: #4ade80; -fx-font-weight: bold;
+                                       -fx-font-size: 12; -fx-background-radius: 10;
+                                       -fx-border-color: rgba(74,222,128,0.45);
+                                       -fx-border-radius: 10; -fx-cursor: hand; -fx-padding: 8 18;
+                                       -fx-effect: dropshadow(gaussian,rgba(74,222,128,0.25),8,0,0,2);"/>
+                    </HBox>
+
+                    <!-- ══ STATS CARDS ══ -->
+                    <HBox spacing="12">
+                        <!-- Actifs -->
+                        <VBox alignment="CENTER" spacing="6" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: rgba(0,0,0,0.52);
+                                     -fx-background-radius: 14;
+                                     -fx-border-color: rgba(74,222,128,0.4);
+                                     -fx-border-radius: 14; -fx-border-width: 1;
+                                     -fx-padding: 14 16;">
+                            <HBox alignment="CENTER" spacing="6">
+                                <Label text="●"
+                                       style="-fx-font-size: 9; -fx-text-fill: #4ade80;"/>
+                                <Label text="ACTIFS"
+                                       style="-fx-font-size: 9; -fx-font-weight: bold;
+                                              -fx-text-fill: #4ade80; -fx-letter-spacing: 1;"/>
+                            </HBox>
+                            <Label fx:id="lblActifs" text="0"
+                                   style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+                            <Label text="capteurs"
+                                   style="-fx-font-size: 10; -fx-text-fill: rgba(74,222,128,0.6);"/>
+                        </VBox>
+
+                        <!-- En panne -->
+                        <VBox alignment="CENTER" spacing="6" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: rgba(0,0,0,0.52);
+                                     -fx-background-radius: 14;
+                                     -fx-border-color: rgba(252,165,165,0.4);
+                                     -fx-border-radius: 14; -fx-border-width: 1;
+                                     -fx-padding: 14 16;">
+                            <HBox alignment="CENTER" spacing="6">
+                                <Label text="●"
+                                       style="-fx-font-size: 9; -fx-text-fill: #fca5a5;"/>
+                                <Label text="EN PANNE"
+                                       style="-fx-font-size: 9; -fx-font-weight: bold;
+                                              -fx-text-fill: #fca5a5; -fx-letter-spacing: 1;"/>
+                            </HBox>
+                            <Label fx:id="lblEnPanne" text="0"
+                                   style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #fca5a5;"/>
+                            <Label text="capteurs"
+                                   style="-fx-font-size: 10; -fx-text-fill: rgba(252,165,165,0.6);"/>
+                        </VBox>
+
+                        <!-- Total capteurs -->
+                        <VBox alignment="CENTER" spacing="6" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: rgba(0,0,0,0.52);
+                                     -fx-background-radius: 14;
+                                     -fx-border-color: rgba(255,255,255,0.25);
+                                     -fx-border-radius: 14; -fx-border-width: 1;
+                                     -fx-padding: 14 16;">
+                            <HBox alignment="CENTER" spacing="6">
+                                <Label text="📡"
+                                       style="-fx-font-size: 10;"/>
+                                <Label text="TOTAL"
+                                       style="-fx-font-size: 9; -fx-font-weight: bold;
+                                              -fx-text-fill: white; -fx-letter-spacing: 1;"/>
+                            </HBox>
+                            <Label fx:id="lblTotal" text="0"
+                                   style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                            <Label text="capteurs"
+                                   style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.5);"/>
+                        </VBox>
+
+                        <!-- Maintenances -->
+                        <VBox alignment="CENTER" spacing="6" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: rgba(0,0,0,0.52);
+                                     -fx-background-radius: 14;
+                                     -fx-border-color: rgba(252,211,77,0.4);
+                                     -fx-border-radius: 14; -fx-border-width: 1;
+                                     -fx-padding: 14 16;">
+                            <HBox alignment="CENTER" spacing="6">
+                                <Label text="🔧"
+                                       style="-fx-font-size: 10;"/>
+                                <Label text="MAINTENANCES"
+                                       style="-fx-font-size: 9; -fx-font-weight: bold;
+                                              -fx-text-fill: #fcd34d; -fx-letter-spacing: 1;"/>
+                            </HBox>
+                            <Label fx:id="lblTotalM" text="0"
+                                   style="-fx-font-size: 30; -fx-font-weight: bold; -fx-text-fill: #fcd34d;"/>
+                            <Label text="enregistrées"
+                                   style="-fx-font-size: 10; -fx-text-fill: rgba(252,211,77,0.6);"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- ══ CORPS ══ -->
+                <VBox style="-fx-padding: 0 22 26 22;" spacing="12">
+
+                    <!-- Onglets -->
+                    <HBox spacing="0"
+                          style="-fx-background-color: rgba(0,0,0,0.55);
+                                 -fx-background-radius: 12; -fx-padding: 4;
+                                 -fx-border-color: rgba(255,255,255,0.12);
+                                 -fx-border-radius: 12; -fx-border-width: 1;"
+                          maxWidth="420">
+                        <Button fx:id="tabCapteur" text="📡   Capteurs"
+                                onAction="#afficherOngletCapteurs"
+                                prefHeight="38" prefWidth="205"
+                                style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                                       -fx-font-weight: bold; -fx-font-size: 13;
+                                       -fx-background-radius: 9; -fx-cursor: hand;"/>
+                        <Button fx:id="tabMaintenance" text="🔧   Maintenances"
+                                onAction="#afficherOngletMaintenances"
+                                prefHeight="38" prefWidth="205"
+                                style="-fx-background-color: transparent; -fx-text-fill: #64748b;
+                                       -fx-font-size: 13; -fx-background-radius: 9; -fx-cursor: hand;"/>
+                    </HBox>
+
+                    <!-- ═══ PANNEAU CAPTEURS ═══ -->
+                    <VBox fx:id="panneauCapteurs" spacing="10">
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <TextField fx:id="tfRecherche"
+                                       promptText="🔍  Rechercher par nom, type ou localisation..."
+                                       onKeyReleased="#rechercher"
+                                       HBox.hgrow="ALWAYS"
+                                       style="-fx-background-color: rgba(255,255,255,0.96);
+                                              -fx-background-radius: 10; -fx-padding: 10 14;
+                                              -fx-border-color: #d1d5db; -fx-border-radius: 10;
+                                              -fx-font-size: 13;
+                                              -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.12),6,0,0,2);"/>
+                            <Button text="＋  Ajouter" onAction="#ouvrirAjout"
+                                    prefHeight="42"
+                                    style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                                           -fx-font-size: 13; -fx-font-weight: bold;
+                                           -fx-padding: 10 22; -fx-background-radius: 10;
+                                           -fx-cursor: hand;
+                                           -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.5),10,0,0,3);"/>
+                        </HBox>
+
+                        <VBox style="-fx-background-color: rgba(255,255,255,0.98);
+                                     -fx-background-radius: 16;
+                                     -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.28),16,0,0,4);">
+                            <ScrollPane fitToWidth="true" prefHeight="430"
+                                        style="-fx-background-color: transparent;
+                                               -fx-border-color: transparent; -fx-padding: 0;">
+                                <VBox fx:id="listeCapteurs" spacing="0"/>
+                            </ScrollPane>
+                        </VBox>
+                    </VBox>
+
+                    <!-- ═══ PANNEAU MAINTENANCES ═══ -->
+                    <VBox fx:id="panneauMaintenances" spacing="10" managed="false" visible="false">
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <TextField fx:id="tfRechercheM"
+                                       promptText="🔍  Rechercher par type, statut ou description..."
+                                       onKeyReleased="#rechercherMaintenance"
+                                       HBox.hgrow="ALWAYS"
+                                       style="-fx-background-color: rgba(255,255,255,0.96);
+                                              -fx-background-radius: 10; -fx-padding: 10 14;
+                                              -fx-border-color: #d1d5db; -fx-border-radius: 10;
+                                              -fx-font-size: 13;
+                                              -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.12),6,0,0,2);"/>
+                            <Button text="＋  Ajouter" onAction="#ouvrirAjoutMaintenance"
+                                    prefHeight="42"
+                                    style="-fx-background-color: #d97706; -fx-text-fill: white;
+                                           -fx-font-size: 13; -fx-font-weight: bold;
+                                           -fx-padding: 10 22; -fx-background-radius: 10;
+                                           -fx-cursor: hand;
+                                           -fx-effect: dropshadow(gaussian,rgba(217,119,6,0.5),10,0,0,3);"/>
+                        </HBox>
+
+                        <!-- Filtres statut maintenance -->
+                        <HBox spacing="0"
+                              style="-fx-background-color: rgba(255,255,255,0.92);
+                                     -fx-background-radius: 12;
+                                     -fx-border-color: rgba(255,255,255,0.3);
+                                     -fx-border-radius: 12; -fx-border-width: 1;
+                                     -fx-padding: 4;
+                                     -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.15),8,0,0,2);">
+
+                            <Button fx:id="btnFiltreAll" text="Tous"
+                                    onAction="#filtrerMaintenanceTous"
+                                    prefHeight="36"
+                                    style="-fx-background-color: #334155;
+                                           -fx-text-fill: white;
+                                           -fx-font-size: 12; -fx-font-weight: bold;
+                                           -fx-padding: 0 18; -fx-background-radius: 9;
+                                           -fx-cursor: hand;"/>
+
+                            <Region prefWidth="4"/>
+
+                            <Button fx:id="btnFiltrePlanifie"
+                                    onAction="#filtrerMaintenancePlanifie"
+                                    prefHeight="36"
+                                    style="-fx-background-color: transparent;
+                                           -fx-text-fill: #92400e;
+                                           -fx-font-size: 12; -fx-font-weight: bold;
+                                           -fx-padding: 0 16; -fx-background-radius: 9;
+                                           -fx-cursor: hand;">
+                                <graphic>
+                                    <HBox spacing="6" alignment="CENTER">
+                                        <Label text="●"
+                                               style="-fx-font-size: 8; -fx-text-fill: #d97706;"/>
+                                        <Label text="Planifié"
+                                               style="-fx-font-size: 12; -fx-font-weight: bold;
+                                                      -fx-text-fill: #92400e;"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+
+                            <Region prefWidth="4"/>
+
+                            <Button fx:id="btnFiltreEnCours"
+                                    onAction="#filtrerMaintenanceEnCours"
+                                    prefHeight="36"
+                                    style="-fx-background-color: transparent;
+                                           -fx-text-fill: #14532d;
+                                           -fx-font-size: 12; -fx-font-weight: bold;
+                                           -fx-padding: 0 16; -fx-background-radius: 9;
+                                           -fx-cursor: hand;">
+                                <graphic>
+                                    <HBox spacing="6" alignment="CENTER">
+                                        <Label text="●"
+                                               style="-fx-font-size: 8; -fx-text-fill: #16a34a;"/>
+                                        <Label text="En cours"
+                                               style="-fx-font-size: 12; -fx-font-weight: bold;
+                                                      -fx-text-fill: #14532d;"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+
+                            <Region prefWidth="4"/>
+
+                            <Button fx:id="btnFiltreTermine"
+                                    onAction="#filtrerMaintenanceTermine"
+                                    prefHeight="36"
+                                    style="-fx-background-color: transparent;
+                                           -fx-text-fill: #1e3a5f;
+                                           -fx-font-size: 12; -fx-font-weight: bold;
+                                           -fx-padding: 0 16; -fx-background-radius: 9;
+                                           -fx-cursor: hand;">
+                                <graphic>
+                                    <HBox spacing="6" alignment="CENTER">
+                                        <Label text="●"
+                                               style="-fx-font-size: 8; -fx-text-fill: #2563eb;"/>
+                                        <Label text="Terminé"
+                                               style="-fx-font-size: 12; -fx-font-weight: bold;
+                                                      -fx-text-fill: #1e3a5f;"/>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+                        </HBox>
+
+                        <VBox style="-fx-background-color: rgba(255,255,255,0.98);
+                                     -fx-background-radius: 16;
+                                     -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.28),16,0,0,4);">
+                            <ScrollPane fitToWidth="true" prefHeight="430"
+                                        style="-fx-background-color: transparent;
+                                               -fx-border-color: transparent; -fx-padding: 0;">
+                                <VBox fx:id="listeMaintenances" spacing="0"/>
+                            </ScrollPane>
+                        </VBox>
+                    </VBox>
+
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </StackPane>
+</HBox>

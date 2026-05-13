@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.capteur.controllers.ModifierCapteurController"
+      prefWidth="720" prefHeight="480">
+
+    <!-- ══ SIDEBAR GAUCHE ══ -->
+    <VBox prefWidth="200" spacing="0"
+          style="-fx-background-color: linear-gradient(to bottom, #1e3a5f, #1d4ed8, #2563eb);
+                 -fx-padding: 32 20 24 20;">
+
+        <VBox spacing="10" alignment="CENTER"
+              style="-fx-padding: 0 0 24 0;
+                     -fx-border-color: rgba(255,255,255,0.15);
+                     -fx-border-width: 0 0 1 0;">
+            <ImageView fitWidth="52" fitHeight="52" preserveRatio="true">
+                <image><Image url="@/logo.png"/></image>
+            </ImageView>
+            <Label text="ForestGuard"
+                   style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Modifier Capteur"
+                   style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.7);
+                          -fx-text-alignment: center;"/>
+        </VBox>
+
+        <VBox spacing="4" style="-fx-padding: 22 0 0 0;">
+            <Label text="MODIFICATION EN COURS"
+                   style="-fx-font-size: 9; -fx-font-weight: bold;
+                          -fx-text-fill: rgba(255,255,255,0.45); -fx-letter-spacing: 1;
+                          -fx-padding: 0 0 8 0;"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT"
+                  style="-fx-background-color: rgba(255,255,255,0.15);
+                         -fx-background-radius: 10; -fx-padding: 10 12;">
+                <Label text="✎"
+                       style="-fx-background-color: #93c5fd; -fx-text-fill: #1e3a5f;
+                              -fx-font-size: 11; -fx-font-weight: bold;
+                              -fx-background-radius: 50; -fx-min-width: 24; -fx-min-height: 24;
+                              -fx-alignment: center;"/>
+                <VBox spacing="1">
+                    <Label text="Édition active"
+                           style="-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                    <Label text="Modifiez les champs"
+                           style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.6);"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <VBox spacing="4"
+              style="-fx-background-color: rgba(0,0,0,0.2); -fx-background-radius: 10;
+                     -fx-padding: 12 14;">
+            <Label text="⚠ Attention"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #fbbf24;"/>
+            <Label text="Les modifications seront appliquées immédiatement en base de données."
+                   style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.65);
+                          -fx-wrap-text: true;"/>
+        </VBox>
+    </VBox>
+
+    <!-- ══ FORMULAIRE DROITE ══ -->
+    <VBox HBox.hgrow="ALWAYS" spacing="0"
+          style="-fx-background-color: #f8fafc;">
+
+        <VBox style="-fx-padding: 28 28 20 28; -fx-background-color: white;
+                     -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;">
+            <Label text="Modifier le capteur"
+                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <Label text="Modifiez les informations du capteur sélectionné"
+                   style="-fx-font-size: 11; -fx-text-fill: #94a3b8; -fx-padding: 3 0 0 0;"/>
+        </VBox>
+
+        <VBox spacing="16" VBox.vgrow="ALWAYS"
+              style="-fx-padding: 22 28 16 28;">
+
+            <HBox spacing="16">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="NOM DU CAPTEUR *"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                    <TextField fx:id="tfNom"
+                               style="-fx-background-color: white;
+                                      -fx-border-color: #e2e8f0; -fx-border-radius: 10;
+                                      -fx-background-radius: 10; -fx-text-fill: #0f172a;
+                                      -fx-padding: 11 14; -fx-font-size: 13;
+                                      -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.05),4,0,0,1);"/>
+                    <Label fx:id="lblErreurNom" text="" visible="false" managed="false"
+                           style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="TYPE *"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                    <ComboBox fx:id="cbType" maxWidth="Infinity"
+                              style="-fx-background-color: white;
+                                     -fx-border-color: #e2e8f0; -fx-border-radius: 10;
+                                     -fx-background-radius: 10; -fx-font-size: 13;
+                                     -fx-pref-height: 42;
+                                     -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.05),4,0,0,1);"/>
+                    <Label fx:id="lblErreurType" text="" visible="false" managed="false"
+                           style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="16">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="LOCALISATION *"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                    <ComboBox fx:id="cbLocalisation" maxWidth="Infinity"
+                              promptText="Sélectionner ou saisir une localisation..."
+                              style="-fx-background-color: white;
+                                     -fx-border-color: #e2e8f0; -fx-border-radius: 10;
+                                     -fx-background-radius: 10; -fx-font-size: 13;
+                                     -fx-pref-height: 42;"/>
+                    <Label fx:id="lblErreurLocalisation" text="" visible="false" managed="false"
+                           style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="STATUT *"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                    <ComboBox fx:id="cbStatut" maxWidth="Infinity"
+                              style="-fx-background-color: white;
+                                     -fx-border-color: #e2e8f0; -fx-border-radius: 10;
+                                     -fx-background-radius: 10; -fx-font-size: 13;
+                                     -fx-pref-height: 42;
+                                     -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.05),4,0,0,1);"/>
+                    <Label fx:id="lblErreurStatut" text="" visible="false" managed="false"
+                           style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+                </VBox>
+            </HBox>
+
+            <VBox spacing="5">
+                <Label text="FORÊT ASSOCIÉE *"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                <ComboBox fx:id="cbForet" maxWidth="Infinity"
+                          promptText="Sélectionner une forêt..."
+                          style="-fx-background-color: white;
+                                 -fx-border-color: #bbf7d0; -fx-border-radius: 10;
+                                 -fx-background-radius: 10; -fx-font-size: 13;
+                                 -fx-pref-height: 42;
+                                 -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.1),6,0,0,2);"/>
+                <Label fx:id="lblErreurForet" text="" visible="false" managed="false"
+                       style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+            </VBox>
+        </VBox>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT"
+              style="-fx-padding: 14 28 20 28; -fx-background-color: white;
+                     -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0;">
+            <Button text="Annuler" onAction="#annuler"
+                    prefHeight="40" prefWidth="100"
+                    style="-fx-background-color: #f1f5f9; -fx-text-fill: #64748b;
+                           -fx-font-size: 13; -fx-font-weight: bold;
+                           -fx-background-radius: 10; -fx-border-color: #e2e8f0;
+                           -fx-border-radius: 10; -fx-cursor: hand;"/>
+            <Button text="💾  Enregistrer les modifications" onAction="#modifier"
+                    prefHeight="40"
+                    style="-fx-background-color: #2563eb; -fx-text-fill: white;
+                           -fx-font-size: 13; -fx-font-weight: bold;
+                           -fx-background-radius: 10; -fx-cursor: hand; -fx-padding: 0 22;
+                           -fx-effect: dropshadow(gaussian,rgba(37,99,235,0.4),10,0,0,3);"/>
+        </HBox>
+    </VBox>
+</HBox>

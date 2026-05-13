@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.capteur.controllers.AjoutCapteurController"
+      prefWidth="720" prefHeight="480">
+
+    <!-- ══ SIDEBAR GAUCHE ══ -->
+    <VBox prefWidth="210" spacing="0"
+          style="-fx-background-color: linear-gradient(to bottom, #14532d, #166534, #15803d);
+                 -fx-padding: 32 20 24 20;">
+
+        <!-- Logo + titre -->
+        <VBox spacing="10" alignment="CENTER"
+              style="-fx-padding: 0 0 24 0;
+                     -fx-border-color: rgba(255,255,255,0.15);
+                     -fx-border-width: 0 0 1 0;">
+            <ImageView fitWidth="52" fitHeight="52" preserveRatio="true">
+                <image><Image url="@/logo.png"/></image>
+            </ImageView>
+            <Label text="ForestGuard"
+                   style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Nouveau Capteur"
+                   style="-fx-font-size: 11; -fx-text-fill: rgba(255,255,255,0.7);
+                          -fx-text-alignment: center; -fx-wrap-text: true;"/>
+        </VBox>
+
+        <!-- Étapes -->
+        <VBox spacing="4" style="-fx-padding: 22 0 0 0;">
+            <Label text="ÉTAPES"
+                   style="-fx-font-size: 9; -fx-font-weight: bold;
+                          -fx-text-fill: rgba(255,255,255,0.45);
+                          -fx-letter-spacing: 1; -fx-padding: 0 0 8 0;"/>
+
+            <!-- Étape 1 active -->
+            <HBox spacing="12" alignment="CENTER_LEFT"
+                  style="-fx-background-color: rgba(255,255,255,0.15);
+                         -fx-background-radius: 10; -fx-padding: 10 12;">
+                <Label text="1"
+                       style="-fx-background-color: #4ade80; -fx-text-fill: #14532d;
+                              -fx-font-size: 11; -fx-font-weight: bold;
+                              -fx-background-radius: 50; -fx-min-width: 24; -fx-min-height: 24;
+                              -fx-alignment: center;"/>
+                <VBox spacing="1">
+                    <Label text="Identification"
+                           style="-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                    <Label text="Nom, type, statut"
+                           style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.6);"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="12" alignment="CENTER_LEFT"
+                  style="-fx-padding: 10 12;">
+                <Label text="2"
+                       style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: rgba(255,255,255,0.7);
+                              -fx-font-size: 11; -fx-font-weight: bold;
+                              -fx-background-radius: 50; -fx-min-width: 24; -fx-min-height: 24;
+                              -fx-alignment: center;"/>
+                <VBox spacing="1">
+                    <Label text="Localisation"
+                           style="-fx-font-size: 12; -fx-text-fill: rgba(255,255,255,0.7);"/>
+                    <Label text="Position, forêt"
+                           style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.4);"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <!-- Conseil -->
+        <VBox spacing="5"
+              style="-fx-background-color: rgba(0,0,0,0.2); -fx-background-radius: 10;
+                     -fx-padding: 12 14;">
+            <Label text="💡 Conseil"
+                   style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #4ade80;"/>
+            <Label text="Choisissez un nom descriptif incluant la zone géographique."
+                   style="-fx-font-size: 10; -fx-text-fill: rgba(255,255,255,0.65);
+                          -fx-wrap-text: true;"/>
+        </VBox>
+    </VBox>
+
+    <!-- ══ FORMULAIRE DROITE ══ -->
+    <VBox HBox.hgrow="ALWAYS" spacing="0"
+          style="-fx-background-color: #f8fafc;">
+
+        <!-- Header -->
+        <VBox style="-fx-padding: 26 28 18 28; -fx-background-color: white;
+                     -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;">
+            <Label text="Informations du capteur"
+                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <Label text="Tous les champs marqués * sont obligatoires"
+                   style="-fx-font-size: 11; -fx-text-fill: #94a3b8; -fx-padding: 3 0 0 0;"/>
+        </VBox>
+
+        <!-- Champs -->
+        <VBox spacing="14" VBox.vgrow="ALWAYS"
+              style="-fx-padding: 20 28 14 28;">
+
+            <HBox spacing="16">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="NOM DU CAPTEUR *"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                    <TextField fx:id="tfNom" promptText="Ex: Capteur-Nord-01"
+                               style="-fx-background-color: white;
+                                      -fx-border-color: #e2e8f0; -fx-border-radius: 10;
+                                      -fx-background-radius: 10; -fx-text-fill: #0f172a;
+                                      -fx-prompt-text-fill: #cbd5e1;
+                                      -fx-padding: 11 14; -fx-font-size: 13;"/>
+                    <Label fx:id="lblErreurNom" text="" visible="false" managed="false"
+                           style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="TYPE *"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                    <ComboBox fx:id="cbType" maxWidth="Infinity"
+                              style="-fx-background-color: white;
+                                     -fx-border-color: #e2e8f0; -fx-border-radius: 10;
+                                     -fx-background-radius: 10; -fx-font-size: 13;
+                                     -fx-pref-height: 42;"/>
+                    <Label fx:id="lblErreurType" text="" visible="false" managed="false"
+                           style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="16">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="LOCALISATION *"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                    <ComboBox fx:id="cbLocalisation" maxWidth="Infinity"
+                              promptText="Sélectionner ou saisir une localisation..."
+                              style="-fx-background-color: white;
+                                     -fx-border-color: #e2e8f0; -fx-border-radius: 10;
+                                     -fx-background-radius: 10; -fx-font-size: 13;
+                                     -fx-pref-height: 42;"/>
+                    <Label fx:id="lblErreurLocalisation" text="" visible="false" managed="false"
+                           style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="STATUT *"
+                           style="-fx-font-size: 10; -fx-font-weight: bold;
+                                  -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                    <ComboBox fx:id="cbStatut" maxWidth="Infinity"
+                              style="-fx-background-color: white;
+                                     -fx-border-color: #e2e8f0; -fx-border-radius: 10;
+                                     -fx-background-radius: 10; -fx-font-size: 13;
+                                     -fx-pref-height: 42;"/>
+                    <Label fx:id="lblErreurStatut" text="" visible="false" managed="false"
+                           style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Forêt pleine largeur -->
+            <VBox spacing="5">
+                <Label text="FORÊT ASSOCIÉE *"
+                       style="-fx-font-size: 10; -fx-font-weight: bold;
+                              -fx-text-fill: #475569; -fx-letter-spacing: 0.5;"/>
+                <ComboBox fx:id="cbForet" maxWidth="Infinity"
+                          promptText="Sélectionner une forêt..."
+                          style="-fx-background-color: white;
+                                 -fx-border-color: #bbf7d0; -fx-border-radius: 10;
+                                 -fx-background-radius: 10; -fx-font-size: 13;
+                                 -fx-pref-height: 42;"/>
+                <Label fx:id="lblErreurForet" text="" visible="false" managed="false"
+                       style="-fx-font-size: 10; -fx-text-fill: #dc2626;"/>
+            </VBox>
+        </VBox>
+
+        <!-- Footer boutons -->
+        <HBox spacing="10" alignment="CENTER_RIGHT"
+              style="-fx-padding: 14 28 20 28; -fx-background-color: white;
+                     -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0;">
+            <Button text="Annuler" onAction="#annuler"
+                    prefHeight="40" prefWidth="100"
+                    style="-fx-background-color: #f1f5f9; -fx-text-fill: #64748b;
+                           -fx-font-size: 13; -fx-font-weight: bold;
+                           -fx-background-radius: 10; -fx-border-color: #e2e8f0;
+                           -fx-border-radius: 10; -fx-cursor: hand;"/>
+            <Button text="✅  Enregistrer le capteur" onAction="#ajouter"
+                    prefHeight="40"
+                    style="-fx-background-color: #16a34a; -fx-text-fill: white;
+                           -fx-font-size: 13; -fx-font-weight: bold;
+                           -fx-background-radius: 10; -fx-cursor: hand; -fx-padding: 0 22;
+                           -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.4),10,0,0,3);"/>
+        </HBox>
+    </VBox>
+</HBox>

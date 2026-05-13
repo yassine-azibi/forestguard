@@ -1,0 +1,1549 @@
+.app-bg {
+    -fx-background-color: linear-gradient(to bottom, rgba(6, 14, 9, 0.44), rgba(6, 14, 9, 0.66));
+}
+
+.register-root {
+    -fx-background-color: linear-gradient(to bottom, rgba(6, 14, 9, 0.34), rgba(6, 14, 9, 0.70));
+}
+
+.register-overlay {
+    -fx-background-color: rgba(1, 8, 4, 0.55);
+}
+
+.register-shell {
+    -fx-background-color: transparent;
+}
+
+.login-root {
+    -fx-background-color: linear-gradient(to bottom, rgba(4, 16, 9, 0.34), rgba(4, 16, 9, 0.70));
+}
+
+.login-overlay {
+    -fx-background-color: rgba(4, 16, 9, 0.28);
+}
+
+.login-card {
+    -fx-background-color: rgba(11, 26, 15, 0.70);
+    -fx-background-radius: 26;
+    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-border-radius: 26;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.50), 36, 0.20, 0, 10);
+}
+
+.login-card .text-field,
+.login-card .password-field {
+    -fx-background-color: rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28);
+}
+
+.login-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255, 255, 255, 0.82);
+}
+
+.dashboard-root {
+    -fx-background-color: linear-gradient(to bottom, rgba(4, 16, 9, 0.34), rgba(4, 16, 9, 0.72));
+}
+
+.dashboard-overlay {
+    -fx-background-color: rgba(4, 16, 9, 0.24);
+}
+
+.dashboard-page {
+    -fx-background-color: transparent;
+}
+
+.dashboard-hero {
+    -fx-padding: 24 26;
+}
+
+.dashboard-info-card {
+    -fx-background-color: rgba(7, 22, 12, 0.72);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(74, 222, 128, 0.14);
+    -fx-border-width: 1;
+    -fx-padding: 18 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.30), 20, 0.16, 0, 6);
+}
+
+.info-card-value {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+}
+
+.action-card {
+    -fx-background-color: rgba(7, 22, 12, 0.76);
+    -fx-background-radius: 22;
+    -fx-border-radius: 22;
+    -fx-border-color: rgba(74, 222, 128, 0.20);
+    -fx-border-width: 1;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.38), 24, 0.18, 0, 8);
+    -fx-cursor: hand;
+}
+
+.action-card:hover {
+    -fx-background-color: rgba(12, 32, 18, 0.88);
+    -fx-border-color: rgba(74, 222, 128, 0.36);
+}
+
+.action-icon {
+    -fx-font-size: 30px;
+}
+
+.action-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+}
+
+.action-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255, 255, 255, 0.72);
+}
+
+.page-shell {
+    -fx-background-color: transparent;
+}
+
+.top-banner {
+    -fx-background-color: rgba(6, 11, 10, 0.52);
+    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-border-width: 0 0 1 0;
+}
+
+.auth-card {
+    -fx-background-color: rgba(220, 236, 228, 0.12);
+    -fx-background-radius: 22;
+    -fx-border-color: rgba(255, 255, 255, 0.28);
+    -fx-border-radius: 22;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.42), 34, 0.22, 0, 10);
+}
+
+.brand {
+    -fx-font-size: 34px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #f3f6f4;
+}
+
+.title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #f3f6f4;
+}
+
+.title-light {
+    -fx-text-fill: #f3f6f4;
+}
+
+.subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #cdd8d3;
+}
+
+.subtitle-light {
+    -fx-text-fill: #cdd8d3;
+}
+
+.feedback {
+    -fx-text-fill: #ffcbc7;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+.muted {
+    -fx-text-fill: #bccac2;
+}
+
+.separator .line {
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+}
+
+.text-field,
+.password-field {
+    -fx-background-color: rgba(8, 18, 12, 0.22), rgba(8, 18, 12, 0.22);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #f6fbf8;
+    -fx-prompt-text-fill: #aebdb5;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.24);
+    -fx-padding: 12 14;
+    -fx-control-inner-background: rgba(8, 18, 12, 0.22);
+}
+
+.combo-box-base {
+    -fx-background-color: rgba(8, 18, 12, 0.22), rgba(8, 18, 12, 0.22);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #f6fbf8;
+    -fx-prompt-text-fill: #aebdb5;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.24);
+    -fx-padding: 0;
+}
+
+.combo-box-base:focused {
+    -fx-border-color: #4ade80;
+    -fx-effect: dropshadow(gaussian, rgba(74, 222, 128, 0.26), 10, 0.2, 0, 0);
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #f6fbf8;
+    -fx-background-color: transparent;
+    -fx-padding: 12 14;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #cdd8d3;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: rgba(9, 20, 13, 0.98);
+    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+}
+
+.combo-box-popup .list-cell {
+    -fx-text-fill: #f6fbf8;
+    -fx-background-color: transparent;
+}
+
+.combo-box-popup .list-cell:hover,
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: rgba(74, 222, 128, 0.20);
+}
+
+.text-field:focused,
+.password-field:focused {
+    -fx-border-color: #4ade80;
+    -fx-effect: dropshadow(gaussian, rgba(74, 222, 128, 0.26), 10, 0.2, 0, 0);
+}
+
+.primary-button {
+    -fx-background-color: linear-gradient(to right, #22c55e, #15803d);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 12;
+    -fx-padding: 12 18;
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to right, #16a34a, #166534);
+}
+
+.location-detect-button {
+    -fx-background-color: linear-gradient(to right, #22c55e, #15803d);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 13px;
+    -fx-background-radius: 12;
+    -fx-padding: 10 16;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.35), 10, 0.2, 0, 3);
+}
+
+.location-detect-button:hover {
+    -fx-background-color: linear-gradient(to right, #16a34a, #166534);
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.55), 14, 0.25, 0, 4);
+    -fx-translate-y: -1;
+}
+
+.location-detect-button:pressed {
+    -fx-background-color: linear-gradient(to right, #15803d, #14532d);
+    -fx-translate-y: 0;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.20), 6, 0.15, 0, 1);
+}
+
+.location-detect-button:disabled {
+    -fx-background-color: rgba(34, 197, 94, 0.30);
+    -fx-text-fill: rgba(255, 255, 255, 0.55);
+    -fx-effect: none;
+    -fx-cursor: default;
+}
+
+/* Champ adresse complète détectée — lecture seule, style distinct */
+.location-address-field {
+    -fx-background-color: rgba(5, 15, 9, 0.60), rgba(5, 15, 9, 0.60);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #d5f7df;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.35);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: rgba(74, 222, 128, 0.30);
+    -fx-padding: 10 14;
+    -fx-font-size: 13px;
+    -fx-font-style: italic;
+}
+
+/* Champ coordonnées GPS — lecture seule, police monospace pour l'alignement */
+.location-gps-field {
+    -fx-background-color: rgba(3, 12, 7, 0.72), rgba(3, 12, 7, 0.72);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #86efac;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.30);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: rgba(74, 222, 128, 0.40);
+    -fx-padding: 10 14;
+    -fx-font-size: 13px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-weight: 600;
+}
+
+/* Bouton copier coordonnées GPS */
+.gps-copy-button {
+    -fx-background-color: rgba(74, 222, 128, 0.18);
+    -fx-text-fill: #86efac;
+    -fx-font-size: 15px;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: rgba(74, 222, 128, 0.35);
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+    -fx-padding: 6 8;
+}
+
+.gps-copy-button:hover {
+    -fx-background-color: rgba(74, 222, 128, 0.30);
+    -fx-border-color: rgba(74, 222, 128, 0.60);
+}
+
+.gps-copy-button:disabled {
+    -fx-background-color: rgba(34, 197, 94, 0.22);
+    -fx-text-fill: #4ade80;
+    -fx-cursor: default;
+}
+
+
+.secondary-button {
+    -fx-background-color: rgba(148, 163, 184, 0.26);
+    -fx-text-fill: #e2e8f0;
+    -fx-font-weight: 700;
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.25);
+    -fx-border-radius: 12;
+    -fx-padding: 12 18;
+}
+
+.location-status {
+    -fx-text-fill: #d5f7df;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+.danger-button {
+    -fx-background-color: linear-gradient(to right, #ef4444, #b91c1c);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 12;
+    -fx-padding: 12 18;
+}
+
+.home-button {
+    -fx-background-color: linear-gradient(to right, #0ea5e9, #0369a1);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 12;
+    -fx-padding: 12 18;
+}
+
+.home-button:hover {
+    -fx-background-color: linear-gradient(to right, #0284c7, #075985);
+}
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7ef5ae;
+    -fx-font-weight: 700;
+    -fx-padding: 0;
+}
+
+/* ── Bouton Google OAuth2 ──────────────────────────────────────────────────── */
+.google-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #3c4043;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #dadce0;
+    -fx-border-width: 1;
+    -fx-padding: 11 18;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 6, 0.1, 0, 2);
+}
+
+.google-button:hover {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #bdc1c6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 8, 0.12, 0, 3);
+    -fx-translate-y: -1;
+}
+
+.google-button:pressed {
+    -fx-background-color: #f1f3f4;
+    -fx-translate-y: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 4, 0.08, 0, 1);
+}
+
+.google-button:disabled {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #9aa0a6;
+    -fx-border-color: #e8eaed;
+    -fx-effect: none;
+    -fx-cursor: default;
+}
+
+.profile-root {
+    -fx-background-color: linear-gradient(to bottom, rgba(5, 18, 10, 0.45), rgba(5, 18, 10, 0.78));
+}
+
+.profile-overlay {
+    -fx-background-color: rgba(5, 18, 10, 0.30);
+}
+
+.toolbar-shell {
+    -fx-background-color: rgba(8, 16, 10, 0.72);
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+    -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.34), 18, 0.18, 0, 6);
+}
+
+.toolbar-brand {
+    -fx-font-size: 17px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+}
+
+.toolbar-subbrand {
+    -fx-font-size: 10px;
+    -fx-text-fill: #55d98b;
+}
+
+.nav-pill {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-text-fill: #e2e8f0;
+    -fx-font-weight: 700;
+    -fx-background-radius: 999;
+    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-radius: 999;
+    -fx-padding: 10 18;
+}
+
+.nav-pill:hover {
+    -fx-background-color: rgba(74, 222, 128, 0.16);
+    -fx-text-fill: white;
+}
+
+.nav-pill-active {
+    -fx-background-color: #16a34a;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(22, 163, 74, 0.45), 14, 0.22, 0, 4);
+}
+
+/* ── Nav avatar circle ────────────────────────────────────────────────────── */
+
+.nav-avatar-circle {
+    -fx-min-width: 38px;
+    -fx-min-height: 38px;
+    -fx-max-width: 38px;
+    -fx-max-height: 38px;
+    -fx-pref-width: 38px;
+    -fx-pref-height: 38px;
+    -fx-background-color: #7c3aed;
+    -fx-text-fill: white;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+    -fx-background-radius: 999;
+    -fx-border-radius: 999;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-alignment: center;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(124, 58, 237, 0.40), 10, 0.20, 0, 2);
+}
+
+.nav-avatar-circle:hover {
+    -fx-border-color: #22c55e;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.content-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.content-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.profile-page {
+    -fx-background-color: transparent;
+}
+
+.signal-root {
+    -fx-background-color: linear-gradient(to bottom, rgba(3, 18, 9, 0.28), rgba(3, 18, 9, 0.70));
+}
+
+.signal-overlay {
+    -fx-background-color: rgba(1, 8, 4, 0.60);
+}
+
+.signal-shell {
+    -fx-background-color: transparent;
+}
+
+.signal-topbar {
+    -fx-background-color: rgba(7, 18, 11, 0.66);
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+}
+
+.signal-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-control-inner-background: transparent;
+    -fx-text-box-border: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.signal-scroll:focused {
+    -fx-focus-color: transparent;
+}
+
+.signal-scroll .viewport {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.signal-scroll .content {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.signal-scroll .corner {
+    -fx-background-color: transparent;
+}
+
+.signal-scroll .track-background {
+    -fx-background-color: transparent;
+}
+
+.signal-scroll .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.signal-scroll:vertical .scroll-bar {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.signal-scroll:vertical .increment-button,
+.signal-scroll:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.signal-scroll .thumb {
+    -fx-background-color: rgba(74, 222, 128, 0.40);
+    -fx-background-radius: 5;
+}
+
+.signal-page {
+    -fx-alignment: top-center;
+    -fx-background-color: transparent;
+}
+
+.signal-main-card,
+.signal-section-card,
+.emergency-card,
+.upload-dropzone {
+    -fx-background-color: rgba(8, 22, 13, 0.72);
+    -fx-background-radius: 24;
+    -fx-border-radius: 24;
+    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.36), 28, 0.18, 0, 8);
+}
+
+.signal-main-card {
+    -fx-padding: 22 26;
+}
+
+.signal-section-card {
+    -fx-padding: 18 22;
+}
+
+.signal-glass-card {
+    -fx-background-color: rgba(10, 28, 16, 0.74);
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+}
+
+.emergency-card {
+    -fx-background-color: rgba(124, 18, 18, 0.48);
+    -fx-border-color: rgba(248, 113, 113, 0.40);
+    -fx-padding: 18 22;
+}
+
+.emergency-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #fff3f3;
+}
+
+.emergency-text,
+.upload-status,
+.upload-hint {
+    -fx-text-fill: rgba(255, 255, 255, 0.80);
+}
+
+.upload-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+}
+
+.upload-dropzone {
+    -fx-padding: 20;
+    -fx-cursor: hand;
+}
+
+.upload-dropzone:hover {
+    -fx-background-color: rgba(12, 32, 19, 0.88);
+    -fx-border-color: rgba(74, 222, 128, 0.28);
+}
+
+.signal-page .combo-box,
+.signal-page .text-field,
+.signal-page .text-area {
+    -fx-background-color: rgba(5, 15, 9, 0.78), rgba(5, 15, 9, 0.78);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.42);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: rgba(255, 255, 255, 0.16);
+    -fx-padding: 12 14;
+    -fx-control-inner-background: rgba(5, 15, 9, 0.78);
+    -fx-text-box-border: rgba(255, 255, 255, 0.16);
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: rgba(74, 222, 128, 0.22);
+}
+
+.signal-page .combo-box-popup {
+    -fx-background-color: rgba(5, 15, 9, 0.90);
+}
+
+.signal-page .combo-box:focused,
+.signal-page .text-field:focused,
+.signal-page .text-area:focused {
+    -fx-border-color: #4ade80;
+    -fx-effect: dropshadow(gaussian, rgba(74, 222, 128, 0.22), 12, 0.18, 0, 0);
+}
+
+.signal-page .text-area {
+    -fx-highlight-fill: rgba(74, 222, 128, 0.24);
+}
+
+.signal-page .button {
+    -fx-cursor: hand;
+}
+
+.signal-page .primary-button:hover,
+.signal-page .secondary-button:hover {
+    -fx-translate-y: -1;
+}
+
+.submit-report-button {
+    -fx-min-width: 180;
+}
+
+.hero-card,
+.summary-card,
+.form-card,
+.modal-card {
+    -fx-background-color: rgba(7, 22, 12, 0.76);
+    -fx-background-radius: 22;
+    -fx-border-radius: 22;
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.38), 24, 0.18, 0, 8);
+}
+
+.hero-card {
+    -fx-padding: 22 24;
+}
+
+.hero-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+}
+
+.hero-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(255, 255, 255, 0.72);
+}
+
+.summary-name {
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+}
+
+.summary-email {
+    -fx-font-size: 12px;
+    -fx-text-fill: rgba(255, 255, 255, 0.72);
+}
+
+.summary-meta {
+    -fx-padding: 8 0 0 0;
+}
+
+.meta-label,
+.field-label,
+.section-subtitle,
+.modal-subtitle {
+    -fx-text-fill: rgba(255, 255, 255, 0.68);
+}
+
+.meta-label,
+.field-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+}
+
+.meta-value {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+.avatar-badge {
+    -fx-min-width: 88px;
+    -fx-min-height: 88px;
+    -fx-max-width: 88px;
+    -fx-max-height: 88px;
+    -fx-background-radius: 999;
+    -fx-border-radius: 999;
+    -fx-background-color: linear-gradient(to bottom right, #22c55e, #15803d);
+    -fx-text-fill: white;
+    -fx-font-size: 30px;
+    -fx-font-weight: 800;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.40), 18, 0.20, 0, 6);
+}
+
+.form-card {
+    -fx-padding: 28;
+}
+
+.section-title,
+.modal-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+}
+
+.section-subtitle {
+    -fx-font-size: 13px;
+}
+
+.form-card .text-field,
+.form-card .password-field,
+.modal-card .text-field,
+.modal-card .password-field,
+.modal-card .text-area {
+    -fx-background-color: rgba(7, 16, 11, 0.72), rgba(7, 16, 11, 0.72);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.44);
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+    -fx-padding: 12 14;
+}
+
+.form-card .text-field:focused,
+.form-card .password-field:focused,
+.modal-card .text-field:focused,
+.modal-card .password-field:focused,
+.modal-card .text-area:focused {
+    -fx-border-color: #4ade80;
+    -fx-effect: dropshadow(gaussian, rgba(74, 222, 128, 0.22), 10, 0.18, 0, 0);
+}
+
+.alert-list {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.alert-list .viewport {
+    -fx-background-color: transparent;
+}
+
+.alert-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 6 0;
+}
+
+.alert-item {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 16;
+    -fx-border-color: rgba(255, 255, 255, 0.08);
+    -fx-border-radius: 16;
+}
+
+.alerts-root {
+    -fx-background-color: linear-gradient(to bottom, rgba(4, 16, 9, 0.36), rgba(4, 16, 9, 0.74));
+}
+
+.alerts-overlay {
+    -fx-background-color: rgba(4, 16, 9, 0.24);
+}
+
+.alerts-page {
+    -fx-background-color: transparent;
+}
+
+.alerts-main-card {
+    -fx-padding: 24 26;
+}
+
+.alerts-filter-card,
+.alerts-list-container {
+    -fx-background-color: rgba(7, 22, 12, 0.78);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+    -fx-border-width: 1;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.36), 22, 0.16, 0, 8);
+}
+
+.alerts-filter-card .combo-box {
+    -fx-background-color: rgba(7, 16, 11, 0.72), rgba(7, 16, 11, 0.72);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.44);
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+    -fx-padding: 12 14;
+}
+
+.alerts-filter-card .combo-box:focused {
+    -fx-border-color: #4ade80;
+    -fx-effect: dropshadow(gaussian, rgba(74, 222, 128, 0.22), 10, 0.18, 0, 0);
+}
+
+.alert-card {
+    -fx-background-color: rgba(255, 255, 255, 0.93);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: rgba(15, 23, 42, 0.08);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.12), 16, 0.10, 0, 4);
+}
+
+.alert-zone-name {
+    -fx-font-size: 17px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #0f172a;
+}
+
+.alert-meta {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #334155;
+}
+
+.alert-badge {
+    -fx-padding: 4 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: 800;
+    -fx-background-radius: 999;
+    -fx-border-radius: 999;
+}
+
+.badge-critical {
+    -fx-background-color: rgba(239, 68, 68, 0.18);
+    -fx-text-fill: #b91c1c;
+    -fx-border-color: rgba(239, 68, 68, 0.34);
+}
+
+.badge-medium {
+    -fx-background-color: rgba(249, 115, 22, 0.18);
+    -fx-text-fill: #c2410c;
+    -fx-border-color: rgba(249, 115, 22, 0.34);
+}
+
+.badge-low {
+    -fx-background-color: rgba(34, 197, 94, 0.18);
+    -fx-text-fill: #166534;
+    -fx-border-color: rgba(34, 197, 94, 0.34);
+}
+
+.badge-active {
+    -fx-background-color: rgba(59, 130, 246, 0.18);
+    -fx-text-fill: #1d4ed8;
+    -fx-border-color: rgba(59, 130, 246, 0.34);
+}
+
+.badge-contained {
+    -fx-background-color: rgba(100, 116, 139, 0.20);
+    -fx-text-fill: #334155;
+    -fx-border-color: rgba(100, 116, 139, 0.34);
+}
+
+.view-details-button {
+    -fx-background-color: linear-gradient(to right, #22c55e, #15803d);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 12;
+    -fx-padding: 10 18;
+}
+
+.view-details-button:hover {
+    -fx-background-color: linear-gradient(to right, #16a34a, #166534);
+}
+
+.alerts-empty {
+    -fx-text-fill: rgba(255, 255, 255, 0.75);
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-padding: 8 0;
+}
+
+.alert-item-text {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHATBOT — ForestBot
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Bouton dans la navbar */
+.chat-nav-pill {
+    -fx-background-color: rgba(74, 222, 128, 0.20);
+    -fx-text-fill: #86efac;
+    -fx-border-color: rgba(74, 222, 128, 0.40);
+    -fx-border-width: 1;
+}
+
+.chat-nav-pill:hover {
+    -fx-background-color: rgba(74, 222, 128, 0.32);
+    -fx-text-fill: white;
+}
+
+/* ── Fenêtre chat ─────────────────────────────────────────────────────────── */
+
+.chat-root {
+    -fx-background-color: #0d1f13;
+}
+
+/* ── En-tête ──────────────────────────────────────────────────────────────── */
+
+.chat-header {
+    -fx-background-color: rgba(8, 22, 13, 0.98);
+    -fx-border-color: rgba(74, 222, 128, 0.22);
+    -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 10, 0.15, 0, 4);
+}
+
+.chat-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+}
+
+.chat-subtitle {
+    -fx-font-size: 11px;
+    -fx-text-fill: #55d98b;
+}
+
+.chat-context-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: rgba(255, 255, 255, 0.60);
+    -fx-font-weight: 600;
+}
+
+.chat-alert-combo {
+    -fx-background-color: rgba(7, 16, 11, 0.80);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255,255,255,0.44);
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: rgba(74, 222, 128, 0.28);
+    -fx-font-size: 12px;
+    -fx-padding: 4 8;
+}
+
+.chat-clear-button {
+    -fx-background-color: rgba(239, 68, 68, 0.15);
+    -fx-text-fill: #fca5a5;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: rgba(239, 68, 68, 0.30);
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+}
+
+.chat-clear-button:hover {
+    -fx-background-color: rgba(239, 68, 68, 0.28);
+    -fx-border-color: rgba(239, 68, 68, 0.55);
+}
+
+/* ── Zone de messages ─────────────────────────────────────────────────────── */
+
+.chat-scroll {
+    -fx-background-color: transparent;
+    -fx-background: #0d1f13;
+}
+
+.chat-scroll .viewport {
+    -fx-background-color: #0d1f13;
+}
+
+.chat-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(74, 222, 128, 0.30);
+    -fx-background-radius: 4;
+}
+
+.chat-messages-container {
+    -fx-background-color: #0d1f13;
+}
+
+/* ── Bulles utilisateur (droite, vert) ────────────────────────────────────── */
+
+.chat-bubble-user {
+    -fx-background-color: linear-gradient(to bottom right, #22c55e, #15803d);
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-line-spacing: 2;
+    -fx-background-radius: 18 18 4 18;
+    -fx-padding: 10 14;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.30), 8, 0.15, 0, 3);
+}
+
+/* ── Bulles bot (gauche, sombre) ──────────────────────────────────────────── */
+
+.chat-bubble-bot {
+    -fx-background-color: rgba(12, 32, 18, 0.92);
+    -fx-text-fill: #e2f5e9;
+    -fx-font-size: 13px;
+    -fx-line-spacing: 2;
+    -fx-background-radius: 18 18 18 4;
+    -fx-border-color: rgba(74, 222, 128, 0.20);
+    -fx-border-radius: 18 18 18 4;
+    -fx-border-width: 1;
+    -fx-padding: 10 14;
+}
+
+/* ── Bulle d'erreur ───────────────────────────────────────────────────────── */
+
+.chat-bubble-error {
+    -fx-background-color: rgba(124, 18, 18, 0.55);
+    -fx-text-fill: #fecaca;
+    -fx-font-size: 12px;
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(248, 113, 113, 0.40);
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-padding: 8 12;
+}
+
+/* ── Icône bot ────────────────────────────────────────────────────────────── */
+
+.chat-bot-icon {
+    -fx-font-size: 18px;
+    -fx-min-width: 28px;
+    -fx-alignment: center;
+}
+
+/* ── Indicateur de frappe ─────────────────────────────────────────────────── */
+
+.chat-typing-dots {
+    -fx-text-fill: #4ade80;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-background-color: rgba(12, 32, 18, 0.92);
+    -fx-background-radius: 18 18 18 4;
+    -fx-border-color: rgba(74, 222, 128, 0.20);
+    -fx-border-radius: 18 18 18 4;
+    -fx-border-width: 1;
+    -fx-padding: 10 16;
+}
+
+/* ── Zone de saisie ───────────────────────────────────────────────────────── */
+
+.chat-input-area {
+    -fx-background-color: rgba(8, 22, 13, 0.98);
+    -fx-border-color: rgba(74, 222, 128, 0.22);
+    -fx-border-width: 1 0 0 0;
+}
+
+.chat-input-field {
+    -fx-background-color: rgba(5, 15, 9, 0.90);
+    -fx-text-fill: #f0fdf4;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.38);
+    -fx-background-radius: 22;
+    -fx-border-radius: 22;
+    -fx-border-color: rgba(74, 222, 128, 0.28);
+    -fx-border-width: 1;
+    -fx-padding: 11 16;
+    -fx-font-size: 13px;
+}
+
+.chat-input-field:focused {
+    -fx-border-color: #4ade80;
+    -fx-effect: dropshadow(gaussian, rgba(74, 222, 128, 0.22), 10, 0.18, 0, 0);
+}
+
+.chat-send-button {
+    -fx-background-color: linear-gradient(to right, #22c55e, #15803d);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 13px;
+    -fx-background-radius: 22;
+    -fx-padding: 11 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.35), 8, 0.15, 0, 2);
+}
+
+.chat-send-button:hover {
+    -fx-background-color: linear-gradient(to right, #16a34a, #166534);
+    -fx-translate-y: -1;
+}
+
+.chat-send-button:disabled {
+    -fx-background-color: rgba(34, 197, 94, 0.25);
+    -fx-text-fill: rgba(255, 255, 255, 0.45);
+    -fx-effect: none;
+    -fx-cursor: default;
+    -fx-translate-y: 0;
+}
+
+.chat-disclaimer {
+    -fx-font-size: 10px;
+    -fx-text-fill: rgba(255, 255, 255, 0.35);
+    -fx-padding: 6 4 0 4;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+/* ── Bouton flottant Chat IA (coin bas-droit du dashboard) ───────────────── */
+
+.chat-float-button {
+    -fx-background-color: #22c55e;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-background-radius: 50;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 15, 0.25, 0, 4);
+}
+
+.chat-float-button:hover {
+    -fx-background-color: #16a34a;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.45), 20, 0.30, 0, 6);
+}
+
+.chat-float-button:pressed {
+    -fx-background-color: #15803d;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TICKER BAR — animated news-style bottom bar
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Outer bar — fixed to bottom of StackPane */
+.ticker-bar {
+    -fx-background-color: rgba(0, 0, 0, 0.88);
+    -fx-border-color: #22c55e;
+    -fx-border-width: 2 0 0 0;
+    -fx-pref-height: 40;
+    -fx-max-height: 40;
+    -fx-min-height: 40;
+}
+
+/* Green badge on the left */
+.ticker-label-badge {
+    -fx-background-color: #22c55e;
+    -fx-text-fill: white;
+    -fx-font-weight: 800;
+    -fx-font-size: 12px;
+    -fx-padding: 0 16;
+    -fx-pref-height: 40;
+    -fx-min-height: 40;
+    -fx-max-height: 40;
+}
+
+/* Clip container — hides overflow so text appears to scroll.
+   No -fx-clip here: clipping is handled by the StackPane layout bounds. */
+.ticker-clip {
+    -fx-pref-height: 40;
+    -fx-max-height: 40;
+    -fx-min-height: 40;
+    -fx-background-color: transparent;
+}
+
+/* The scrolling text label — must NOT be width-constrained.
+   JavaFX Label clips with "..." when max-width is set; keep it unbounded. */
+.ticker-text {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-background-color: transparent;
+    /* No -fx-max-width, no -fx-pref-width — label expands to full text width */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PHONE INPUT — +216 prefix wrapper
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.phone-input-wrapper {
+    -fx-background-color: rgba(8, 18, 12, 0.22);
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: rgba(255, 255, 255, 0.24);
+    -fx-border-width: 1;
+}
+
+.phone-input-wrapper:focused-within {
+    -fx-border-color: #4ade80;
+}
+
+.phone-prefix {
+    -fx-text-fill: #22c55e;
+    -fx-font-weight: 800;
+    -fx-font-size: 13px;
+    -fx-padding: 12 10 12 14;
+    -fx-background-color: rgba(34, 197, 94, 0.10);
+    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-border-width: 0 1 0 0;
+}
+
+.phone-input-inner {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-text-fill: #f6fbf8;
+    -fx-prompt-text-fill: #aebdb5;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 12 14;
+}
+
+.phone-input-inner:focused {
+    -fx-border-color: transparent;
+    -fx-effect: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOGIN PAGE — cinematic card styles
+   Scoped to #formCard so they don't bleed into other pages.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Login text fields ───────────────────────────────────────────────────── */
+#emailField,
+#mdpField {
+    -fx-background-color: rgba(6, 28, 6, 0.70);
+    -fx-background-radius: 14;
+    -fx-border-color: rgba(76, 175, 80, 0.38);
+    -fx-border-radius: 14;
+    -fx-border-width: 1.5;
+    -fx-text-fill: #e8fce8;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.28);
+    -fx-font-size: 13.5px;
+    -fx-padding: 13 18;
+    -fx-font-family: 'Georgia';
+}
+
+#emailField:focused,
+#mdpField:focused {
+    -fx-background-color: rgba(10, 40, 10, 0.80);
+    -fx-border-color: rgba(100, 210, 100, 0.75);
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(76, 210, 80, 0.35), 12, 0, 0, 0);
+}
+
+/* ── Login button ────────────────────────────────────────────────────────── */
+#loginBtn {
+    -fx-background-color: linear-gradient(to right, #1b6b1b, #2e7d32, #43a047, #2e7d32);
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Georgia';
+    -fx-background-radius: 14;
+    -fx-padding: 16 0;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(76, 175, 80, 0.65), 22, 0, 0, 6);
+}
+
+#loginBtn:hover {
+    -fx-background-color: linear-gradient(to right, #256b25, #388e3c, #4caf50, #388e3c);
+    -fx-effect: dropshadow(gaussian, rgba(100, 220, 100, 0.85), 28, 0, 0, 8);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+#loginBtn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+    -fx-effect: dropshadow(gaussian, rgba(76, 175, 80, 0.40), 12, 0, 0, 3);
+}
+
+/* ── Forgot password / register links ────────────────────────────────────── */
+#forgotPasswordLink,
+#registerLink {
+    -fx-cursor: hand;
+    -fx-font-family: 'Georgia';
+    -fx-font-style: italic;
+}
+
+#forgotPasswordLink:hover,
+#registerLink:hover {
+    -fx-text-fill: #81c784;
+    -fx-underline: true;
+}
+
+/* ── Error label ─────────────────────────────────────────────────────────── */
+#errorLabel {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 11.5px;
+    -fx-font-family: 'Georgia';
+    -fx-font-style: italic;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODULE GESTION-UTILISATEUR — Admin Panel
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.admin-root {
+    -fx-background-color: linear-gradient(to bottom, rgba(4, 16, 9, 0.36), rgba(4, 16, 9, 0.74));
+}
+
+.admin-overlay {
+    -fx-background-color: rgba(4, 16, 9, 0.28);
+}
+
+.admin-page {
+    -fx-background-color: transparent;
+}
+
+/* ── Stats cards ─────────────────────────────────────────────────────────── */
+
+.admin-stat-card {
+    -fx-background-color: rgba(7, 22, 12, 0.78);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(74, 222, 128, 0.22);
+    -fx-border-width: 1;
+    -fx-padding: 20 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.32), 20, 0.16, 0, 6);
+}
+
+.admin-stat-card:hover {
+    -fx-border-color: rgba(74, 222, 128, 0.44);
+    -fx-background-color: rgba(10, 30, 16, 0.88);
+}
+
+.stat-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: rgba(255, 255, 255, 0.72);
+}
+
+.stat-value {
+    -fx-font-size: 34px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #4ade80;
+    -fx-effect: dropshadow(gaussian, rgba(74, 222, 128, 0.35), 10, 0.20, 0, 2);
+}
+
+/* ── Filter bar ──────────────────────────────────────────────────────────── */
+
+.admin-filter-bar {
+    -fx-background-color: rgba(7, 22, 12, 0.76);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.28), 16, 0.14, 0, 5);
+}
+
+/* ── Table card ──────────────────────────────────────────────────────────── */
+
+.admin-table-card {
+    -fx-background-color: rgba(7, 22, 12, 0.78);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(74, 222, 128, 0.18);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.34), 22, 0.16, 0, 7);
+}
+
+/* ── TableView ───────────────────────────────────────────────────────────── */
+
+.admin-table {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: rgba(74, 222, 128, 0.08);
+}
+
+.admin-table .column-header-background {
+    -fx-background-color: rgba(5, 18, 10, 0.72);
+    -fx-background-radius: 14 14 0 0;
+}
+
+.admin-table .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(74, 222, 128, 0.12);
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 12 10;
+}
+
+.admin-table .column-header .label {
+    -fx-text-fill: #86efac;
+    -fx-font-weight: 800;
+    -fx-font-size: 12px;
+}
+
+.admin-table .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(74, 222, 128, 0.06);
+    -fx-border-width: 0 0 1 0;
+}
+
+.admin-table .table-row-cell:hover {
+    -fx-background-color: rgba(74, 222, 128, 0.08);
+}
+
+.admin-table .table-row-cell:selected {
+    -fx-background-color: rgba(74, 222, 128, 0.16);
+}
+
+.admin-table .table-cell {
+    -fx-text-fill: #e2f5e9;
+    -fx-font-size: 13px;
+    -fx-padding: 10 10;
+    -fx-background-color: transparent;
+}
+
+.admin-table .table-row-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.admin-table .table-row-cell:empty .table-cell {
+    -fx-border-color: transparent;
+}
+
+.admin-table .scroll-bar:vertical .thumb,
+.admin-table .scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(74, 222, 128, 0.30);
+    -fx-background-radius: 4;
+}
+
+.admin-table .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+/* ── Action buttons inside table ─────────────────────────────────────────── */
+
+.admin-action-edit {
+    -fx-background-color: rgba(59, 130, 246, 0.22);
+    -fx-text-fill: #93c5fd;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: rgba(59, 130, 246, 0.38);
+    -fx-border-width: 1;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+}
+
+.admin-action-edit:hover {
+    -fx-background-color: rgba(59, 130, 246, 0.38);
+    -fx-border-color: rgba(59, 130, 246, 0.65);
+    -fx-translate-y: -1;
+}
+
+.admin-action-delete {
+    -fx-background-color: rgba(239, 68, 68, 0.18);
+    -fx-text-fill: #fca5a5;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: rgba(239, 68, 68, 0.34);
+    -fx-border-width: 1;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+}
+
+.admin-action-delete:hover {
+    -fx-background-color: rgba(239, 68, 68, 0.32);
+    -fx-border-color: rgba(239, 68, 68, 0.60);
+    -fx-translate-y: -1;
+}
+
+/* ── Pagination ──────────────────────────────────────────────────────────── */
+
+.admin-pagination {
+    -fx-background-color: rgba(5, 18, 10, 0.60);
+    -fx-background-radius: 0 0 18 18;
+    -fx-border-color: rgba(74, 222, 128, 0.12);
+    -fx-border-width: 1 0 0 0;
+}
+
+.admin-page-info {
+    -fx-text-fill: rgba(255, 255, 255, 0.72);
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+/* ── Dashboard card for admin access ─────────────────────────────────────── */
+
+.admin-access-card {
+    -fx-background-color: rgba(124, 58, 237, 0.18);
+    -fx-background-radius: 22;
+    -fx-border-radius: 22;
+    -fx-border-color: rgba(167, 139, 250, 0.30);
+    -fx-border-width: 1;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(124, 58, 237, 0.28), 24, 0.18, 0, 8);
+    -fx-cursor: hand;
+}
+
+.admin-access-card:hover {
+    -fx-background-color: rgba(124, 58, 237, 0.30);
+    -fx-border-color: rgba(167, 139, 250, 0.55);
+}

@@ -8,13 +8,28 @@ module gestion.des.interventions {
     requires java.desktop;
     requires com.github.librepdf.openpdf;
 
+    // ── Module gestion-utilisateur ──
+    requires org.mindrot.jbcrypt;
+    requires jakarta.mail;
+    requires jakarta.activation;
+    requires java.net.http;
+
     opens controller to javafx.fxml;
     opens tests to javafx.fxml;
     opens model to javafx.base;
+
+    // Packages du module gestion-utilisateur
+    opens com.forestguard.controllers to javafx.fxml;
+    opens com.forestguard.entities to javafx.base;
 
     exports tests;
     exports controller;
     exports model;
     exports dao;
     exports utils;
+    exports com.forestguard.controllers;
+    exports com.forestguard.entities;
+    exports com.forestguard.services;
+    exports com.forestguard.utils;
+    exports com.forestguard.interfaces;
 }

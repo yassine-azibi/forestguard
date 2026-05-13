@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.forestguard.controllers.ChatController"
+            styleClass="chat-root"
+            stylesheets="@../styles/app.css"
+            prefWidth="520" prefHeight="680">
+
+    <!-- ── En-tête ──────────────────────────────────────────────────────── -->
+    <top>
+        <VBox styleClass="chat-header" spacing="8">
+            <padding>
+                <Insets top="16" right="18" bottom="14" left="18"/>
+            </padding>
+
+            <!-- Titre + bouton effacer -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="🤖" style="-fx-font-size: 22px;"/>
+                <VBox spacing="2" HBox.hgrow="ALWAYS">
+                    <Label text="ForestBot" styleClass="chat-title"/>
+                    <Label text="Assistant sécurité incendie" styleClass="chat-subtitle"/>
+                </VBox>
+                <Button fx:id="clearButton" text="🗑 Effacer"
+                        onAction="#handleClear"
+                        styleClass="chat-clear-button"/>
+            </HBox>
+
+            <!-- Contexte : localisation + niveau d'alerte -->
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Label fx:id="locationLabel" text="📍 Localisation inconnue"
+                       styleClass="chat-context-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Niveau d'alerte :" styleClass="chat-context-label"/>
+                <ComboBox fx:id="alertLevelCombo"
+                          styleClass="chat-alert-combo"
+                          prefWidth="110"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- ── Zone de messages ──────────────────────────────────────────────── -->
+    <center>
+        <ScrollPane fx:id="messagesScrollPane"
+                    fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED"
+                    styleClass="chat-scroll">
+            <content>
+                <VBox fx:id="messagesContainer"
+                      spacing="6"
+                      styleClass="chat-messages-container"
+                      fillWidth="true">
+                    <padding>
+                        <Insets top="12" right="0" bottom="12" left="0"/>
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <!-- ── Zone de saisie ────────────────────────────────────────────────── -->
+    <bottom>
+        <VBox styleClass="chat-input-area">
+            <padding>
+                <Insets top="12" right="14" bottom="14" left="14"/>
+            </padding>
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="inputField"
+                           promptText="Posez votre question sur la sécurité incendie..."
+                           HBox.hgrow="ALWAYS"
+                           maxWidth="Infinity"
+                           styleClass="chat-input-field"/>
+                <Button fx:id="sendButton"
+                        text="Envoyer ➤"
+                        onAction="#handleSend"
+                        styleClass="chat-send-button"/>
+            </HBox>
+            <Label text="ForestBot peut faire des erreurs. En cas d'urgence, appelez le 197."
+                   styleClass="chat-disclaimer"
+                   wrapText="true"/>
+        </VBox>
+    </bottom>
+</BorderPane>

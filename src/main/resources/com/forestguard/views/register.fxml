@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.forestguard.controllers.RegisterController"
+           styleClass="register-root"
+           stylesheets="@../styles/app.css">
+    <ImageView fx:id="backgroundImage" preserveRatio="false" opacity="0.95" StackPane.alignment="CENTER">
+        <effect>
+            <GaussianBlur radius="10.0"/>
+        </effect>
+        <image>
+            <Image url="@../images/foret.jpg"/>
+        </image>
+    </ImageView>
+    <VBox styleClass="register-overlay" StackPane.alignment="CENTER"/>
+
+    <BorderPane styleClass="register-shell">
+    <center>
+        <VBox alignment="CENTER" spacing="18.0" styleClass="auth-card" maxWidth="820.0">
+            <padding>
+                <Insets top="36" right="38" bottom="36" left="38"/>
+            </padding>
+            <Label text="Creer un compte" styleClass="brand"/>
+            <Label text="Inscrivez-vous pour acceder aux services ForestGuard." wrapText="true" styleClass="subtitle"/>
+            <GridPane hgap="14.0" vgap="14.0" maxWidth="Infinity">
+                <TextField fx:id="nomField" promptText="Nom complet" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+                <TextField fx:id="emailField" promptText="Email" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <HBox spacing="0" alignment="CENTER_LEFT" styleClass="phone-input-wrapper" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Label text="+216" styleClass="phone-prefix"/>
+                    <TextField fx:id="telephoneField" promptText="XX XXX XXX" HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="phone-input-inner"/>
+                </HBox>
+                    <VBox spacing="6.0" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                        <HBox spacing="10.0" alignment="CENTER_LEFT">
+                            <ComboBox fx:id="localisationComboBox" promptText="Sélectionnez un gouvernorat" editable="true" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            <Button fx:id="autoDetectButton" text="📍 Auto-détecter" onAction="#handleAutoDetectLocation" styleClass="location-detect-button" prefHeight="44.0"/>
+                        </HBox>
+                        <Label fx:id="locationStatusLabel" text="" styleClass="location-status" wrapText="true"/>
+                    </VBox>
+                <PasswordField fx:id="passwordField" promptText="Mot de passe" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="Confirmer le mot de passe" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+            <Label fx:id="feedbackLabel" styleClass="feedback" wrapText="true"/>
+            <Button text="Creer le compte" onAction="#handleRegister" maxWidth="Infinity" styleClass="primary-button"/>
+
+            <!-- Séparateur "ou" -->
+            <HBox alignment="CENTER" spacing="10">
+                <Separator HBox.hgrow="ALWAYS"/>
+                <Label text="ou" styleClass="muted"/>
+                <Separator HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <!-- Bouton Google -->
+            <Button fx:id="googleRegisterButton" text="Continuer avec Google"
+                    onAction="#handleGoogleRegister"
+                    maxWidth="Infinity"
+                    styleClass="google-button"/>
+
+            <HBox alignment="CENTER" spacing="8.0">
+                <Label text="Deja inscrit ?" styleClass="muted"/>
+                <Button text="Retour connexion" onAction="#goToLogin" styleClass="link-button"/>
+            </HBox>
+        </VBox>
+    </center>
+    </BorderPane>
+</StackPane>

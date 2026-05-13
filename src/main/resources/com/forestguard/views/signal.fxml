@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.forestguard.controllers.SignalController"
+           styleClass="signal-root"
+           stylesheets="@../styles/app.css">
+    <ImageView fx:id="backgroundImage" preserveRatio="false" opacity="0.95" StackPane.alignment="CENTER">
+        <effect>
+            <GaussianBlur radius="10.0"/>
+        </effect>
+        <image>
+            <Image url="@../images/foret.jpg"/>
+        </image>
+    </ImageView>
+    <VBox styleClass="signal-overlay" StackPane.alignment="CENTER"/>
+
+    <BorderPane styleClass="signal-shell">
+        <top>
+            <HBox alignment="CENTER_LEFT" spacing="16" styleClass="toolbar-shell signal-topbar">
+                <padding>
+                    <Insets top="16" right="24" bottom="16" left="24"/>
+                </padding>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                        <image>
+                            <Image url="@../images/logo.png"/>
+                        </image>
+                    </ImageView>
+                    <VBox spacing="2">
+                        <Label text="ForestGuard" styleClass="toolbar-brand"/>
+                        <Label text="Interface de signalement" styleClass="toolbar-subbrand"/>
+                    </VBox>
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Retour au tableau de bord" onAction="#handleBackToDashboard" styleClass="secondary-button"/>
+            </HBox>
+        </top>
+
+        <center>
+            <ScrollPane fx:id="contentScrollPane" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="content-scroll signal-scroll" style="-fx-background-color: transparent; -fx-background: transparent;">
+                <content>
+                    <VBox spacing="18" styleClass="signal-page" fillWidth="true" maxWidth="1240.0">
+                        <padding>
+                            <Insets top="24" right="28" bottom="28" left="28"/>
+                        </padding>
+
+                        <VBox spacing="8" styleClass="hero-card signal-main-card">
+                            <Label text="Signaler un incendie" styleClass="hero-title"/>
+                            <Label text="Aidez à protéger nos forêts en signalant immédiatement les incendies." styleClass="hero-subtitle"/>
+                        </VBox>
+
+                        <VBox spacing="10" styleClass="emergency-card">
+                            <Label text="Avis d'urgence" styleClass="emergency-title"/>
+                            <Label text="Si vous êtes en danger immédiat, appelez les secours avant de soumettre un rapport." styleClass="emergency-text" wrapText="true"/>
+                        </VBox>
+
+                        <VBox spacing="14" styleClass="signal-section-card signal-glass-card">
+                            <Label text="Informations de localisation" styleClass="section-title"/>
+
+                            <VBox spacing="6">
+                                <Label text="Zone forestière" styleClass="field-label"/>
+                                <ComboBox fx:id="zoneComboBox" promptText="Sélectionner une zone" maxWidth="Infinity"/>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <Label text="Localité / Gouvernorat" styleClass="field-label"/>
+                                <ComboBox fx:id="locationComboBox" promptText="Choisir ou détecter automatiquement" editable="true" maxWidth="Infinity"/>
+                            </VBox>
+
+                            <VBox fx:id="fullAddressBox" spacing="6" managed="false" visible="false">
+                                <Label text="Adresse détectée" styleClass="field-label"/>
+                                <TextField fx:id="fullAddressField"
+                                    promptText="L'adresse complète apparaîtra ici"
+                                    editable="false"
+                                    maxWidth="Infinity"
+                                    styleClass="location-address-field"/>
+                            </VBox>
+
+                            <VBox fx:id="gpsCoordinatesBox" spacing="6" managed="false" visible="false">
+                                <Label text="Coordonnées GPS" styleClass="field-label"/>
+                                <HBox spacing="8" alignment="CENTER_LEFT">
+                                    <TextField fx:id="gpsCoordinatesField"
+                                        promptText="Latitude / Longitude"
+                                        editable="false"
+                                        HBox.hgrow="ALWAYS"
+                                        maxWidth="Infinity"
+                                        styleClass="location-gps-field"/>
+                                    <Button fx:id="copyGpsButton"
+                                        text="📋"
+                                        onAction="#handleCopyGpsCoordinates"
+                                        styleClass="gps-copy-button"
+                                        prefWidth="38" prefHeight="38"
+                                        minWidth="38"/>
+                                </HBox>
+                            </VBox>
+
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Button fx:id="autoDetectButton" text="📍 Détecter ma position" onAction="#handleAutoDetectLocation" styleClass="secondary-button"/>
+                            </HBox>
+
+                            <Label fx:id="locationStatusLabel"
+                                   text="Sélectionnez une ville ou utilisez la détection automatique."
+                                   wrapText="true"
+                                   styleClass="location-status"/>
+                        </VBox>
+
+                        <VBox spacing="14" styleClass="signal-section-card signal-glass-card">
+                            <Label text="Détails de l'incendie" styleClass="section-title"/>
+                            <TextArea fx:id="detailsArea"
+                                      promptText="Décrivez la couleur de la fumée, la taille du feu, la direction du vent, les structures proches et les risques visibles..."
+                                      wrapText="true"
+                                      prefRowCount="8"
+                                      maxWidth="Infinity"/>
+                            <VBox spacing="6">
+                                <Label text="Niveau d'incendie" styleClass="field-label"/>
+                                <ComboBox fx:id="niveauComboBox" promptText="Sélectionner le niveau" maxWidth="Infinity"/>
+                            </VBox>
+                        </VBox>
+
+                        <VBox spacing="14" styleClass="signal-section-card signal-glass-card">
+                            <Label text="Photo (optionnel)" styleClass="section-title"/>
+
+                            <StackPane styleClass="upload-dropzone" prefHeight="150" maxWidth="Infinity">
+                                <VBox alignment="CENTER" spacing="8">
+                                    <Label text="Cliquez pour télécharger une photo" styleClass="upload-title"/>
+                                    <Label text="PNG, JPG jusqu'à 8 Mo" styleClass="upload-hint"/>
+                                    <Button text="Cliquez pour télécharger une photo" onAction="#handleUploadPhoto" styleClass="primary-button"/>
+                                </VBox>
+                            </StackPane>
+
+                            <HBox spacing="12" alignment="CENTER_LEFT">
+                                <ImageView fx:id="photoPreview" fitWidth="160" fitHeight="110" preserveRatio="true" smooth="true"/>
+                                <Label fx:id="uploadStatusLabel" text="Aucune photo téléchargée" styleClass="upload-status" wrapText="true"/>
+                            </HBox>
+                        </VBox>
+
+                        <HBox alignment="CENTER_RIGHT">
+                            <Button text="Soumettre le rapport" onAction="#handleSubmitReport" styleClass="primary-button submit-report-button"/>
+                        </HBox>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+</StackPane>

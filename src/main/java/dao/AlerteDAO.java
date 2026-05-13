@@ -157,6 +157,72 @@ public class AlerteDAO {
     }
 
     // ══════════════════════════════════════════════════════════════════════════
+    //  MÉTHODES SUPPLÉMENTAIRES pour l'intégration des modules
+    // ══════════════════════════════════════════════════════════════════════════
+
+    /**
+     * Récupère toutes les alertes pour un ComboBox (format: "ID - Type - Niveau")
+     */
+    public List<String> getAllForComboBox() {
+        List<String> list = new ArrayList<>();
+        if (cnx == null) return list;
+        String sql = "SELECT id, type_alerte, niveau FROM alerte ORDER BY date_alerte DESC";
+        try (Statement st = cnx.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                String item = rs.getInt("id") + " - " + 
+                             rs.getString("type_alerte") + " - " + 
+                             rs.getString("niveau");
+                list.add(item);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur getAllForComboBox : " + e.getMessage());
+        }
+        return list;
+    }
+
+    /**
+     * Récupère la localisation d'une alerte par son ID
+     */
+    public String getLocalisationById(int id) {
+        if (cnx == null) return null;
+        String sql = "SELECT localisation FROM alerte WHERE id=?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getString("localisation");
+        } catch (SQLException e) {
+            System.out.println("Erreur getLocalisationById : " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Récupère le niveau et le type d'une alerte par son ID
+     */
+    public String getNiveauEtType(int id) {
+        if (cnx == null) return null;
+        String sql = "SELECT niveau, type_alerte FROM alerte WHERE id=?";
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("niveau") + " - " + rs.getString("type_alerte");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur getNiveauEtType : " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Récupère les nouvelles alertes (statut = "Nouvelle")
+     */
+    public List<Alerte> getNouvellesAlertes() {
+        return getByStatut("Nouvelle");
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
     //  MAPPING privé : convertit une ligne SQL en objet Alerte
     // ══════════════════════════════════════════════════════════════════════════
 

@@ -1357,7 +1357,7 @@ public class ForetPrincipal {
         long eleve = toutesForets.stream()
             .filter(f -> f.getNiveauRisque() != null && f.getNiveauRisque().equalsIgnoreCase("Eleve"))
             .count();
-        double superficie = toutesForets.stream().mapToDouble(edu.gestionincendies.entites.Foret::getSuperficie).sum();
+        double superficie = toutesForets.stream().mapToDouble(model.Foret::getSuperficie).sum();
         StringBuilder sb = new StringBuilder();
         sb.append("ForestGuard surveille actuellement ").append(toutesForets.size()).append(" forêts");
         sb.append(", pour une superficie totale de ").append(String.format("%.0f", superficie)).append(" hectares.");
@@ -1373,7 +1373,7 @@ public class ForetPrincipal {
         long enCours = tousIncendies.stream()
             .filter(i -> i.getStatut() != null && i.getStatut().equalsIgnoreCase("En cours"))
             .count();
-        double totalHa = tousIncendies.stream().mapToDouble(edu.gestionincendies.entites.Incendie::getSuperficieBrulee).sum();
+        double totalHa = tousIncendies.stream().mapToDouble(model.Incendie::getSuperficieBrulee).sum();
         StringBuilder sb = new StringBuilder();
         sb.append("Le système enregistre ").append(tousIncendies.size()).append(" incendie").append(tousIncendies.size() > 1 ? "s" : "");
         sb.append(", avec une superficie brûlée totale de ").append(String.format("%.1f", totalHa)).append(" hectares.");

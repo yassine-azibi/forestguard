@@ -30,6 +30,7 @@ public class CarteController implements Initializable {
     private WebEngine webEngine;
     private double currentLat = 36.365;
     private double currentLng = 6.6147;
+    private int proxyPort = 0; // Port du serveur proxy (non utilisé actuellement)
 
     private Map<String, Map<String, double[]>> regionsData = new HashMap<>();
 
@@ -230,5 +231,34 @@ public class CarteController implements Initializable {
             </body>
             </html>
         """;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  MÉTHODES SUPPLÉMENTAIRES pour l'intégration du module gestionforet
+    // ══════════════════════════════════════════════════════════════════════════
+
+    /**
+     * Retourne le port du serveur proxy (non utilisé actuellement)
+     */
+    public int getProxyPort() {
+        return proxyPort;
+    }
+
+    /**
+     * Arrête le serveur proxy (non implémenté - méthode stub)
+     */
+    public void arreterServeur() {
+        System.out.println("[CarteController] arreterServeur() appelé (non implémenté)");
+        // Méthode stub pour compatibilité avec le module gestionforet
+        // Le serveur proxy n'est pas utilisé dans cette version
+    }
+
+    /**
+     * Charge les forêts sur la carte (non implémenté - méthode stub)
+     */
+    public void chargerForets(String gouvernorat) {
+        System.out.println("[CarteController] chargerForets(" + gouvernorat + ") appelé (non implémenté)");
+        // Méthode stub pour compatibilité avec le module gestionforet
+        // Les forêts peuvent être chargées depuis la base de données si nécessaire
     }
 }

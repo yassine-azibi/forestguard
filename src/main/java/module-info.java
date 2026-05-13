@@ -18,6 +18,15 @@ module gestion.des.interventions {
     requires jakarta.activation;
     requires twilio;
 
+    // ── Module gestion-des-donnees ──
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
+    requires org.apache.pdfbox;
+    requires javafx.swing;
+
+    // ── Module gestion-des-capteurs ──
+    requires com.fazecast.jSerialComm;
+
     opens controller to javafx.fxml;
     opens tests to javafx.fxml;
     opens model to javafx.base;

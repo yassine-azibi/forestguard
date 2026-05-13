@@ -112,6 +112,44 @@
             <version>5.5.13.3</version>
         </dependency>
 
+        <!-- ── Module gestion-des-donnees ── -->
+
+        <!-- Apache POI pour export Excel -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+
+        <!-- Apache PDFBox pour génération PDF -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.29</version>
+        </dependency>
+
+        <!-- JavaFX Swing pour intégration -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>17.0.13</version>
+            <classifier>win</classifier>
+        </dependency>
+
+        <!-- ── Module gestion-des-capteurs ── -->
+
+        <!-- jSerialComm pour communication série (ESP32) -->
+        <dependency>
+            <groupId>com.fazecast</groupId>
+            <artifactId>jSerialComm</artifactId>
+            <version>2.10.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

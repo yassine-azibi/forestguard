@@ -13,6 +13,7 @@ module gestion.des.interventions {
     requires jakarta.mail;
     requires jakarta.activation;
     requires java.net.http;
+    requires twilio;
 
     opens controller to javafx.fxml;
     opens tests to javafx.fxml;

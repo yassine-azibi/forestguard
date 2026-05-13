@@ -35,7 +35,7 @@ module gestion.des.interventions {
     opens ForestGuard.entities to javafx.base;
 
     // Packages du module gestionforet
-    opens controllers to javafx.fxml;
+    // Note: Les fichiers de gestionforet sont dans le package 'controller' (sans s) déjà ouvert ligne 29
 
     exports tests;
     exports controller;

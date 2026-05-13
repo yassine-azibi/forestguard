@@ -71,7 +71,9 @@ requires jbcrypt;
 |------|--------|--------|
 | Fichiers avec BOM | 33 | ✅ Corrigés |
 | Module incorrect | 1 | ✅ Corrigé |
-| **Total** | **34** | **✅ 100%** |
+| Package inexistant | 1 | ✅ Corrigé |
+| MyConnectionForet.java | 1 | ✅ Réécrit |
+| **Total** | **36** | **✅ 100%** |
 
 ---
 
@@ -98,6 +100,34 @@ git commit -m "fix: Suppression BOM UTF-8 de 33 fichiers Java + correction modul
 ```
 
 **Commit ID**: 5692a0e
+
+---
+
+---
+
+## 🔧 CORRECTIONS SUPPLÉMENTAIRES (13 Mai 2026)
+
+### 3. Package "controllers" inexistant ⚠️
+
+**Erreur**: `package is empty or does not exist: controllers`
+
+**Cause**: La ligne 38 de `module-info.java` référençait un package `controllers` (avec s) qui n'existe pas. Les fichiers de gestionforet sont dans le package `controller` (sans s) déjà ouvert ligne 29.
+
+**Correction**: Suppression de la ligne 38 `opens controllers to javafx.fxml;`
+
+### 4. Réécriture de MyConnectionForet.java ⚠️
+
+**Erreur**: `invalid method declaration; return type required` (ligne 15)
+
+**Cause**: Possible BOM résiduel ou problème d'encodage dans le fichier.
+
+**Correction**: Réécriture complète du fichier avec encodage UTF-8 sans BOM.
+
+**Commit**: 
+```bash
+git add src/main/java/module-info.java src/main/java/utils/MyConnectionForet.java
+git commit -m "fix: Suppression package controllers inexistant + réécriture MyConnectionForet.java"
+```
 
 ---
 

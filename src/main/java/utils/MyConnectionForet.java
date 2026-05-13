@@ -9,17 +9,17 @@ public class MyConnectionForet {
     private static final String LOGIN = "root";
     private static final String PWD   = "";
 
-    private static MyConnection instance;
+    private static MyConnectionForet instance;
     private Connection cnx;
 
-    private MyConnection() {
+    private MyConnectionForet() {
         connect();
     }
 
     /** Singleton — une seule instance partagée dans toute l'application. */
-    public static MyConnection getInstance() {
+    public static MyConnectionForet getInstance() {
         if (instance == null) {
-            instance = new MyConnection();
+            instance = new MyConnectionForet();
         }
         return instance;
     }
@@ -51,4 +51,3 @@ public class MyConnectionForet {
         return cnx;
     }
 }
-

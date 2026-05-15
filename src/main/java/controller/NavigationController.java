@@ -182,28 +182,37 @@ public class NavigationController {
     
     /**
      * Ouvre le dashboard pompier principal
+     * Redirige directement vers la gestion des interventions
      */
     public static void ouvrirDashboardPompier(Stage stage, Pompier pompier) {
         try {
             System.out.println("🏠 Ouverture Dashboard Pompier...");
+            System.out.println("🚒 Redirection vers Gestion des Interventions...");
             
             // Stocker le pompier dans AppConfig
             if (pompier != null) {
                 AppConfig.getInstance().setPompierConnecte(pompier);
             }
             
+            // Rediriger directement vers la gestion des interventions
             FXMLLoader loader = new FXMLLoader(
-                NavigationController.class.getResource("/GestionPompier.fxml"));
+                NavigationController.class.getResource("/fxml/DashboardAgent.fxml"));
             Parent root = loader.load();
+            
+            // Récupérer le controller et passer les infos du pompier
+            DashboardAgentController controller = loader.getController();
+            if (controller != null && pompier != null) {
+                controller.setPompierInfo(pompier.getNom() + " " + pompier.getPrenom(), pompier.getId());
+            }
             
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("ForestGuard - Dashboard");
+            stage.setTitle("ForestGuard - Gestion des Interventions");
             stage.setMaximized(true);
             
-            System.out.println("✅ Dashboard Pompier chargé");
+            System.out.println("✅ Gestion des Interventions chargée pour le pompier");
         } catch (Exception e) {
-            System.err.println("❌ Erreur lors de l'ouverture du Dashboard: " + e.getMessage());
+            System.err.println("❌ Erreur lors de l'ouverture de la Gestion des Interventions: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -41,10 +41,13 @@ public class ReclamationsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cbFiltreStatut.setItems(FXCollections.observableArrayList(
-            "Tous", "Active", "Resolved", "Pending"));
-        cbFiltreStatut.setValue("Tous");
-        cbFiltreStatut.setOnAction(e -> chargerReclamations());
+        // Vérifier si cbFiltreStatut existe (peut être null si sidebar retirée)
+        if (cbFiltreStatut != null) {
+            cbFiltreStatut.setItems(FXCollections.observableArrayList(
+                "Tous", "Active", "Resolved", "Pending"));
+            cbFiltreStatut.setValue("Tous");
+            cbFiltreStatut.setOnAction(e -> chargerReclamations());
+        }
 
         chargerReclamations();
 
@@ -69,7 +72,8 @@ public class ReclamationsController implements Initializable {
         }
 
         List<Map<String, String>> reclamations = new ArrayList<>();
-        String filtre = cbFiltreStatut.getValue();
+        // Gérer le cas où cbFiltreStatut est null (sidebar retirée)
+        String filtre = (cbFiltreStatut != null) ? cbFiltreStatut.getValue() : "Tous";
         String sql = "SELECT * FROM fire_alerts" +
             (filtre != null && !filtre.equals("Tous") ? " WHERE status=?" : "") +
             " ORDER BY created_at DESC";
@@ -97,8 +101,14 @@ public class ReclamationsController implements Initializable {
 
         long actives = reclamations.stream()
             .filter(r -> "Active".equals(r.get("status"))).count();
-        lblTotal.setText(reclamations.size() + " réclamations");
-        lblNouveaux.setText(actives + " actives");
+        
+        // Mettre à jour les labels seulement s'ils existent (sidebar peut être retirée)
+        if (lblTotal != null) {
+            lblTotal.setText(reclamations.size() + " réclamations");
+        }
+        if (lblNouveaux != null) {
+            lblNouveaux.setText(actives + " actives");
+        }
 
         if (reclamations.isEmpty()) {
             Label vide = new Label("Aucune réclamation citoyenne pour le moment");
@@ -284,7 +294,11 @@ public class ReclamationsController implements Initializable {
                                        Alerte a, Map<String, String> r) {
         javafx.stage.Stage popup = new javafx.stage.Stage();
         popup.setTitle("Analyse IA — Réclamation #" + r.get("id"));
-        popup.initOwner(lblTotal.getScene().getWindow());
+        
+        // Utiliser conteneurReclamations au lieu de lblTotal pour obtenir la fenêtre
+        if (conteneurReclamations != null && conteneurReclamations.getScene() != null) {
+            popup.initOwner(conteneurReclamations.getScene().getWindow());
+        }
 
         String couleur = switch (a.getNiveau()) {
             case "Critique" -> "#ef4444";
@@ -455,7 +469,10 @@ public class ReclamationsController implements Initializable {
 
     @FXML private void goDashboard() {
         if (scheduler != null) scheduler.shutdown();
-        Stage s = (Stage) lblTotal.getScene().getWindow();
-        NavigationManager.navigateTo(s, "/fxml/Dashboard.fxml");
+        // Utiliser conteneurReclamations au lieu de lblTotal pour obtenir la fenêtre
+        if (conteneurReclamations != null && conteneurReclamations.getScene() != null) {
+            Stage s = (Stage) conteneurReclamations.getScene().getWindow();
+            NavigationManager.navigateTo(s, "/fxml/Dashboard.fxml");
+        }
     }
 }

@@ -34,9 +34,20 @@ public class AjouterInterventionController implements Initializable {
     private final EquipementDAO   equipementDAO  = new EquipementDAO();
     private final InterventionDAO interventionDAO = new InterventionDAO();
 
-    private final String currentAgent = "John Martinez";
+    private String currentAgent = "John Martinez";
+    private int currentPompierId = 1;
 
     private Map<Integer, String> alertesMap;
+    
+    /**
+     * Définit les informations de l'agent connecté
+     * Appelé depuis DashboardAgentController
+     */
+    public void setAgentInfo(String nomComplet, int id) {
+        this.currentAgent = nomComplet;
+        this.currentPompierId = id;
+        System.out.println("✅ Agent défini pour nouvelle intervention: " + nomComplet + " (ID: " + id + ")");
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -123,6 +134,11 @@ public class AjouterInterventionController implements Initializable {
         inter.setAlerteLocalisation(localisation);
 
         if (interventionDAO.create(inter)) {
+            System.out.println("✅ Intervention créée en base de données");
+            System.out.println("   Zone: " + inter.getAlertZone());
+            System.out.println("   Agent: " + inter.getAgentName());
+            System.out.println("   Statut: " + inter.getStatut());
+            
             // Ajouter les équipements
             List<Equipement> selected = lvEquipements.getSelectionModel().getSelectedItems();
             equipementDAO.addEquipements(
@@ -131,13 +147,18 @@ public class AjouterInterventionController implements Initializable {
                     inter.getStartDate(),
                     selected
             );
-
-            // ✅ OUVERTURE DU POPUP D'ANALYSE IA + CARTE
-            ouvrirPopupAnalyse(inter, alerteId);
+            System.out.println("✅ " + selected.size() + " équipement(s) ajouté(s)");
 
             showSuccess("Intervention créée avec succès !");
+            
+            // ✅ OUVERTURE DU POPUP D'ANALYSE IA + CARTE
+            ouvrirPopupAnalyse(inter, alerteId);
+            
+            // Fermer la fenêtre APRÈS le popup d'analyse
+            System.out.println("🔒 Fermeture de la fenêtre d'ajout");
             handleAnnuler();
         } else {
+            System.out.println("❌ Échec de la création de l'intervention");
             showAlert("Erreur lors de la création !");
         }
     }

@@ -3,62 +3,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
 
-<HBox xmlns="http://javafx.com/javafx"
+<!-- CONTENU PRINCIPAL SANS SIDEBAR -->
+<StackPane xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="controller.DashboardController"
-      prefHeight="720.0" prefWidth="1200.0"
-      style="-fx-background-color: #0a1612;">
-
-    <!-- ══ SIDEBAR ══ -->
-    <VBox prefWidth="220" minWidth="220"
-          style="-fx-background-color: #0d1f14;
-                 -fx-border-color: #1a3a20; -fx-border-width: 0 1 0 0;
-                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 12, 0, 4, 0);">
-        <VBox alignment="CENTER_LEFT" spacing="4"
-              style="-fx-padding: 22 16 20 16; -fx-border-color: #1a3a20; -fx-border-width: 0 0 1 0;">
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <ImageView fitWidth="44" fitHeight="44" preserveRatio="true">
-                    <image><Image url="@../brinis.png"/></image>
-                </ImageView>
-                <VBox spacing="2">
-                    <Label text="ForestGuard"
-                           style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
-                    <Label text="Surveillance Intelligente"
-                           style="-fx-text-fill: #4ade80; -fx-font-size: 10;"/>
-                </VBox>
-            </HBox>
-        </VBox>
-        <VBox spacing="3" style="-fx-padding: 16 10;">
-            <Button text="🚒  Pompiers" maxWidth="Infinity" onAction="#goPompiers"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="🌲  Forets" maxWidth="Infinity"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="📡  Capteurs" maxWidth="Infinity" onAction="#goCapteurs"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="📊  Donnees" maxWidth="Infinity"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="🔔  Alertes" maxWidth="Infinity" onAction="#actualiser"
-                    style="-fx-background-color:linear-gradient(to right,#16a34a,#15803d);-fx-text-fill:white;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-font-weight:bold;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;-fx-effect:dropshadow(gaussian,rgba(22,163,74,0.4),8,0,0,2);"/>
-            
-            
-                                    <Button text="📋  Reclamations" maxWidth="Infinity" onAction="#goReclamations"
-                    style="-fx-background-color:transparent;-fx-text-fill:#fbbf24;
-                           -fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;
-                           -fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="👤  Utilisateurs" maxWidth="Infinity" onAction="#goUtilisateurs"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-        </VBox>
-        <Region VBox.vgrow="ALWAYS"/>
-        <HBox alignment="CENTER_LEFT" spacing="8"
-              style="-fx-padding:14 16;-fx-border-color:#1a3a20;-fx-border-width:1 0 0 0;-fx-cursor:hand;">
-            <Label text="&lt;"
-                   style="-fx-background-color:#1a2e1e;-fx-text-fill:#4ade80;-fx-background-radius:6;-fx-padding:4 10;-fx-font-weight:bold;-fx-font-size:13;-fx-border-color:#2d5a37;-fx-border-radius:6;-fx-border-width:1;"/>
-            <Label text="Reduire" style="-fx-text-fill:#94a3b8;-fx-font-size:13;"/>
-        </HBox>
-    </VBox>
-
-    <!-- ══ CONTENU PRINCIPAL ══ -->
-    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color:#0a1612;">
+      prefHeight="720.0" prefWidth="980.0"
+      style="-fx-background-color: transparent;">
+    <VBox style="-fx-background-color:#0a1612;">
 
         <!-- BANNIÈRE -->
         <StackPane prefHeight="120" minHeight="120" maxHeight="120">
@@ -163,4 +114,4 @@
         </TableView>
 
     </VBox>
-</HBox>
+</StackPane>

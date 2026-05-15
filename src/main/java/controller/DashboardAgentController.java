@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DashboardAgentController implements Initializable {
@@ -254,7 +255,12 @@ public class DashboardAgentController implements Initializable {
     }
 
     private void loadData() {
-        data.setAll(dao.getByAgent(currentAgent));
+        System.out.println("🔄 Rechargement des interventions pour: " + currentAgent);
+        List<Intervention> interventions = dao.getByAgent(currentAgent);
+        System.out.println("📊 Nombre d'interventions chargées: " + interventions.size());
+        
+        data.clear();
+        data.setAll(interventions);
         listeInterventions.refresh();
         updateStats();
     }
@@ -271,15 +277,22 @@ public class DashboardAgentController implements Initializable {
     @FXML
     private void handleNewIntervention() {
         try {
+            System.out.println("➕ Ouverture fenêtre nouvelle intervention...");
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/AjouterIntervention.fxml"));
             Parent root = loader.load();
+            
+            // Passer l'agent connecté au contrôleur
+            AjouterInterventionController ctrl = loader.getController();
+            ctrl.setAgentInfo(currentAgent, currentPompier);
+            
             Stage stage = new Stage();
             setForestGuardIcon(stage);
             stage.setTitle("Nouvelle Intervention");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
+            System.out.println("✅ Fenêtre nouvelle intervention fermée, rechargement des données...");
             loadData();
         } catch (IOException e) {
             e.printStackTrace();
@@ -288,6 +301,7 @@ public class DashboardAgentController implements Initializable {
 
     private void ouvrirModifier(Intervention intervention) {
         try {
+            System.out.println("✏️ Ouverture fenêtre modification intervention...");
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/ModifierIntervention.fxml"));
             Parent root = loader.load();
@@ -299,6 +313,7 @@ public class DashboardAgentController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
+            System.out.println("✅ Fenêtre modification intervention fermée, rechargement des données...");
             loadData();
         } catch (IOException e) {
             e.printStackTrace();
@@ -548,6 +563,49 @@ public class DashboardAgentController implements Initializable {
         } catch (IOException e) {
             System.out.println("❌ Erreur ouverture liste affectations: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Gère la déconnexion du pompier
+     * Arrête les services et retourne à l'écran de connexion
+     */
+    @FXML
+    private void handleDeconnexion() {
+        try {
+            // Arrêter les services avant de fermer
+            if (notificationService != null) {
+                notificationService.arreter();
+                System.out.println("🛑 Service de notifications arrêté");
+            }
+            
+            if (affectationService != null) {
+                affectationService.arreter();
+                System.out.println("🛑 Service d'affectations arrêté");
+            }
+            
+            // Fermer la fenêtre actuelle
+            Stage currentStage = (Stage) listeInterventions.getScene().getWindow();
+            currentStage.close();
+            
+            // Ouvrir la fenêtre de login
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+            Parent root = loader.load();
+            Stage loginStage = new Stage();
+            setForestGuardIcon(loginStage);
+            loginStage.setTitle("ForestGuard - Connexion");
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+            
+            System.out.println("✅ Déconnexion réussie - Retour à l'écran de connexion");
+            
+        } catch (IOException e) {
+            System.out.println("❌ Erreur lors de la déconnexion: " + e.getMessage());
+            e.printStackTrace();
+            
+            // En cas d'erreur, au moins fermer la fenêtre actuelle
+            Stage currentStage = (Stage) listeInterventions.getScene().getWindow();
+            currentStage.close();
         }
     }
 }

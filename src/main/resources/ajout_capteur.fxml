@@ -19,7 +19,7 @@
                      -fx-border-color: rgba(255,255,255,0.15);
                      -fx-border-width: 0 0 1 0;">
             <ImageView fitWidth="52" fitHeight="52" preserveRatio="true">
-                <image><Image url="@/logo.png"/></image>
+                <image><Image url="@logo.png"/></image>
             </ImageView>
             <Label text="ForestGuard"
                    style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: white;"/>

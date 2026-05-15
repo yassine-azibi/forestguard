@@ -50,6 +50,7 @@ public class LoginController implements Initializable {
     @FXML private Button loginBtn;
     @FXML private Label forgotPasswordLink;
     @FXML private Label registerLink;
+    @FXML private Button btnAdminLogin;
 
     private final List<Particle> particles = new ArrayList<>();
     private final Random random = new Random();
@@ -399,6 +400,25 @@ public class LoginController implements Initializable {
         // Hover sur les liens
         setupLinkHover(forgotPasswordLink);
         setupLinkHover(registerLink);
+        
+        // Hover sur le bouton Espace Admin
+        if (btnAdminLogin != null) {
+            btnAdminLogin.setOnMouseEntered(e -> btnAdminLogin.setStyle(
+                    "-fx-background-color: rgba(255,255,255,0.13);" +
+                    "-fx-text-fill: rgba(255,255,255,0.90);" +
+                    "-fx-font-size: 12px; -fx-font-family: 'Georgia'; -fx-font-weight: bold;" +
+                    "-fx-background-radius: 22; -fx-border-color: rgba(255,255,255,0.40);" +
+                    "-fx-border-radius: 22; -fx-border-width: 1;" +
+                    "-fx-padding: 10 20; -fx-cursor: hand;" +
+                    "-fx-effect: dropshadow(gaussian, rgba(255,255,255,0.15), 12, 0, 0, 0);"));
+            btnAdminLogin.setOnMouseExited(e -> btnAdminLogin.setStyle(
+                    "-fx-background-color: rgba(255,255,255,0.07);" +
+                    "-fx-text-fill: rgba(255,255,255,0.55);" +
+                    "-fx-font-size: 12px; -fx-font-family: 'Georgia'; -fx-font-weight: bold;" +
+                    "-fx-background-radius: 22; -fx-border-color: rgba(255,255,255,0.18);" +
+                    "-fx-border-radius: 22; -fx-border-width: 1;" +
+                    "-fx-padding: 10 20; -fx-cursor: hand;"));
+        }
     }
 
     private void setupLinkHover(Label link) {
@@ -489,22 +509,14 @@ public class LoginController implements Initializable {
     // ══════════════════════════════════════════════════
     @FXML
     public void handleNaviguerAdmin() {
-        // Lance le jar du projet admin (pompier) en parallèle,
-        // puis ferme cette fenêtre utilisateur.
+        // Retourne au login admin/pompier
         try {
-            String adminJar = System.getProperty("forestguard.admin.jar",
-                    System.getProperty("user.home") + "/pompier/pompier.jar");
-            java.io.File jarFile = new java.io.File(adminJar);
-            if (jarFile.exists()) {
-                new ProcessBuilder("java", "-jar", adminJar)
-                        .inheritIO()
-                        .start();
-                if (particleTimer != null) particleTimer.stop();
-                ((javafx.stage.Stage) emailField.getScene().getWindow()).close();
-            } else {
-                // Jar absent : affiche un message informatif
-                errorLabel.setText("⚠  Espace Admin non disponible sur ce poste.");
-            }
+            if (particleTimer != null) particleTimer.stop();
+            
+            Stage stage = (Stage) emailField.getScene().getWindow();
+            controller.NavigationController.retourLogin(stage);
+            
+            System.out.println("✅ Retour vers l'espace Admin");
         } catch (Exception ex) {
             ex.printStackTrace();
             errorLabel.setText("⚠  Impossible d'ouvrir l'espace Admin.");

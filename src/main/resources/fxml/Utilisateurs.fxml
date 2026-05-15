@@ -2,34 +2,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
-<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+<!-- CONTENU PRINCIPAL SANS SIDEBAR -->
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="controller.UtilisateursController"
-      prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color:#0a1612;">
-    <VBox prefWidth="220" minWidth="220" style="-fx-background-color:#0d1f14;-fx-border-color:#1a3a20;-fx-border-width:0 1 0 0;">
-        <VBox alignment="CENTER_LEFT" style="-fx-padding:22 16 20 16;-fx-border-color:#1a3a20;-fx-border-width:0 0 1 0;">
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <ImageView fitWidth="44" fitHeight="44" preserveRatio="true"><image><Image url="@../brinis.png"/></image></ImageView>
-                <VBox spacing="2">
-                    <Label text="ForestGuard" style="-fx-text-fill:white;-fx-font-size:16;-fx-font-weight:bold;"/>
-                    <Label text="Surveillance Intelligente" style="-fx-text-fill:#4ade80;-fx-font-size:10;"/>
-                </VBox>
-            </HBox>
-        </VBox>
-        <VBox spacing="3" style="-fx-padding:16 10;">
-            <Button text="🔔  Alertes" maxWidth="Infinity" onAction="#goDashboard"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="📡  Capteurs" maxWidth="Infinity" onAction="#goCapteurs"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="👤  Utilisateurs" maxWidth="Infinity"
-                    style="-fx-background-color:linear-gradient(to right,#3b82f6,#2563eb);-fx-text-fill:white;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-font-weight:bold;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="🚒  Pompiers" maxWidth="Infinity" onAction="#goPompiers"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-            <Button text="🌲  Forets" maxWidth="Infinity" onAction="#goForets"
-                    style="-fx-background-color:transparent;-fx-text-fill:#94a3b8;-fx-background-radius:8;-fx-padding:11 14;-fx-font-size:13;-fx-alignment:CENTER_LEFT;-fx-cursor:hand;-fx-border-width:0;"/>
-        </VBox>
-        <Region VBox.vgrow="ALWAYS"/>
-    </VBox>
-    <VBox HBox.hgrow="ALWAYS" style="-fx-background-color:#0a1612;">
+      prefHeight="720.0" prefWidth="980.0" style="-fx-background-color: transparent;">
+    <VBox style="-fx-background-color:#0a1612;">
         <StackPane prefHeight="110" minHeight="110" maxHeight="110">
             <ImageView fitWidth="980" fitHeight="110" preserveRatio="false"><image><Image url="@../brinis2.jpg"/></image></ImageView>
             <Pane style="-fx-background-color:linear-gradient(to right,rgba(10,22,18,0.85),rgba(10,22,18,0.4));"/>
@@ -58,4 +35,4 @@
             <VBox fx:id="conteneurCartes" spacing="8" style="-fx-padding:4 4 8 4;-fx-background-color:transparent;"/>
         </ScrollPane>
     </VBox>
-</HBox>
+</StackPane>

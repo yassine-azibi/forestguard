@@ -63,14 +63,23 @@ public class ModifierInterventionController implements Initializable {
             return;
         }
 
+        System.out.println("💾 Modification de l'intervention...");
+        System.out.println("   Zone: " + intervention.getAlertZone());
+        System.out.println("   Agent: " + intervention.getAgentName());
+        System.out.println("   Ancien statut: " + intervention.getStatut());
+        
         // Mettre à jour l'intervention
         intervention.setStatut(cbStatut.getValue());
         intervention.setResultat(taResultat.getText().trim());
         if ("Completed".equals(cbStatut.getValue()) && intervention.getEndDate() == null) {
             intervention.setEndDate(java.time.LocalDateTime.now());
         }
+        
+        System.out.println("   Nouveau statut: " + intervention.getStatut());
 
         if (interventionDAO.update(intervention)) {
+            System.out.println("✅ Intervention mise à jour en base de données");
+            
             // Mettre à jour les équipements
             equipementDAO.deleteByIntervention(
                     intervention.getAlertZone(), intervention.getAgentName());
@@ -80,9 +89,13 @@ public class ModifierInterventionController implements Initializable {
                     intervention.getStartDate(),
                     lvEquipements.getSelectionModel().getSelectedItems()
             );
+            System.out.println("✅ Équipements mis à jour");
+            
             showSuccess("Intervention modifiée avec succès !");
+            System.out.println("🔒 Fermeture de la fenêtre de modification");
             handleAnnuler();
         } else {
+            System.out.println("❌ Échec de la mise à jour de l'intervention");
             showAlert("Erreur lors de la modification !");
         }
     }

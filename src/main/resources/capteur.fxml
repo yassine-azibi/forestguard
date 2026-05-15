@@ -3,99 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 
-<HBox xmlns="http://javafx.com/javafx/17"
+<!-- CONTENU PRINCIPAL SANS SIDEBAR -->
+<StackPane xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="edu.capteur.controllers.CapteurController"
-      prefWidth="1280" prefHeight="800"
-      style="-fx-background-color: #0d1f14;">
-
-    <!-- ══════════ SIDEBAR ══════════ -->
-    <VBox fx:id="sidebar" prefWidth="240"
-          style="-fx-background-color: #0b1710;
-                 -fx-border-color: #1a2e1e;
-                 -fx-border-width: 0 1 0 0;
-                 -fx-min-width: 72;">
-
-        <!-- Logo -->
-        <HBox spacing="12" alignment="CENTER_LEFT"
-              style="-fx-padding: 22 16 18 16;
-                     -fx-border-color: #1a2e1e; -fx-border-width: 0 0 1 0;">
-            <ImageView fx:id="logoImg" fitWidth="40" fitHeight="40" preserveRatio="true">
-                <image><Image url="@/logo.png"/></image>
-            </ImageView>
-            <VBox fx:id="logoNom" spacing="2">
-                <Label text="ForestGuard"
-                       style="-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: white;"/>
-                <Label text="Surveillance Intelligente"
-                       style="-fx-font-size: 10; -fx-text-fill: #4ade80;"/>
-            </VBox>
-        </HBox>
-
-        <!-- Navigation -->
-        <VBox fx:id="navBox" spacing="2"
-              style="-fx-padding: 14 8 0 8;" VBox.vgrow="ALWAYS">
-
-            <Button fx:id="btnPM" prefWidth="220" prefHeight="44" text="🚒  Pompiers"
-                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
-                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
-                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
-            <Button fx:id="btnFR" prefWidth="220" prefHeight="44" text="🌲  Forêts"
-                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
-                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
-                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
-
-            <!-- Bouton actif -->
-            <VBox style="-fx-background-color: rgba(22,163,74,0.12);
-                         -fx-background-radius: 10;
-                         -fx-border-color: rgba(74,222,128,0.25);
-                         -fx-border-radius: 10; -fx-border-width: 1;">
-                <Button fx:id="btnCP" prefWidth="220" prefHeight="44"
-                        text="📡  Capteurs"
-                        style="-fx-background-color: transparent; -fx-text-fill: #4ade80;
-                               -fx-font-size: 13; -fx-font-weight: bold;
-                               -fx-alignment: CENTER_LEFT;
-                               -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
-            </VBox>
-
-            <Button fx:id="btnDN" prefWidth="220" prefHeight="44" text="📊  Données"
-                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
-                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
-                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
-            <Button fx:id="btnAL" prefWidth="220" prefHeight="44" text="🔔  Alertes"
-                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
-                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
-                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
-            <Button fx:id="btnUS" prefWidth="220" prefHeight="44" text="👤  Utilisateurs"
-                    style="-fx-background-color: transparent; -fx-text-fill: #64748b;
-                           -fx-font-size: 13; -fx-alignment: CENTER_LEFT;
-                           -fx-padding: 10 14; -fx-background-radius: 10; -fx-cursor: hand;"/>
-        </VBox>
-
-        <!-- Spacer avec dégradé -->
-        <Region VBox.vgrow="ALWAYS"
-                style="-fx-background-color: linear-gradient(to top,rgba(22,163,74,0.08),transparent);
-                       -fx-min-height: 40;"/>
-
-        <!-- Toggle sidebar -->
-        <HBox alignment="CENTER_LEFT" spacing="10"
-              style="-fx-padding: 12 14; -fx-border-color: #1a2e1e; -fx-border-width: 1 0 0 0;">
-            <Button fx:id="btnToggle" prefWidth="40" prefHeight="32"
-                    text="&lt;" onAction="#toggleSidebar"
-                    style="-fx-background-color: #162a1c; -fx-background-radius: 8;
-                           -fx-border-color: #2a4d32; -fx-border-radius: 8;
-                           -fx-font-size: 12; -fx-font-weight: bold;
-                           -fx-text-fill: #4ade80; -fx-cursor: hand;"/>
-            <Label fx:id="lblReducer" text="Réduire"
-                   style="-fx-font-size: 11; -fx-text-fill: #475569;"/>
-        </HBox>
-    </VBox>
-
-    <!-- ══════════ CONTENU PRINCIPAL ══════════ -->
-    <StackPane HBox.hgrow="ALWAYS">
+      prefWidth="1040" prefHeight="800"
+      style="-fx-background-color: transparent;">
 
         <!-- Fond image forêt -->
         <ImageView fitWidth="1100" fitHeight="800" preserveRatio="false" opacity="0.7">
-            <image><Image url="@/foret.jpg"/></image>
+            <image><Image url="@image/foret.jpg"/></image>
         </ImageView>
         <!-- Overlay sombre -->
         <VBox style="-fx-background-color: rgba(5,18,8,0.45);"/>
@@ -391,5 +308,4 @@
                 </VBox>
             </VBox>
         </ScrollPane>
-    </StackPane>
-</HBox>
+</StackPane>

@@ -27,6 +27,10 @@ module gestion.des.interventions {
     // ── Module gestion-des-capteurs ──
     requires com.fazecast.jSerialComm;
 
+    // Package app (point d'entrée principal)
+    opens app to javafx.graphics, javafx.fxml;
+    exports app;
+
     opens controller to javafx.fxml;
     opens tests to javafx.fxml;
     opens model to javafx.base;
@@ -43,6 +47,10 @@ module gestion.des.interventions {
     opens ForestGuard.controllers to javafx.fxml;
     opens ForestGuard.entities to javafx.base;
 
+    // Packages du module pompier (Login pompier)
+    opens edu.pompier.controllers to javafx.fxml;
+    opens edu.pompier.entities to javafx.base;
+
     // Packages du module gestionforet
     // Note: Les fichiers de gestionforet sont dans le package 'controller' (sans s) déjà ouvert ligne 29
 
@@ -57,4 +65,6 @@ module gestion.des.interventions {
     exports com.forestguard.services;
     exports com.forestguard.utils;
     exports com.forestguard.interfaces;
+    exports edu.pompier.controllers;
+    exports edu.pompier.entities;
 }

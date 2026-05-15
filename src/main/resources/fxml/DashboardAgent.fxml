@@ -141,6 +141,21 @@
                        style="-fx-font-size: 12; -fx-text-fill: #4ade80;"/>
             </HBox>
         </VBox>
+        
+        <!-- Bouton Déconnexion -->
+        <VBox style="-fx-padding: 10 16 16 16;">
+            <Button prefWidth="268" prefHeight="44"
+                    text="🔓  Déconnexion"
+                    onAction="#handleDeconnexion"
+                    style="-fx-background-color: rgba(220,38,38,0.15);
+                           -fx-text-fill: #fca5a5; -fx-font-size: 13;
+                           -fx-font-weight: bold;
+                           -fx-alignment: CENTER_LEFT;
+                           -fx-padding: 10 20; -fx-background-radius: 12;
+                           -fx-cursor: hand;
+                           -fx-border-color: rgba(220,38,38,0.3);
+                           -fx-border-radius: 12; -fx-border-width: 1;"/>
+        </VBox>
     </VBox>
 
     <!-- ══════════ CONTENU ══════════ -->

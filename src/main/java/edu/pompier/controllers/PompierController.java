@@ -36,7 +36,7 @@ public class PompierController {
 
     // Sidebar
     @FXML private VBox menuLateral;
-    @FXML private Button btnDashboard, btnPompiers, btnForets, btnCapteurs, btnDonnees, btnAlertes, btnUtilisateurs;
+    @FXML private Button btnDashboard, btnPompiers, btnForets, btnCapteurs, btnDonnees, btnAlertes, btnReclamations, btnUtilisateurs;
     @FXML private Button btnDeconnexion;
 
     // Background
@@ -478,8 +478,30 @@ public class PompierController {
         // ── Démarrage de la surveillance automatique des alertes ──
         demarrerSurveillance();
 
-        // ── Afficher le Dashboard par défaut ──
-        afficherVueDashboard();
+        // ── Afficher le Dashboard par défaut sans rechargement de scène ──
+        afficherVueDashboardInitiale();
+    }
+
+    /**
+     * Affichage initial du dashboard pendant initialize().
+     * Ne tente jamais de recharger le FXML, car la Scene n'est pas encore attachée.
+     */
+    private void afficherVueDashboardInitiale() {
+        if (vueDashboard != null)      { vueDashboard.setVisible(true);      vueDashboard.setManaged(true); }
+        if (vuePompiers != null)       { vuePompiers.setVisible(false);      vuePompiers.setManaged(false); }
+        if (vueGardes != null)         { vueGardes.setVisible(false);        vueGardes.setManaged(false); }
+        if (vueAffectations != null)   { vueAffectations.setVisible(false);  vueAffectations.setManaged(false); }
+        if (vueIA != null)             { vueIA.setVisible(false);            vueIA.setManaged(false); }
+        if (vueChatbot != null)        { vueChatbot.setVisible(false);       vueChatbot.setManaged(false); }
+
+        setHeader("Tableau de Bord", "Vue d'ensemble de l'application ForestGuard", false, false, false);
+        setBarreRechercheVisible(false);
+        setSidebarActif(btnDashboard);
+
+        if (lblDateHeure != null) {
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("EEEE dd MMMM yyyy  •  HH:mm", java.util.Locale.FRENCH);
+            lblDateHeure.setText(LocalDateTime.now().format(fmt));
+        }
     }
 
     /**
@@ -834,7 +856,7 @@ public class PompierController {
     private void setSidebarActif(Button actif) {
         String styleActif = "-fx-background-color: #16a34a; -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian,rgba(22,163,74,0.4),10,0,0,3);";
         String styleInactif = "-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-font-size: 13; -fx-alignment: CENTER_LEFT; -fx-padding: 10 16; -fx-background-radius: 12; -fx-cursor: hand;";
-        Button[] tous = {btnDashboard, btnPompiers, btnForets, btnCapteurs, btnDonnees, btnAlertes, btnUtilisateurs};
+        Button[] tous = {btnDashboard, btnPompiers, btnForets, btnCapteurs, btnDonnees, btnAlertes, btnReclamations, btnUtilisateurs};
         for (Button b : tous) {
             if (b != null) b.setStyle(b == actif ? styleActif : styleInactif);
         }
@@ -842,6 +864,13 @@ public class PompierController {
 
     @FXML
     public void afficherVueDashboard() {
+        // Vérifier si on est dans un module externe (vueDashboard n'est plus dans la scène)
+        if (vueDashboard == null || vueDashboard.getScene() == null) {
+            // Recharger le dashboard complet
+            rechargerDashboardPrincipal();
+            return;
+        }
+        
         // Cacher toutes les vues
         if (vueDashboard != null)      { vueDashboard.setVisible(true);      vueDashboard.setManaged(true); }
         if (vuePompiers != null)       { vuePompiers.setVisible(false);       vuePompiers.setManaged(false); }
@@ -885,6 +914,13 @@ public class PompierController {
 
     @FXML
     public void afficherVuePompiers() {
+        // Vérifier si on est dans un module externe (vuePompiers n'est plus dans la scène)
+        if (vuePompiers == null || vuePompiers.getScene() == null) {
+            // Recharger le dashboard complet
+            rechargerDashboardPrincipal();
+            return;
+        }
+        
         if (vueDashboard != null)  { vueDashboard.setVisible(false);  vueDashboard.setManaged(false); }
         vuePompiers.setVisible(true);      vuePompiers.setManaged(true);
         vueGardes.setVisible(false);       vueGardes.setManaged(false);
@@ -900,6 +936,29 @@ public class PompierController {
         if (btnTabChatbot != null) btnTabChatbot.setStyle("-fx-background-color:rgba(255,255,255,0.10);-fx-text-fill:rgba(255,255,255,0.65);-fx-font-size:13;-fx-font-weight:bold;-fx-padding:8 20;-fx-cursor:hand;-fx-border-color:rgba(255,255,255,0.2);-fx-border-width:1;-fx-background-radius:0 10 10 0;-fx-border-radius:0 10 10 0;");
         chargerListe();
         setBarreRechercheVisible(true);
+    }
+    
+    /**
+     * Recharge le dashboard principal (GestionPompier.fxml) en remplaçant toute la scène
+     * Utilisé quand on revient d'un module externe
+     */
+    private void rechargerDashboardPrincipal() {
+        try {
+            System.out.println("🔄 Rechargement du dashboard principal...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GestionPompier.fxml"));
+            Parent root = loader.load();
+            
+            // Obtenir la scène actuelle et remplacer le root
+            Stage stage = (Stage) btnDashboard.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("ForestGuard - Administration");
+            
+            System.out.println("✅ Dashboard principal rechargé");
+        } catch (Exception e) {
+            System.err.println("❌ Erreur lors du rechargement du dashboard: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -3413,8 +3472,23 @@ public class PompierController {
      */
     @FXML
     private void ouvrirGestionForets() {
-        Stage stage = (Stage) btnForets.getScene().getWindow();
-        controller.NavigationController.ouvrirGestionForets(stage);
+        try {
+            System.out.println("🌲 Chargement module Gestion Forêts...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ForetPrincipal.fxml"));
+            Parent content = loader.load();
+            
+            // Charger dans le mainStackPane au lieu de remplacer toute la scène
+            mainStackPane.getChildren().clear();
+            mainStackPane.getChildren().add(content);
+            
+            // Mettre à jour la sidebar
+            setSidebarActif(btnForets);
+            
+            System.out.println("✅ Module Gestion Forêts chargé dans la zone principale");
+        } catch (Exception e) {
+            System.err.println("❌ Erreur lors du chargement du module Forêts: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -3422,8 +3496,23 @@ public class PompierController {
      */
     @FXML
     private void ouvrirGestionCapteurs() {
-        Stage stage = (Stage) btnCapteurs.getScene().getWindow();
-        controller.NavigationController.ouvrirGestionCapteurs(stage);
+        try {
+            System.out.println("📡 Chargement module Gestion Capteurs...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/capteur.fxml"));
+            Parent content = loader.load();
+            
+            // Charger dans le mainStackPane au lieu de remplacer toute la scène
+            mainStackPane.getChildren().clear();
+            mainStackPane.getChildren().add(content);
+            
+            // Mettre à jour la sidebar
+            setSidebarActif(btnCapteurs);
+            
+            System.out.println("✅ Module Gestion Capteurs chargé dans la zone principale");
+        } catch (Exception e) {
+            System.err.println("❌ Erreur lors du chargement du module Capteurs: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -3431,8 +3520,23 @@ public class PompierController {
      */
     @FXML
     private void ouvrirGestionDonnees() {
-        Stage stage = (Stage) btnDonnees.getScene().getWindow();
-        controller.NavigationController.ouvrirGestionDonnees(stage);
+        try {
+            System.out.println("📊 Chargement module Gestion Données...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/donnees.fxml"));
+            Parent content = loader.load();
+            
+            // Charger dans le mainStackPane au lieu de remplacer toute la scène
+            mainStackPane.getChildren().clear();
+            mainStackPane.getChildren().add(content);
+            
+            // Mettre à jour la sidebar
+            setSidebarActif(btnDonnees);
+            
+            System.out.println("✅ Module Gestion Données chargé dans la zone principale");
+        } catch (Exception e) {
+            System.err.println("❌ Erreur lors du chargement du module Données: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -3440,8 +3544,47 @@ public class PompierController {
      */
     @FXML
     private void ouvrirGestionAlertes() {
-        Stage stage = (Stage) btnAlertes.getScene().getWindow();
-        controller.NavigationController.ouvrirGestionAlertes(stage);
+        try {
+            System.out.println("🚨 Chargement module Gestion Alertes...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Dashboard.fxml"));
+            Parent content = loader.load();
+            
+            // Charger dans le mainStackPane au lieu de remplacer toute la scène
+            mainStackPane.getChildren().clear();
+            mainStackPane.getChildren().add(content);
+            
+            // Mettre à jour la sidebar
+            setSidebarActif(btnAlertes);
+            
+            System.out.println("✅ Module Gestion Alertes chargé dans la zone principale");
+        } catch (Exception e) {
+            System.err.println("❌ Erreur lors du chargement du module Alertes: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Ouvre le module Gestion des Réclamations
+     */
+    @FXML
+    private void ouvrirGestionReclamations() {
+        try {
+            System.out.println("📋 Chargement module Gestion Réclamations...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Reclamations.fxml"));
+            Parent content = loader.load();
+            
+            // Charger dans le mainStackPane au lieu de remplacer toute la scène
+            mainStackPane.getChildren().clear();
+            mainStackPane.getChildren().add(content);
+            
+            // Mettre à jour la sidebar
+            setSidebarActif(btnReclamations);
+            
+            System.out.println("✅ Module Gestion Réclamations chargé dans la zone principale");
+        } catch (Exception e) {
+            System.err.println("❌ Erreur lors du chargement du module Réclamations: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -3456,12 +3599,27 @@ public class PompierController {
     }
     
     /**
-     * Ouvre le login utilisateur (espace utilisateur)
+     * Ouvre le module Gestion des Utilisateurs
      */
     @FXML
     private void ouvrirGestionUtilisateurs() {
-        Stage stage = (Stage) btnUtilisateurs.getScene().getWindow();
-        controller.NavigationController.ouvrirLoginUtilisateur(stage);
+        try {
+            System.out.println("👤 Chargement module Gestion Utilisateurs...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/forestguard/views/admin_utilisateur.fxml"));
+            Parent content = loader.load();
+            
+            // Charger dans le mainStackPane au lieu de remplacer toute la scène
+            mainStackPane.getChildren().clear();
+            mainStackPane.getChildren().add(content);
+            
+            // Mettre à jour la sidebar
+            setSidebarActif(btnUtilisateurs);
+            
+            System.out.println("✅ Module Gestion Utilisateurs chargé dans la zone principale");
+        } catch (Exception e) {
+            System.err.println("❌ Erreur lors du chargement du module Utilisateurs: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     // ══════════════════════════════════════════
